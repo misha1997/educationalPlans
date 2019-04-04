@@ -1,0 +1,16 @@
+{
+  "name": "univer-spa",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "install": "concurrently \"cd server && npm install\" \"cd client && npm install\"",
+    "start": "concurrently \"cd server && npm start\" \"cd client && npm run serve\"",
+    "seed": "node ./server/db/seed"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "concurrently": "^4.1.0"
+  }
+}
