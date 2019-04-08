@@ -32,8 +32,7 @@ Token.destroy({
   where: {
     userId
   }
-})
-    .then(() => Token.create({ tokenId, userId }));
+}).then(() => Token.create({ tokenId, userId }));
 
 module.exports = {
   generateAccessToken,

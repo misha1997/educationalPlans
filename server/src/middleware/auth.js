@@ -2,13 +2,12 @@ const jwt = require('jsonwebtoken');
 require('dotenv').config();
 
 module.exports = (req, res, next) => {
-    var authHeader = req.get('Authorization');
+    const authHeader = req.get('Authorization');
     if(!authHeader) {
-        res.send({ message: 'Token not provided!' })
+        res.send({ message: 'Token not provided!' });
     }
-    var token = authHeader;
     try {
-        const payload = jwt.verify(token, process.env.JWT_SECRET);
+        const payload = jwt.verify(authHeader, process.env.JWT_SECRET);
         if (payload.type !== 'access') {
             res.status(401).json({ message: 'Invalid token!' });
             return;

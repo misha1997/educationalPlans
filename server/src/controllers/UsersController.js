@@ -124,7 +124,6 @@ class UsersController{
       })
       .then((token) => {
         Object.assign({}, token);
-        console.log(token)
         if (token == null) {
           throw new Error('invalid token');
         }

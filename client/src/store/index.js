@@ -14,22 +14,29 @@ export default new Vuex.Store({
     createPersistedState()
   ],
   state: {
-    token: null,
+    accessToken: null,
+    refreshToken: null,
     user: null,
     isUserLoggedIn: false
   },
   mutations: {
-    setToken (state, token) {
-      state.token = token
-      state.isUserLoggedIn = !!(token)
+    setAccessToken (state, accessToken) {
+      state.accessToken = accessToken
+      state.isUserLoggedIn = !!(accessToken)
+    },
+    setRefreshToken (state, refreshToken) {
+      state.refreshToken = refreshToken
     },
     setUser (state, user) {
       state.user = user
     }
   },
   actions: {
-    setToken ({commit}, token) {
-      commit('setToken', token)
+    setAccessToken ({commit}, accessToken) {
+      commit('setAccessToken', accessToken)
+    },
+    setRefreshToken ({commit}, refreshToken) {
+      commit('setAccessToken', refreshToken)
     },
     setUser ({commit}, user) {
       commit('setUser', user)
