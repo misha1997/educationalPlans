@@ -3,7 +3,7 @@ const DistributionOfHours = require('../models/DistributionOfHours');
 
 class DistributionOfHoursController{
 
-  findAll(req, res){
+  index(req, res){
     DistributionOfHours.findAll({
       where: {
         education_item_id: req.body.id,

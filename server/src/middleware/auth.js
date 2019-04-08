@@ -4,15 +4,24 @@ require('dotenv').config();
 module.exports = (req, res, next) => {
     var authHeader = req.get('Authorization');
     if(!authHeader) {
-        res.status(401).json({ message: 'Token not provided!' });
+        res.send({ message: 'Token not provided!' })
     }
-    var token = authHeader.replace('Bearer ', '');
+    var token = authHeader;
     try {
-        jwt.verify(token, process.env.JWT_SECRET);
+        const payload = jwt.verify(token, process.env.JWT_SECRET);
+        if (payload.type !== 'access') {
+            res.status(401).json({ message: 'Invalid token!' });
+            return;
+        }
         next();
     } catch (e) {
+        if (e instanceof jwt.TokenExpiredError) {
+            res.status(401).json({ message: 'token expired!' });
+            return;
+        }
         if(e instanceof jwt.JsonWebTokenError) {
             res.status(401).json({ message: 'Invalid token!' });
+            return;
         }
     }
 };

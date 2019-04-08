@@ -5,9 +5,9 @@ const SubjectsController = require('../controllers/SubjectsController');
 
 let Subject = new SubjectsController();
 
-router.get('/', Subject.findAll);
-router.get('/:id', Subject.findOne);
-router.post('/', Subject.create);
+router.get('/', Subject.index);
+router.post('/', Subject.store);
+router.get('/:id', Subject.show);
 router.put('/:id', Subject.update);
 router.delete('/:id', Subject.destroy);
 

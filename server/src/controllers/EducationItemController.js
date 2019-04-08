@@ -7,7 +7,7 @@ const DistributionOfHours = require('../models/DistributionOfHours');
 
 
 class EducationItemController{
-  findAll(req, res){
+  index(req, res){
     let seriesRequests = async (req, res) => {
       try{
 
@@ -37,7 +37,7 @@ class EducationItemController{
     seriesRequests(req, res);
   }
 
-  create(req, res){
+  store(req, res){
     EducationItem.create(req.body).then((response) => {
         EducationItem.find({
           where: {

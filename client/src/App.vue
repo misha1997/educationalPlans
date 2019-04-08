@@ -1,22 +1,20 @@
 <template>
-  <div id="app">
-    <h1>Client Side Application</h1>
-  </div>
+    <v-app>
+        <login-component v-show="!$store.state.isUserLoggedIn"></login-component>
+        <content-component v-show="$store.state.isUserLoggedIn"></content-component>
+    </v-app>
 </template>
 
 <script>
-  export default {
-    name: 'app'
-  }
-</script>
 
-<style>
-  #app {
-    font-family: 'Avenir', Helvetica, Arial, sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    text-align: center;
-    color: #2c3e50;
-    margin-top: 60px;
-  }
-</style>
+import ContentComponent from './components/Content';
+import LoginComponent from './components/Login/Login';
+
+export default {
+  name: 'app',
+    components: {
+        LoginComponent,
+        ContentComponent
+    },
+}
+</script>

@@ -2,7 +2,7 @@ const Subjects = require('../models/Subjects');
 
 class SubjectsController{
 
-  findAll(req, res){
+  index(req, res){
     Subjects.findAll().then((subject) => {
       res.send(subject);
     }).catch((err) => {
@@ -10,7 +10,7 @@ class SubjectsController{
     });
   }
 
-  findOne(req, res){
+  show(req, res){
     Subjects.findAll({
       where: {
         subject_id: req.params.id
@@ -22,7 +22,7 @@ class SubjectsController{
     });
   }
 
-  create(req,res){
+  store(req,res){
     Subjects.create(req.body).then((response) => {
       res.send(response)
     }).catch((err)=>{

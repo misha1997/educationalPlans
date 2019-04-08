@@ -5,7 +5,7 @@ const DistributionOfHoursController = require('../controllers/DistributionOfHour
 
 let DistributionOfHours = new DistributionOfHoursController();
 
-router.post('/', DistributionOfHours.findAll);
+router.post('/', DistributionOfHours.index);
 router.post('/store', DistributionOfHours.store);
 
 module.exports = router;

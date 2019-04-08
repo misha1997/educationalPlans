@@ -1,0 +1,9 @@
+[
+    {
+        "email" : "test3@i.ua", 
+        "password" : "12345678", 
+        "name" : "Name", 
+        "surname" : "Surname", 
+        "role" : "admin"
+    }
+]

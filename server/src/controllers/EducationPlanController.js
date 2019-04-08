@@ -5,46 +5,46 @@ const Subdivision = require('../models/Subdivision');
 
 class EducationPlanController{
 
-  findAll(req, res){
-    EducationPlan.findAll({
-      include: [{
-        model: Departmens,
+    index(req, res){
+      EducationPlan.findAll({
         include: [{
-          model: Subdivision
+          model: Departmens,
+          include: [{
+            model: Subdivision
+          }]
         }]
-      }]
-    })
-      .map(el => el.get({ plain: true }))
-      .then((response)=>{
-        let educationPlans = _.map(response, (item) => {
-          return Object.assign(item, {subdivision_id: item.department.subdivision.subdivision_id});
-        });
-        res.send(educationPlans);
       })
-      .catch((err)=>{
-        res.send(err);
-      })
+        .map(el => el.get({ plain: true }))
+        .then((response)=>{
+          let educationPlans = _.map(response, (item) => {
+            return Object.assign(item, {subdivision_id: item.department.subdivision.subdivision_id});
+          });
+          res.send(educationPlans);
+        })
+        .catch((err)=>{
+          res.send(err);
+        })
     }
 
-    create(req, res){
+    store(req, res){
       EducationPlan.create(req.body,{
         include: [Departmens]
       })
-      .then((response) => {
-        EducationPlan.findOne({
-          where: {
-            id: response.id,
-          },
-          include: [{
-            model: Departmens
-          }]
-        })
-          .then((response)=>{
-            res.send(response)
+        .then((response) => {
+          EducationPlan.findOne({
+            where: {
+              id: response.id,
+            },
+            include: [{
+              model: Departmens
+            }]
           })
-          .catch((err)=>{
-            res.send(err);
-          })
+            .then((response)=>{
+              res.send(response)
+            })
+            .catch((err)=>{
+              res.send(err);
+            })
         })
         .catch((err) => {
           res.send(err);

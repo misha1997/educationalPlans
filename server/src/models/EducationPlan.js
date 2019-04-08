@@ -1,5 +1,5 @@
 const Sequelize = require('sequelize');
-let db = require('../../db');
+let db = require('../db');
 
 let Departments = require('./Departments');
 

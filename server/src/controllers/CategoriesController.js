@@ -2,7 +2,7 @@ const Categories = require('../models/Categories');
 
 class CategoriesController{
 
-  findAll(req, res){
+  index(req, res){
     Categories.findAll().then((categories) => {
       res.send(categories);
     }).catch((err) => {
@@ -10,7 +10,7 @@ class CategoriesController{
     });
   }
 
-  findOne(req, res){
+  show(req, res){
     Categories.findAll({
       where: {
         category_id: req.params.id
@@ -22,7 +22,7 @@ class CategoriesController{
     });
   }
 
-  create(req,res){
+  store(req,res){
     Categories.create(req.body).then((response) => {
       res.send(response)
     }).catch((err)=>{
