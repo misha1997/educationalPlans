@@ -9,6 +9,9 @@ const users = require('./users');
 const login = require('./login');
 const refreshTokens = require('./refreshToken');
 const subjects = require('./subjects');
+
+const saveExel = require('./saveExel');
+
 const distributionOfHours = require('./distributionOfHours');
 
 const authMiddleware = require('../middleware/auth');
@@ -24,6 +27,9 @@ module.exports = function(app){
   app.use('/api/users', users);
   app.use('/api/login', login);
   app.use('/api/refresh-tokens', refreshTokens);
+
+  app.use('/api/save-exel', saveExel);
+
   app.use('/api/subjects', subjects);
   app.use('/api/distribution-of-hours', distributionOfHours);
 }

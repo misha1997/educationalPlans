@@ -85,7 +85,7 @@
       },
 
       saveExel(){
-        Api().post('save-plan', {
+        Api().post('save-exel', {
           id: this.getEducationPlanId
         })
       }
