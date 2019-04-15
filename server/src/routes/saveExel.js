@@ -1,10 +1,10 @@
 let express = require('express');
 let router = express.Router();
 
-const EducationItemController = require('../controllers/EducationItemController');
+const SavePlanController = require('../controllers/SavePlanController');
 
-let EducationItem = new EducationItemController();
+let SavePlan = new SavePlanController();
 
-router.post('/', EducationItem.save);
+router.post('/', SavePlan.save);
 
 module.exports = router;
