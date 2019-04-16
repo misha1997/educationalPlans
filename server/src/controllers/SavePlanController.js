@@ -179,7 +179,7 @@ class SavePlanController {
             let educationPlanDepartmentName;
             educationItem[e].dataValues.distribution_of_hours.forEach(function(item, d, distribution_of_hour) {
               distribution_of_hours += distribution_of_hour[d].dataValues.value;
-              worksheet.cell(11+lineIter, 12+distribution_of_hour[d].dataValues.module_number, 11+lineIter, 12+distribution_of_hour[d].dataValues.module_number, true)
+              worksheet.cell(11+lineIter, 12+distribution_of_hour[d].dataValues.module_number)
                 .number(distribution_of_hour[d].dataValues.value).style(myStyle); // Години
             })
             educationPlans.forEach(function(item, p, educationPlan){
@@ -188,35 +188,35 @@ class SavePlanController {
               }
             })
             subjectIter++;
-            worksheet.cell(11+lineIter, 1, 11+lineIter, 1, true).number(subjectIter).style(myStyle);
-            worksheet.cell(11+lineIter, 2, 11+lineIter, 2, true).string(educationItem[e].dataValues.subject.dataValues.name).style(myStyle); // Назви навчальних дисциплін
-            worksheet.cell(11+lineIter, 6, 11+lineIter, 6, true).number(educationItem[e].dataValues.credits).style(myStyle); // Кредити
-            worksheet.cell(11+lineIter, 7, 11+lineIter, 7, true).number(educationItem[e].dataValues.credits*30).style(myStyle); // загальний обсяг
-            worksheet.cell(11+lineIter, 8, 11+lineIter, 8, true).number(distribution_of_hours*8).style(myStyle); // всього
+            worksheet.cell(11+lineIter, 1).number(subjectIter).style(myStyle);
+            worksheet.cell(11+lineIter, 2).string(educationItem[e].dataValues.subject.dataValues.name).style(myStyle); // Назви навчальних дисциплін
+            worksheet.cell(11+lineIter, 6).number(educationItem[e].dataValues.credits).style(myStyle); // Кредити
+            worksheet.cell(11+lineIter, 7).number(educationItem[e].dataValues.credits*30).style(myStyle); // загальний обсяг
+            worksheet.cell(11+lineIter, 8).number(distribution_of_hours*8).style(myStyle); // всього
             distribution_of_hours_all += distribution_of_hours*8;
-            worksheet.cell(11+lineIter, 9, 11+lineIter, 9, true).number(educationItem[e].dataValues.lectures).style(myStyle); // Лекції
+            worksheet.cell(11+lineIter, 9).number(educationItem[e].dataValues.lectures).style(myStyle); // Лекції
             lectures_all +=educationItem[e].dataValues.lectures;
-            worksheet.cell(11+lineIter, 10, 11+lineIter, 10, true).number(distribution_of_hours*8-educationItem[e].dataValues.lectures).style(myStyle); // практичні, семінарські
+            worksheet.cell(11+lineIter, 10).number(distribution_of_hours*8-educationItem[e].dataValues.lectures).style(myStyle); // практичні, семінарські
             practices_all += distribution_of_hours*8-educationItem[e].dataValues.lectures;
-            worksheet.cell(11+lineIter, 11, 11+lineIter, 11, true).number(educationItem[e].dataValues.practice).style(myStyle); // лабораторні
+            worksheet.cell(11+lineIter, 11).number(educationItem[e].dataValues.practice).style(myStyle); // лабораторні
             laboratores_all += educationItem[e].dataValues.practice;
-            worksheet.cell(11+lineIter, 12, 11+lineIter, 12, true).number(educationItem[e].dataValues.credits*30-distribution_of_hours*8).style(myStyle); // самостійна робота
+            worksheet.cell(11+lineIter, 12).number(educationItem[e].dataValues.credits*30-distribution_of_hours*8).style(myStyle); // самостійна робота
             independent_work += educationItem[e].dataValues.credits*30-distribution_of_hours*8;
-            worksheet.cell(11+lineIter, 29, 11+lineIter, 29, true).string(educationPlanDepartmentName).style(myStyle); // Кафедра викладання 
+            worksheet.cell(11+lineIter, 29).string(educationPlanDepartmentName).style(myStyle); // Кафедра викладання 
             lineIter++;
           }
         })
         subjectIter = 0;
-        worksheet.cell(11+lineIter, 2, 11+lineIter, 2, true).string("Усього").style(myStyle);
-        worksheet.cell(11+lineIter, 8, 11+lineIter, 8, true).number(distribution_of_hours_all).style(myStyle);  // Всього
+        worksheet.cell(11+lineIter, 2).string("Усього").style(myStyle);
+        worksheet.cell(11+lineIter, 8).number(distribution_of_hours_all).style(myStyle);  // Всього
         distribution_of_hours_all = 0;
-        worksheet.cell(11+lineIter, 9, 11+lineIter, 9, true).number(lectures_all).style(myStyle);  // Всього лекцій
+        worksheet.cell(11+lineIter, 9).number(lectures_all).style(myStyle);  // Всього лекцій
         lectures_all = 0;
-        worksheet.cell(11+lineIter, 10, 11+lineIter, 10, true).number(practices_all).style(myStyle);  // Вього практичних, семінарських
+        worksheet.cell(11+lineIter, 10).number(practices_all).style(myStyle);  // Вього практичних, семінарських
         practices_all = 0;
-        worksheet.cell(11+lineIter, 11, 11+lineIter, 11, true).number(laboratores_all).style(myStyle);  // Всього лабораторних
+        worksheet.cell(11+lineIter, 11).number(laboratores_all).style(myStyle);  // Всього лабораторних
         laboratores_all = 0;
-        worksheet.cell(11+lineIter, 12, 11+lineIter, 12, true).number(independent_work).style(myStyle);  // Всього самостійна робота
+        worksheet.cell(11+lineIter, 12).number(independent_work).style(myStyle);  // Всього самостійна робота
         independent_work = 0;
         lineIter++;
       })
