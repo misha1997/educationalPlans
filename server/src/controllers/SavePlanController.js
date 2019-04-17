@@ -1,5 +1,5 @@
 const excel = require('excel4node');
-
+const _ = require('lodash');
 const EducationItem = require('../models/EducationItem');
 const Subjects = require('../models/Subjects');
 const Category = require('../models/Categories');
@@ -113,16 +113,9 @@ class SavePlanController {
     worksheet.cell(3, 25, 3, 28, true).string('4 курс').style(myStyle);
     worksheet.cell(4, 13, 4, 28, true).string('Семестри').style(myStyle);
 
-    // У кого есть желание можете переделать в циклы
-    
-    worksheet.cell(5, 13, 5, 14, true).string('1').style(myStyle);
-    worksheet.cell(5, 15, 5, 16, true).string('2').style(myStyle);
-    worksheet.cell(5, 17, 5, 18, true).string('3').style(myStyle);
-    worksheet.cell(5, 19, 5, 20, true).string('4').style(myStyle);
-    worksheet.cell(5, 21, 5, 22, true).string('5').style(myStyle);
-    worksheet.cell(5, 23, 5, 24, true).string('6').style(myStyle);
-    worksheet.cell(5, 25, 5, 26, true).string('7').style(myStyle);
-    worksheet.cell(5, 27, 5, 28, true).string('8').style(myStyle);
+    for (let i=1;i<=8;i++){
+      worksheet.cell(5, 11+i*2, 5, 12+i*2, true).number(i).style(myStyle);
+    }
     
     worksheet.cell(6, 13, 6, 28, true).string('Модульні атестаційні цикли').style(myStyle);
 
@@ -166,7 +159,12 @@ class SavePlanController {
     var practices_all = 0;
     var laboratores_all = 0;
     var independent_work = 0;
-
+    var Array_Module = [];
+    var Array_Value = [];
+    var FullArray = [];
+    var LastArr = {};
+    var result = {};
+  
     Categories.forEach(function(item, i, categories) {
       worksheet.cell(10+lineIter+1, 1, 10+lineIter+1, 30, true).string(i+1 + "." + categories[i].dataValues.name).style(myStyle); // Категорії
       lineIter++;
@@ -179,14 +177,45 @@ class SavePlanController {
             let educationPlanDepartmentName;
             educationItem[e].dataValues.distribution_of_hours.forEach(function(item, d, distribution_of_hour) {
               distribution_of_hours += distribution_of_hour[d].dataValues.value;
-              worksheet.cell(11+lineIter, 12+distribution_of_hour[d].dataValues.module_number)
-                .number(distribution_of_hour[d].dataValues.value).style(myStyle); // Години
+              worksheet.cell(11+lineIter, 12+distribution_of_hour[d].dataValues.module_number).number(distribution_of_hour[d].dataValues.value).style(myStyle); // Години
+
+            //Расчёт сумм часов
+            Array_Module.push(distribution_of_hour[d].dataValues.module_number);
+            Array_Value.push(distribution_of_hour[d].dataValues.value);
+            for (let i=0; i<Array_Module.length; i++) { 
+              FullArray[i] = Array.of (Array_Module[i], Array_Value[i]);  
+          }
+          FullArray.sort(function(a, b) {
+            return a[0] == b[0] ? a > b : a[0] > b[0] 
+        });
+       
+        LastArr = FullArray.map(function(x) {
+          return {    
+              "m_num": x[0],
+              "hours": x[1]
+          }
+      })
+      // Конечный объект с суммами часов
+      result = Object.values(
+        LastArr.reduce((a, c) => (
+          a[c.m_num] = a[c.m_num] ?
+          (a[c.m_num].hours += c.hours, a[c.m_num]) :
+          c, a), {}
+        )
+      );
+    
+      
+      
             })
             educationPlans.forEach(function(item, p, educationPlan){
               if (educationPlan[p].dataValues.id == educationItem[e].dataValues.education_plans_id) {
                 educationPlanDepartmentName = educationPlan[p].dataValues.department.dataValues.name;
+                
               }
-            })
+            })  
+            for (let i = 0; i<result.length;i++){
+              console.log(result[i].hours);
+            } 
             subjectIter++;
             worksheet.cell(11+lineIter, 1).number(subjectIter).style(myStyle);
             worksheet.cell(11+lineIter, 2).string(educationItem[e].dataValues.subject.dataValues.name).style(myStyle); // Назви навчальних дисциплін
@@ -206,6 +235,7 @@ class SavePlanController {
             lineIter++;
           }
         })
+        
         subjectIter = 0;
         worksheet.cell(11+lineIter, 2).string("Усього").style(myStyle);
         worksheet.cell(11+lineIter, 8).number(distribution_of_hours_all).style(myStyle);  // Всього
@@ -218,9 +248,16 @@ class SavePlanController {
         laboratores_all = 0;
         worksheet.cell(11+lineIter, 12).number(independent_work).style(myStyle);  // Всього самостійна робота
         independent_work = 0;
+        for (let i = 0; i<result.length;i++){
+        worksheet.cell(11+lineIter, 12+result[i].m_num).number(result[i].hours).style(myStyle); //Подсчёт часов
+        }
         lineIter++;
+      
       })
+      
     })
+    
+  
     workbook.write('Excel.xlsx')
     console.log('хорош')
   }
