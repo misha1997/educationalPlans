@@ -17,7 +17,7 @@ const distributionOfHours = require('./distributionOfHours');
 const authMiddleware = require('../middleware/auth');
 
 module.exports = function(app){
-  app.use('/api/categories', authMiddleware, categories);
+  app.use('/api/categories',  categories);
   app.use('/api/asu', asu);
   app.use('/api/subdivisions', subdivisions);
   app.use('/api/sub-categories', subCategories);

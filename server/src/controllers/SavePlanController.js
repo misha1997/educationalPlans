@@ -156,24 +156,41 @@ class SavePlanController {
 
     var distribution_of_hours_all = 0;
     var distribution_of_hours_allSubCategory = 0;
+    var distribution_of_hours_total = 0;
 
     var lectures_all = 0;
     var lectures_allSubCategory = 0;
+    var lectures_total = 0;
 
     var practices_all = 0;
     var practices_allSubCategory = 0;
+    var practices_total = 0;
 
     var laboratores_all = 0;
     var laboratores_allSubCategory = 0;
+    var laboratores_total = 0;
 
     var independent_work = 0;
     var independent_work_allSubCategory = 0;
+    var independent_work_total = 0;
 
     var Array_Module = [];
     var Array_Value = [];
     var FullArray = [];
     var LastArr = {};
     var result = {};
+
+    var Array_Module_allSubCategory = [];
+    var Array_Value_allSubCategory = [];
+    var FullArray_allSubCategory = [];
+    var LastArr_allSubCategory = {};
+    var result_allSubCategory = {};
+
+    var Array_Module_total = [];
+    var Array_Value_total = [];
+    var FullArray_total = [];
+    var LastArr_total = {};
+    var result_total = {};
 
     Categories.forEach(function(item, i, categories) {
       worksheet.cell(10+lineIter+1, 1, 10+lineIter+1, 30, true).string(i+1 + "." + categories[i].dataValues.name).style(myStyle); // Категорії
@@ -231,16 +248,18 @@ class SavePlanController {
             lectures_all +=educationItem[e].dataValues.lectures;
             worksheet.cell(11+lineIter, 10).number(distribution_of_hours*8-educationItem[e].dataValues.lectures).style(myStyle); // практичні, семінарські
             practices_all += distribution_of_hours*8-educationItem[e].dataValues.lectures;
-            worksheet.cell(11+lineIter, 11).number(educationItem[e].dataValues.practice).style(myStyle); // лабораторні
-            laboratores_all += educationItem[e].dataValues.practice;
+            worksheet.cell(11+lineIter, 11).number(educationItem[e].dataValues.laboratories).style(myStyle); // лабораторні
+            laboratores_all += educationItem[e].dataValues.laboratories;
             worksheet.cell(11+lineIter, 12).number(educationItem[e].dataValues.credits*30-distribution_of_hours*8).style(myStyle); // самостійна робота
             independent_work += educationItem[e].dataValues.credits*30-distribution_of_hours*8;
             worksheet.cell(11+lineIter, 29).string(educationPlanDepartmentName).style(myStyle); // Кафедра викладання 
             lineIter++;
+            
           }
         })
 
         subjectIter = 0;
+        worksheet.cell(11+lineIter, 1).string("").style(myStyle);
         worksheet.cell(11+lineIter, 2).string("Усього").style(myStyle);
         worksheet.cell(11+lineIter, 8).number(distribution_of_hours_all).style(myStyle);  // Всього
         distribution_of_hours_allSubCategory += distribution_of_hours_all
@@ -259,9 +278,35 @@ class SavePlanController {
         independent_work = 0;
 
 
-        for (let i = 0; i<result.length;i++){
-          worksheet.cell(11+lineIter, 12+result[i].m_num).number(result[i].hours).style(myStyle); //Подсчёт часов
+        for (let j = 0; j<result.length;j++){
+          worksheet.cell(11+lineIter, 12+result[j].m_num).number(result[j].hours).style(myStyle); //Подсчёт часов
+
+              Array_Module_allSubCategory.push(result[j].m_num);
+              Array_Value_allSubCategory.push(result[j].hours);
+              for (let i=0; i<Array_Module_allSubCategory.length; i++) { 
+                FullArray_allSubCategory[i] = Array.of (Array_Module_allSubCategory[i], Array_Value_allSubCategory[i]);  
+              }
+              FullArray_allSubCategory.sort(function(a, b) {
+                return a[0] == b[0] ? a > b : a[0] > b[0] 
+              });
+       
+              LastArr_allSubCategory = FullArray_allSubCategory.map(function(x) {
+                return {    
+                    "m_num": x[0],
+                    "hours": x[1]
+                }
+              })
+              // Конечный объект с суммами часов
+              result_allSubCategory = Object.values(
+                LastArr_allSubCategory.reduce((a, c) => (
+                  a[c.m_num] = a[c.m_num] ?
+                  (a[c.m_num].hours += c.hours, a[c.m_num]) :
+                  c, a), {}
+                )
+              );
+            
         }
+      
 
         Array_Module = [];
         Array_Value = [];
@@ -272,32 +317,81 @@ class SavePlanController {
         lineIter++;
       
       })
-
-      worksheet.cell(11+lineIter, 2).string("Усього за навчальними дисциплінами загальної підготовки").style(myStyle);
+      worksheet.cell(11+lineIter, 1).string("").style(myStyle);
+      worksheet.cell(11+lineIter, 2).string("Усього за навчальними дисциплінами " + categories[i].dataValues.name.split(" ").splice(-2)).style(myStyle);
       worksheet.cell(11+lineIter, 8).number(distribution_of_hours_allSubCategory).style(myStyle);
+      distribution_of_hours_total+=distribution_of_hours_allSubCategory;
       distribution_of_hours_allSubCategory = 0
       worksheet.cell(11+lineIter, 9).number(lectures_allSubCategory).style(myStyle);
+      lectures_total+=lectures_allSubCategory;
       lectures_allSubCategory = 0
       worksheet.cell(11+lineIter, 10).number(practices_allSubCategory).style(myStyle);
+      practices_total+=practices_allSubCategory;
       practices_allSubCategory = 0;
       worksheet.cell(11+lineIter, 11).number(laboratores_allSubCategory).style(myStyle);
-      laboratores_all = 0;
+      laboratores_total+=laboratores_allSubCategory;
+      laboratores_allSubCategory = 0;
       worksheet.cell(11+lineIter, 12).number(independent_work_allSubCategory).style(myStyle);
-      independent_work = 0;
+      independent_work_total+=independent_work_allSubCategory;
+      independent_work_allSubCategory = 0;
+      for (let j = 0; j<result_allSubCategory.length;j++){
+        worksheet.cell(11+lineIter, 12+result_allSubCategory[j].m_num).number(result_allSubCategory[j].hours).style(myStyle);
 
+        Array_Module_total.push(result_allSubCategory[j].m_num);
+        Array_Value_total.push(result_allSubCategory[j].hours);
+        for (let i=0; i<Array_Module_total.length; i++) { 
+          FullArray_total[i] = Array.of (Array_Module_total[i], Array_Value_total[i]);  
+        }
+        FullArray_total.sort(function(a, b) {
+          return a[0] == b[0] ? a > b : a[0] > b[0] 
+        });
+ 
+        LastArr_total = FullArray_total.map(function(x) {
+          return {    
+              "m_num": x[0],
+              "hours": x[1]
+          }
+        })
+        // Конечный объект с суммами часов
+        result_total = Object.values(
+          LastArr_total.reduce((a, c) => (
+            a[c.m_num] = a[c.m_num] ?
+            (a[c.m_num].hours += c.hours, a[c.m_num]) :
+            c, a), {}
+          )
+        );
+      }
+      Array_Module_allSubCategory = [];
+        Array_Value_allSubCategory = [];
+        FullArray_allSubCategory = [];
+        LastArr_allSubCategory = {};
+        result_allSubCategory = {};
       lineIter++;
       
     })
-
+    
+    worksheet.cell(11+lineIter, 1).string("").style(myStyle);
     worksheet.cell(11+lineIter, 2).string("Загальна кількість").style(myStyle);
+    worksheet.cell(11+lineIter, 8).number(distribution_of_hours_total).style(myStyle);
+    worksheet.cell(11+lineIter, 9).number(lectures_total).style(myStyle);
+    worksheet.cell(11+lineIter, 10).number(practices_total).style(myStyle);
+    worksheet.cell(11+lineIter, 11).number(laboratores_total).style(myStyle);
+    worksheet.cell(11+lineIter, 12).number(independent_work_total).style(myStyle);
     lineIter++;
-    worksheet.cell(11+lineIter, 2).string("Кількість годин на тиждень").style(myStyle);
+    worksheet.cell(11+lineIter, 1).string("").style(myStyle);
+    worksheet.cell(11+lineIter, 2, 11+lineIter, 12, true).string("Кількість годин на тиждень").style(myStyle);
+    for (let j = 0; j<result_total.length;j++){
+      worksheet.cell(11+lineIter, 12+result_total[j].m_num).number(result_total[j].hours).style(myStyle);
+    }
     lineIter++;
-    worksheet.cell(11+lineIter, 2).string("Кількість екзаменів").style(myStyle);
+    worksheet.cell(11+lineIter, 1).string("").style(myStyle);
+    worksheet.cell(11+lineIter, 2, 11+lineIter, 12, true).string("Кількість екзаменів").style(myStyle);
     lineIter++;
-    worksheet.cell(11+lineIter, 2).string("Кількість заліків").style(myStyle);
+    worksheet.cell(11+lineIter, 1).string("").style(myStyle);
+    worksheet.cell(11+lineIter, 2, 11+lineIter, 12, true).string("Кількість заліків").style(myStyle);
     lineIter++;
-    worksheet.cell(11+lineIter, 2).string("Кількість курсових робіт").style(myStyle);
+    worksheet.cell(11+lineIter, 1).string("").style(myStyle);
+    worksheet.cell(11+lineIter, 2, 11+lineIter, 12, true).string("Кількість курсових робіт").style(myStyle);
 
     workbook.write('Excel.xlsx')
     console.log('хорош')
