@@ -2,6 +2,7 @@ require('./bootstrap.js');
 
 import Vue from 'vue'
 import './plugins/vuetify'
+import './assets/css/app.css'
 import { sync } from 'vuex-router-sync'
 import App from './App'
 

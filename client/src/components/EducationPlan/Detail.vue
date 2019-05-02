@@ -33,6 +33,7 @@
   import CreationItem from './Forms/CreationItem';
   import ModulesForm from './Forms/ModulesForm';
   import Stage from './Stage';
+  import {successAlert, errorAlert} from '../../services/Swal';
 
   import Api from '../../services/Api';
 
@@ -88,6 +89,7 @@
         Api().post('save-exel', {
           id: this.getEducationPlanId
         })
+        successAlert("Файл завантажений");
       }
 
     }

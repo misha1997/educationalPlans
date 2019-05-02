@@ -45,12 +45,12 @@
             icon: "description"
           },
           {
-            title: "Підрозділи",
+            title: "Кафедри",
             name: "subdivisions",
             icon: "school"
           },
           {
-            title: "Кафедри",
+            title: "Факультети",
             name: "departments",
             icon: "school"
           },

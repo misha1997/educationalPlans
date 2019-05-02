@@ -25,7 +25,8 @@
         'toggleMenu': 'overlay/toggleMenu'
       }),
       logout () {
-        this.$store.dispatch('setToken', null)
+        this.$store.dispatch('setAccessToken', null)
+        this.$store.dispatch('setRefreshToken', null)
         this.$store.dispatch('setUser', null)
         this.$router.push({
           name: 'home'
