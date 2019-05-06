@@ -5,6 +5,6 @@ const UsersController = require('../controllers/UsersController');
 
 let User = new UsersController();
 
-router.post('/', User.logout);
+router.post('/', User.refreshToken);
 
 module.exports = router;

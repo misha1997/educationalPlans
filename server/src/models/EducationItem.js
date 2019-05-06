@@ -1,5 +1,5 @@
 const Sequelize = require('sequelize');
-let db = require('../../db');
+let db = require('../db');
 
 const Subjects = require('./Subjects');
 const SubCategories = require('./SubCategories');

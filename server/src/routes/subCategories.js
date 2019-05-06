@@ -5,9 +5,9 @@ const SubCategoriesController = require('../controllers/SubCategoriesController'
 
 let SubCategory = new SubCategoriesController();
 
-router.get('/', SubCategory.findAll);
-router.get('/:id', SubCategory.findOne);
-router.post('/', SubCategory.create);
+router.get('/', SubCategory.index);
+router.post('/', SubCategory.store);
+router.get('/:id', SubCategory.show);
 router.put('/:id', SubCategory.update);
 router.delete('/:id', SubCategory.destroy);
 

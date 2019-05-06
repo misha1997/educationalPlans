@@ -2,21 +2,9 @@ const Subdivision = require('../models/Subdivision');
 
 class SubDivisionController{
 
-  findAll(req, res){
+  index(req, res){
     Subdivision.findAll().then((response) => {
       res.send(response);
-    }).catch((err) => {
-      res.send(err);
-    });
-  }
-
-  findOne(req, res){
-    Subdivision.findAll({
-      where: {
-        subdivision_id: req.params.id
-      }
-    }).then((subdivision) => {
-      res.send(subdivision);
     }).catch((err) => {
       res.send(err);
     });
@@ -28,6 +16,18 @@ class SubDivisionController{
     }).catch((err)=>{
       res.send(err);
     })
+  }
+
+  show(req, res){
+    Subdivision.findAll({
+      where: {
+        subdivision_id: req.params.id
+      }
+    }).then((subdivision) => {
+      res.send(subdivision);
+    }).catch((err) => {
+      res.send(err);
+    });
   }
 
   update(req, res){

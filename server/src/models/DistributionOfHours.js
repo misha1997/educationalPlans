@@ -1,5 +1,5 @@
 const Sequelize = require('sequelize');
-let db = require('../../db');
+let db = require('../db');
 
 const DistributionOfHours = db.define('distribution_of_hours',{
   distribution_of_hours_id: {

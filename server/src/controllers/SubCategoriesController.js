@@ -4,7 +4,7 @@ const Categories = require('../models/Categories');
 
 class SubCategoriesController{
 
-  findAll(req, res){
+  index(req, res){
     SubCategories.findAll({
       include: [{
         model: Categories
@@ -21,19 +21,7 @@ class SubCategoriesController{
       })
   }
 
-  findOne(req, res){
-    SubCategories.findAll({
-      where: {category_id: req.params.id}
-    })
-      .then((response)=>{
-        res.send(response);
-      })
-      .catch((err)=>{
-        res.send(err);
-      })
-  }
-
-  create(req, res){
+  store(req, res){
     SubCategories.create(req.body,{
       include: [Categories]
     })
@@ -56,6 +44,18 @@ class SubCategoriesController{
       .catch((err) => {
         res.send(err);
       });
+  }
+
+  show(req, res){
+    SubCategories.findAll({
+      where: {category_id: req.params.id}
+    })
+      .then((response)=>{
+        res.send(response);
+      })
+      .catch((err)=>{
+        res.send(err);
+      })
   }
 
   update(req, res){

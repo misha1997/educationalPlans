@@ -1,13 +1,13 @@
 let _ = require('lodash');
+
 const EducationItem = require('../models/EducationItem');
 const Subjects = require('../models/Subjects');
 const Categories = require('../models/Categories');
 const SubCategories = require('../models/SubCategories');
 const DistributionOfHours = require('../models/DistributionOfHours');
 
-
 class EducationItemController{
-  findAll(req, res){
+  index(req, res){
     let seriesRequests = async (req, res) => {
       try{
 
@@ -37,7 +37,7 @@ class EducationItemController{
     seriesRequests(req, res);
   }
 
-  create(req, res){
+  store(req, res){
     EducationItem.create(req.body).then((response) => {
         EducationItem.find({
           where: {

@@ -4,7 +4,7 @@ const Subdivision = require('../models/Subdivision');
 
 class DepartmentsController{
 
-  findAll(req, res){
+  index(req, res){
     Departments.findAll({
       include: [{
         model: Subdivision
@@ -21,19 +21,7 @@ class DepartmentsController{
       })
   }
 
-  findOne(req, res){
-    Departments.findAll({
-      where: {subdivision_id: req.params.id}
-    })
-      .then((response)=>{
-        res.send(response);
-      })
-      .catch((err)=>{
-        res.send(err);
-      })
-  }
-
-  create(req, res){
+  store(req, res){
     Departments.create(req.body,{
       include: [Subdivision]
     })
@@ -56,6 +44,18 @@ class DepartmentsController{
       .catch((err) => {
         res.send(err);
       });
+  }
+
+  show(req, res){
+    Departments.findAll({
+      where: {subdivision_id: req.params.id}
+    })
+      .then((response)=>{
+        res.send(response);
+      })
+      .catch((err)=>{
+        res.send(err);
+      })
   }
 
   update(req, res){

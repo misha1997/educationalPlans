@@ -1,5 +1,5 @@
 const Sequelize = require('sequelize')
-let db = require('../../db')
+let db = require('../db')
 const Promise = require('bluebird')
 const bcrypt = Promise.promisifyAll(require('bcrypt-nodejs'))
 
