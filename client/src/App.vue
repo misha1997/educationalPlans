@@ -1,7 +1,7 @@
 <template>
     <v-app>
-        <login-component v-show="!$store.state.isUserLoggedIn"></login-component>
-        <content-component v-show="$store.state.isUserLoggedIn"></content-component>
+        <content-component v-if="$store.state.isUserLoggedIn"></content-component>
+        <login-component v-else></login-component>
     </v-app>
 </template>
 

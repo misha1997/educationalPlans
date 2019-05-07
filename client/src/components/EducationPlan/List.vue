@@ -73,7 +73,7 @@
         <td>{{ props.item.department.name }}</td>
         <td>{{ props.item.status }}</td>
         <td>{{ props.item.year }}</td>
-        <td>{{props.item.created_at}}</td>
+        <td>{{ props.item.created_at.substring(0,10) }}</td>
         <td class="justify-center layout px-1 pr-4">
           <v-icon
             small

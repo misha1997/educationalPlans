@@ -20,13 +20,13 @@
             <v-container grid-list-md>
               <v-layout wrap>
                 <v-flex xs12>
-                  <v-text-field v-model="editedItem.lectures" label="Кількість лекцій" type="number" min="0"></v-text-field>
+                  <v-text-field v-model.number="editedItem.lectures" label="Кількість лекцій" type="number" min="0"></v-text-field>
                 </v-flex>
                 <v-flex xs12>
-                  <v-text-field v-model="editedItem.practice" label="Кількість практічних" type="number" min="0"></v-text-field>
+                  <v-text-field v-model.number="editedItem.practice" label="Кількість практічних" type="number" min="0"></v-text-field>
                 </v-flex>
                 <v-flex xs12>
-                  <v-text-field v-model="editedItem.laboratories" label="Кількість лабораторних" type="number" min="0"></v-text-field>
+                  <v-text-field v-model.number="editedItem.laboratories" label="Кількість лабораторних" type="number" min="0"></v-text-field>
                 </v-flex>
               </v-layout>
             </v-container>
@@ -94,8 +94,6 @@
         this.dialog = !this.dialog;
         this.educationItemId = educationItemId
         this.maxAmountOfHours = amountOfHours;
-
-        console.log(data);
         _.assign(this.editedItem, data);
       });
     },
@@ -115,11 +113,11 @@
 
           this.enableLoading();
 
-          Api().put('education-item/update-learning-plan/'+this.educationItemId,{
-            lectures: this.editedItem.lectures,
-            practice: this.editedItem.practice,
-            laboratories: this.editedItem.laboratories
-          })
+            Api().put('education-item/update-learning-plan/'+this.educationItemId,{
+              lectures: this.editedItem.lectures == "" ? 0 : this.editedItem.lectures,
+              practice: this.editedItem.practice == "" ? 0 : this.editedItem.practice,
+              laboratories: this.editedItem.laboratories == "" ? 0 : this.editedItem.laboratories
+            })
             .then((response)=>{
               this.updateLearningData({educationItemId: this.educationItemId, data: response.data});
               successAlert("Запис був збережений");

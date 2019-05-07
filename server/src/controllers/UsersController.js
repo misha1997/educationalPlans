@@ -32,6 +32,18 @@ class UsersController{
     });
   }
 
+  findOne(req, res){
+    Users.findOne({ 
+      where: { 
+        user_id: req.params.id
+      } 
+    }).then((users) => {
+      res.send(users);
+    }).catch((err) => {
+      res.send(err);
+    });
+  }
+
   destroy(req, res){
     Users.destroy({
       where: {
@@ -47,17 +59,16 @@ class UsersController{
   create(req,res){
     Users.create(req.body)
     .then((user) => {
-      const userJson = user.toJSON()
       res.send({
-        user: userJson,
-        token: jwt.sign(user.user_id.toString(), process.env.JWT_SECRET)
+        user
       })
+    }).catch((err) => {
+      res.send(err);
     })
-    .catch(err => res.status(500).json({ message: err.message }))
   }
 
   update(req, res){
-    const {name, surname, email, password, role} = req.body
+    const {name, surname, email, password, role} = req.body.data
     Users.update({
       name: name,
       surname: surname,
@@ -74,7 +85,9 @@ class UsersController{
         user
       })
     })
-    .catch(err => res.status(500).json({ message: err.message }))
+    .catch((err) => {
+      res.send(err);
+    })
   }
 
   login (req, res) {

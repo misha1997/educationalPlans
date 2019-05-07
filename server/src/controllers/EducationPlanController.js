@@ -5,7 +5,7 @@ const Subdivision = require('../models/Subdivision');
 
 class EducationPlanController{
 
-    index(req, res){
+    findAll(req, res) {
       EducationPlan.findAll({
         include: [{
           model: Departmens,
@@ -26,8 +26,31 @@ class EducationPlanController{
         })
     }
 
-    store(req, res){
-      EducationPlan.create(req.body,{
+    findOne(req, res) {
+      EducationPlan.findAll({
+        include: [{
+          model: Departmens,
+          include: [{
+            model: Subdivision
+          }]
+        }],
+        where: {id: req.params.id}
+      })
+        .map(el => el.get({ plain: true }))
+        .then((response)=>{
+          let educationPlans = _.map(response, (item) => {
+            return Object.assign(item, {subdivision_id: item.department.subdivision.subdivision_id});
+          });
+          res.send(educationPlans);
+        })
+        .catch((err)=>{
+          res.send(err);
+        })
+    }
+
+    store(req, res) {
+      req.body.created_at = new Date();
+      EducationPlan.create(req.body, {
         include: [Departmens]
       })
         .then((response) => {
@@ -67,7 +90,7 @@ class EducationPlanController{
       });
     }
 
-    destroy(req, res){
+    destroy(req, res) {
       EducationPlan.destroy({
         where: {
           id: req.params.id

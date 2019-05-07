@@ -8,8 +8,6 @@ const EducationPlan = require('../models/EducationPlan');
 const Departmens = require('../models/Departments');
 const Subdivision = require('../models/Subdivision');
 
-// Знаю что код хуйня но по другому пока не придумал!
-
 class SavePlanController {
   async save (req, res) {
     const educationItems = await EducationItem.findAll({
