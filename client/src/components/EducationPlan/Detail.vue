@@ -29,6 +29,7 @@
 
   import {mapGetters, mapMutations} from 'vuex';
 
+  import DistributionOfControls from './Forms/DistributionOfControls';
   import DistributionOfLearning from './Forms/DistributionOfLearning';
   import CreationItem from './Forms/CreationItem';
   import ModulesForm from './Forms/ModulesForm';
@@ -42,7 +43,9 @@
       Stage,
       CreationItem,
       ModulesForm,
-      DistributionOfLearning
+      DistributionOfLearning,
+      DistributionOfControls
+      
     },
 
     data(){

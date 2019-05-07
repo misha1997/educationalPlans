@@ -7,10 +7,6 @@ const Subdivision = db.define('subdivisions',{
     primaryKey: true,
     autoIncrement: true
   },
-  api_id: {
-    type: Sequelize.INTEGER,
-    allowNull: false
-  },
   name: {
     type: Sequelize.STRING,
     allowNull: false

@@ -5,6 +5,7 @@ const Subjects = require('../models/Subjects');
 const Categories = require('../models/Categories');
 const SubCategories = require('../models/SubCategories');
 const DistributionOfHours = require('../models/DistributionOfHours');
+const DistributionOfControls = require('../models/DistributionOfControls');
 
 class EducationItemController{
   index(req, res){
@@ -21,7 +22,8 @@ class EducationItemController{
           education_item_id: req.body.id,
           include: [
             { model: Subjects},
-            { model: DistributionOfHours}
+            { model: DistributionOfHours},
+            { model: DistributionOfControls}
           ]
         })
 

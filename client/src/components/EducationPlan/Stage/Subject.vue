@@ -21,7 +21,15 @@
             class="mr-2"
             @click="modulesForm(data.item.education_item_id)"
           >
-            today
+          today
+        </v-icon>
+           <v-icon
+            small
+            class="mr-2"
+            @click="DistributionOfControlsForm(data.item.education_item_id)"
+          >
+          
+            remove_red_eye
           </v-icon>
           <v-icon
             small
@@ -66,6 +74,10 @@
     computed: {
       getDistributionOfHours(){
         return this.data.item.distribution_of_hours;
+      },
+
+      getDistributionOfControls(){
+        return this.data.item.distribution_of_controls;
       },
 
       isDistributionOfHours(){
@@ -118,6 +130,10 @@
 
       modulesForm(educationItemId){
         EventBus.$emit('toggle-modules-form', educationItemId, this.getDistributionOfHours);
+      },
+
+      DistributionOfControlsForm(educationItemId){
+        EventBus.$emit('toggle-distribution-of-controls-form', educationItemId, this.getDistributionOfControls);
       },
 
       distributionOfLearningForm(educationItemId){
