@@ -33,6 +33,20 @@ class DistributionOfHoursController{
 
     seriesRequests(req, res);
   }
+
+  delete(req, res){
+    DistributionOfHours.destroy({ 
+      where: { 
+        education_item_id: req.params.id 
+      }
+    })
+    .then(() => {
+      res.send("DistributionOfHours was successfully deleted");
+    }).catch((err) => {
+      res.send(err);
+    })
+  }
+
 }
 
 

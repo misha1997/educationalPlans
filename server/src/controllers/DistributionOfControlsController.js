@@ -1,39 +1,46 @@
-const _ = require('lodash');
 const DistributionOfControls = require('../models/DistributionOfControls');
 
 class DistributionOfControlsController{
 
-  index(req, res){
-    DistributionOfControls.findAll({
+  findOne(req, res){
+    DistributionOfControls.findOne({
       where: {
-        education_item_id: req.body.id,
+        education_item_id: req.params.id,
       }
-    })
-      .then((response) => {
-        res.send(response);
-      })
-      .catch((err) => {
-        res.send(err);
-      });
+    }).then((controls) => {
+      res.send(controls);
+    }).catch((err) => {
+      res.send(err);
+    });
   }
 
-  store(req, res){
-
+  create(req, res){
+    req.body.data.education_item_id = req.body.educationItemId;
     let seriesRequests = async (req, res) => {
       try {
-
         await DistributionOfControls.destroy({ where: { education_item_id: req.body.educationItemId }});
-        let response = await DistributionOfControls.bulkCreate(req.body.data);
-
+        let response = await DistributionOfControls.create(req.body.data);
         res.send(response);
       }catch (err) {
         res.send(err)
       }
     };
-
     seriesRequests(req, res);
   }
-}
 
+  delete(req, res){
+    DistributionOfControls.destroy({ 
+      where: { 
+        education_item_id: req.params.id 
+      }
+    })
+    .then(() => {
+      res.send("DistributionOfControls was successfully deleted");
+    }).catch((err) => {
+      res.send(err);
+    })
+  }
+
+}
 
 module.exports = DistributionOfControlsController;

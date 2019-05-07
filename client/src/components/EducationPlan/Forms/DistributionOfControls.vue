@@ -1,23 +1,24 @@
 <template>
   <div>
-    <v-dialog v-model="dialog" max-width="800px">
+    <v-dialog v-model="dialog" max-width="500px">
       <v-form ref="form" @submit.prevent="save()">
         <v-card>
           <v-card-title>
-            <span class="headline">{{ formTitle }}</span>
+            <span class="headline">Розподіл контрольних заходів за семестрами</span>
           </v-card-title>
-
           <v-card-text>
-            <v-container grid-list-md class="py-0">
-              <v-flex xs12>
-                  <v-text-field v-model="editedItem.exams" label="Кількість екзаменів" ></v-text-field>
+            <v-container grid-list-md>
+              <v-layout wrap>
+                <v-flex xs12>
+                  <v-text-field v-model.number="editedItem.exams" label="Кількість екзаменів" type="number" min="0"></v-text-field>
                 </v-flex>
                 <v-flex xs12>
-                  <v-text-field v-model="editedItem.credit" label="Кількість заліків" ></v-text-field>
+                  <v-text-field v-model.number="editedItem.credit" label="Кількість заліків" type="number" min="0"></v-text-field>
                 </v-flex>
                 <v-flex xs12>
-                  <v-text-field v-model="editedItem.individual_tasks" label="Кількість індивідуальних завдань" ></v-text-field>
+                  <v-text-field v-model.number="editedItem.individual_tasks" label="Кількість індивідуальних завдань" type="number" min="0"></v-text-field>
                 </v-flex>
+              </v-layout>
             </v-container>
           </v-card-text>
 
@@ -37,53 +38,41 @@
 
   import {EventBus} from "../../../event-bus";
   import Api from '../../../services/Api';
-  import Swal from '../../../services/Swal';
-
-
+  import {successAlert, errorAlert} from '../../../services/Swal';
 
   export default {
     data(){
       return {
         dialog: false,
-        data: [],
+        editedItem: {
+          exams: '',
+          credit: '',
+          individual_tasks: ''
+        },
         educationItemId: null,
       }
     },
 
     created(){
-
-      
-
-      EventBus.$on('toggle-distribution-of-controls-form', (educationItemId, data) => {
-        this.dialog = !this.dialog;
+      EventBus.$on('toggle-distribution-of-controls-form', (educationItemId) => {
         this.educationItemId = educationItemId;
-        console.log(data);
-_.assign(this.editedItem, data);
-       
+        this.fetchData();
+        this.dialog = !this.dialog;
       });
     },
 
-    computed: {
-      formTitle () {
-        return this.editedIndex === -1 ? 'Створення' : 'Редагування'
-      }
-    },
-
-    methods:{
+    methods: {
       ...mapMutations({
-        'updateDistributionOfControls': 'plan/updateDistributionOfControls'
+        'enableLoading': 'overlay/enableLoading',
+        'disableLoading': 'overlay/disableLoading'
       }),
 
-      
-
-      fetchData(){
-        Api().post('distribution-of-controls', {
-          id: this.educationItemId
-        })
-          .then((response) => {
-            console.log(response);
+      fetchData() {
+        Api().get(`distribution-of-controls/${this.educationItemId}`)
+          .then((res)=>{
+            this.editedItem = Object.assign({}, res.data)
           })
-          .catch((err) => {
+          .catch((err)=>{
             console.log(err);
           })
       },
@@ -93,38 +82,28 @@ _.assign(this.editedItem, data);
       },
 
       save(){
-        
-
-        let formattedData = _.map(data, (item) => {
-          return{
-            "education_item_id": this.educationItemId,
-            "exams": item.exams,
-            "credit": item.credit,
-            "individual_tasks": item.individual_tasks,
-          }
-        });
-
-
-        Api().post('distribution-of-controls/store', {
+        this.enableLoading();
+        Api().post(`distribution-of-controls`, {
           educationItemId: this.educationItemId,
-          data: formattedData
+          data: this.editedItem
         })
-          .then((response) => {
-            this.updateDistributionOfControls({educationItemId: this.educationItemId, data: response.data});
-            this.dialog = false;
-          })
-          .catch((err) => {
-            console.log(err);
-          })
-
+        .then((response) => {
+          this.dialog = false;
+          successAlert("Запис був збережений");
+        })
+        .catch((err) => {
+          errorAlert(err);
+        })
+        .then(()=>{
+          this.disableLoading();
+        });
       }
     },
 
     watch:{
       dialog: function(){
-        if(this.dialog === false){
+        if(this.dialog === false) {
           this.data = [];
-          
         }
       }
     }

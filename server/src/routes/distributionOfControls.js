@@ -5,7 +5,8 @@ const DistributionOfControlsController = require('../controllers/DistributionOfC
 
 let DistributionOfControls = new DistributionOfControlsController();
 
-router.post('/', DistributionOfControls.index);
-router.post('/store', DistributionOfControls.store);
+router.get('/:id', DistributionOfControls.findOne);
+router.post('/', DistributionOfControls.create);
+router.delete('/:id', DistributionOfControls.delete);
 
 module.exports = router;

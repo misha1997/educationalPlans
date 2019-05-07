@@ -12,6 +12,9 @@ const Departments = db.define('departments', {
   subdivision_id: {
     type: Sequelize.INTEGER
   },
+  api_id: {
+    type: Sequelize.INTEGER
+  },
   name: {
     type: Sequelize.STRING,
     required: true
