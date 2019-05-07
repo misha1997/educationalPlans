@@ -48,7 +48,7 @@ class SubCategoriesController{
 
   show(req, res){
     SubCategories.findAll({
-      where: {category_id: req.params.id}
+      where: {sub_category_id: req.params.id}
     })
       .then((response)=>{
         res.send(response);

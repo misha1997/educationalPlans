@@ -46,7 +46,8 @@ const Users = db.define('users', {
   }
 }, {
   hooks: {
-    beforeCreate: hashPassword
+    beforeCreate: hashPassword,
+    beforeUpdate: hashPassword
   }
 })
 
