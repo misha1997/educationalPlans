@@ -24,7 +24,13 @@ const Departments = db.define('departments', {
 Departments.belongsTo(Subdivision, {
   foreignKey: "subdivision_id",
   targetKey: "subdivision_id"
-})
+});
+
+Subdivision.hasMany(Departments, {
+  foreignKey: "subdivision_id",
+  targetKey: "subdivision_id"
+});
+
 
 module.exports = Departments;
 
