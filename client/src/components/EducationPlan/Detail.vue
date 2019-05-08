@@ -6,19 +6,17 @@
     </v-toolbar>
 
     <distributionOfLearning></distributionOfLearning>
+    <DistributionOfControls></DistributionOfControls>
     <creation-item></creation-item>
     <modules-form></modules-form>
 
     <v-btn color="info" class="mx-0" @click="saveExel()">Завантажити</v-btn>
 
-    <div v-for="category in data">
+    <div v-for="category in data" :key="category.id">
       <h2>{{ category.name }}</h2>
-
-      <div v-for="subCategory in category.sub_categories" class="mt-3 mb-4">
+      <div v-for="subCategory in category.sub_categories" :key="subCategory.id" class="mt-3 mb-4">
         <h5>{{ subCategory.name }}</h5>
-
         <stage :subCategory="subCategory"></stage>
-
       </div>
     </div>
 
@@ -29,6 +27,7 @@
 
   import {mapGetters, mapMutations} from 'vuex';
 
+  import DistributionOfControls from './Forms/DistributionOfControls';
   import DistributionOfLearning from './Forms/DistributionOfLearning';
   import CreationItem from './Forms/CreationItem';
   import ModulesForm from './Forms/ModulesForm';
@@ -43,7 +42,8 @@
       Stage,
       CreationItem,
       ModulesForm,
-      DistributionOfLearning
+      DistributionOfLearning,
+      DistributionOfControls
     },
 
     data(){
@@ -70,18 +70,17 @@
 
       fetchData(){
         this.setEducationPlanId(parseInt(this.$route.params.id));
-
         if(this.getEducationPlanId){
           Api().post('education-item', {
             id: this.getEducationPlanId
           })
-            .then((response)=>{
-              this.data = response.data.data;
-              this.setEducationItems(response.data.educationItems);
-            })
-            .catch((err)=>{
-              console.log(err);
-            })
+          .then((response)=>{
+            this.data = response.data.data;
+            this.setEducationItems(response.data.educationItems);
+          })
+          .catch((err)=>{
+            console.log(err);
+          })
         }
       },
 

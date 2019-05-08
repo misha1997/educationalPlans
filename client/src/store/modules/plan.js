@@ -83,6 +83,17 @@ let mutations = {
     if(index !== -1){
       state.educationItems[index].distribution_of_hours = data;
     }
+  },
+
+
+updateDistributionOfControls(state,{educationItemId, data}){
+  let index = state.educationItems.findIndex((item) => {
+    return item.education_item_id === educationItemId;
+  });
+
+  if(index !== -1){
+    state.educationItems[index].distribution_of_controls = data;
+  }
   }
 };
 

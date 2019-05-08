@@ -7,5 +7,6 @@ let DistributionOfHours = new DistributionOfHoursController();
 
 router.post('/', DistributionOfHours.index);
 router.post('/store', DistributionOfHours.store);
+router.delete('/:id', DistributionOfHours.delete);
 
 module.exports = router;

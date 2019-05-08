@@ -54,4 +54,5 @@ EducationItem.hasMany(DistributionOfHours, {
   targetKey: "education_item_id"
 });
 
+
 module.exports = EducationItem;

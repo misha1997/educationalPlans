@@ -44,12 +44,12 @@
             align: 'left',
             sortable: false,
           },
-          { text: 'Премет', value: 'subject.name', align: 'center'},
-          { text: 'Кількість кредитів ЄКТС', value: 'credits', align: 'center' },
-          { text: 'Загальний обсяг', value: 'credits', align: 'center' },
-          { text: 'Лекції', value: 'lectures', align: 'center' },
-          { text: 'Практичні, семінарські', value: 'practice', align: 'center' },
-          { text: 'Лабораторні', value: 'laboratories', align: 'center'},
+          { text: 'Предмет', value: 'subject.name'},
+          { text: 'Кількість кредитів ЄКТС', value: 'credits' },
+          { text: 'Загальний обсяг', value: 'credits' },
+          { text: 'Лекції', value: 'lectures' },
+          { text: 'Практичні, семінарські', value: 'practice' },
+          { text: 'Лабораторні', value: 'laboratories'},
           { text: '', value: 'name', sortable: false }
         ],
       }

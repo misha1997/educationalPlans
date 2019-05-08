@@ -9,32 +9,36 @@
         <td class="text-center">{{ data.item.laboratories | zeroValue }}</td>
         <td class="justify-center layout px-1 pr-4">
           <v-icon
+            title="Лекції/Практики/Лабораторні"
             small
             class="mr-2"
             @click="distributionOfLearningForm(data.item.education_item_id)"
             v-if="isDistributionOfHours"
           >
-            school
+          school
           </v-icon>
           <v-icon
+            title="Заповнити данні розподілу по модулям" 
             small
             class="mr-2"
             @click="modulesForm(data.item.education_item_id)"
           >
-            today
+          today
           </v-icon>
           <v-icon
+            title="Розподіл контрольних заходів за семестрами"  
             small
             class="mr-2"
-            @click="editItem(data.item)"
+            @click="distributionOfControlsForm(data.item.education_item_id)"
           >
-            edit
+          widgets
           </v-icon>
           <v-icon
+            title="Видалити"
             small
             @click="deleteItem(data.item)"
           >
-            delete
+          delete
           </v-icon>
         </td>
   </tr>
@@ -58,7 +62,6 @@
     filters: {
       zeroValue: function (value) {
         if (value == 0) return ' - '
-
         return value;
       }
     },
@@ -98,9 +101,26 @@
       },
 
       deleteItem (item) {
-        let isDelete = confirm('Вы уверены, что хотите удалить этот элемент?');
+        let isDelete = confirm('Ви впевнені, що хочете видалити цей елемент?');
         if(isDelete) {
           this.enableLoading();
+
+          Api().delete(`distribution-of-controls/${item.education_item_id}`)
+            .then(() => {
+              console.log("distribution-of-controls видалений");
+            })
+            .catch((err) => {
+              console.log(err);
+            })
+
+          Api().delete(`distribution-of-hours/${item.education_item_id}`)
+            .then(() => {
+              console.log("distribution-of-hours видалений");
+            })
+            .catch((err) => {
+              console.log(err);
+            })
+
           Api().delete(`education-item/${item.education_item_id}`)
             .then(() => {
               this.removeEducationItem(item.education_item_id);
@@ -112,12 +132,15 @@
             .then(()=>{
               this.disableLoading();
             })
-
         }
       },
 
       modulesForm(educationItemId){
         EventBus.$emit('toggle-modules-form', educationItemId, this.getDistributionOfHours);
+      },
+
+      distributionOfControlsForm(educationItemId){
+        EventBus.$emit('toggle-distribution-of-controls-form', educationItemId);
       },
 
       distributionOfLearningForm(educationItemId){

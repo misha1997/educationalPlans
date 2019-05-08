@@ -14,6 +14,8 @@ const saveExel = require('./saveExel');
 
 const distributionOfHours = require('./distributionOfHours');
 
+const distributionOfControls = require('./distributionOfControls');
+
 const authMiddleware = require('../middleware/auth');
 
 module.exports = function(app){
@@ -32,4 +34,5 @@ module.exports = function(app){
 
   app.use('/api/subjects', subjects);
   app.use('/api/distribution-of-hours', distributionOfHours);
+  app.use('/api/distribution-of-controls', distributionOfControls);
 }
