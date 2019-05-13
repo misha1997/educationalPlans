@@ -248,6 +248,7 @@ class SavePlanController {
               worksheet.cell(11+lineIter, 4).string(distribution_of_control[r].dataValues.credit).style(myStyle); // Заліки
               worksheet.cell(11+lineIter, 5).string(distribution_of_control[r].dataValues.exams).style(myStyle); //Індивідуальні завдання
               })
+
             worksheet.cell(11+lineIter, 6).number(educationItem[e].dataValues.credits).style(myStyle); // Кредити
             worksheet.cell(11+lineIter, 7).number(educationItem[e].dataValues.credits*30).style(myStyle); // загальний обсяг
             worksheet.cell(11+lineIter, 8).number(distribution_of_hours*8).style(myStyle); // всього
