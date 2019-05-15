@@ -1,5 +1,7 @@
 [
     {
-        "name": "Test Category"
+        "name": "Test Category",
+        "cycles_id": 1,
+        "credits": 10
     }
 ]

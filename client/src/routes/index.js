@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 
-import Home from '../components/Home';
+import Cycles from '../components/Cycles/Cycles';
 import Categories from '../components/Categories/Categories';
 import Departments from '../components/Departments/Departments';
 import Users from '../components/Users/Users';
@@ -18,18 +18,18 @@ export default new VueRouter({
   routes: [
     {
       path: '/',
-      name: 'home',
-      component: Home
+      name: 'education-plan',
+      component: List
+    },
+    {
+      path: '/cycles',
+      name: 'cycles',
+      component: Cycles
     },
     {
       path: '/categories',
       name: 'categories',
       component: Categories
-    },
-    {
-      path: '/education-plan',
-      name: 'education-plan',
-      component: List
     },
     {
       path: '/education-plan/:id',

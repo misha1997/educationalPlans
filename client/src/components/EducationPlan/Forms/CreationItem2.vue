@@ -29,7 +29,7 @@
                     ></v-select>
                 </v-flex>
                 <v-flex xs12>
-                  <v-text-field v-model="editedItem.credits" label="Кількість кредитів" :rules="creditsValidation"></v-text-field>
+                  <v-text-field v-model="editedItem.credits" label="Кількість кредитів"></v-text-field>
                 </v-flex>
               </v-layout>
             </v-container>
@@ -67,6 +67,7 @@
         subjects: [],
 
         creditCategory: 0,
+        who: null,
 
         primaryKey: 'education_item_id',
 
@@ -106,17 +107,21 @@
       },
 
       validator(){
-        return (this.editedItem.credits) ? this.credits + +this.editedItem.credits > this.creditCategory : false;
+        console.log(this.credits)
+        console.log(this.creditCategory)
+        return false;
       }
+
     },
 
     created(){
-      EventBus.$on('toggle-item-form', (credits, creditCategory) => {
+      EventBus.$on('toggle-item-form', (credits, who) => {
+        this.who = who;
         this.credits = credits;
-        this.creditCategory = creditCategory;
         this.dialog = !this.dialog;
       });
       this.fetchSubjects();
+      this.fetchData();
     },
 
     methods:{
@@ -134,6 +139,17 @@
                 name: item.name
               }
             });
+          })
+          .catch((err)=>{
+            console.log(err);
+          })
+      },
+
+      fetchData(){
+        Api().get(`categories/${this.getCurrentItem.category_id}`)
+          .then((response)=>{
+            console.log(response)
+            this.creditCategory = response.data[0].credits
           })
           .catch((err)=>{
             console.log(err);
@@ -162,6 +178,7 @@
 
         } else {
           this.enableLoading();
+          console.log(this.editedItem)
           Api().post(this.apiUrl+'/store',Object.assign(this.editedItem, this.additionalData))
             .then((response)=>{
               response.data.distribution_of_hours = [];

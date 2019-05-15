@@ -98,9 +98,24 @@ updateDistributionOfControls(state,{educationItemId, data}){
 };
 
 let actions = {
-  createEducationItem({state, commit, getters}, subCategoryId){
-    commit('setCurrentItem', {'education_plans_id': getters.getEducationPlanId, 'sub_category_id': subCategoryId});
-  }
+  createEducationItemSubCategory({state, commit, getters}, subCategoryId){
+    commit('setCurrentItem', {
+      'education_plans_id': getters.getEducationPlanId, 
+      'sub_category_id': subCategoryId, 
+    });
+  },
+  createEducationItemCategory({state, commit, getters}, categoryId){
+    commit('setCurrentItem', {
+      'education_plans_id': getters.getEducationPlanId, 
+      'category_id': categoryId, 
+    });
+  },
+  createEducationItemCycle({state, commit, getters}, categoryId){
+    commit('setCurrentItem', {
+      'education_plans_id': getters.getEducationPlanId, 
+      'cycles_id': categoryId, 
+    });
+  },
 }
 
 module.exports = {

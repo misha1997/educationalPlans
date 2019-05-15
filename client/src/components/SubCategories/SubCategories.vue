@@ -12,6 +12,13 @@
             </v-card-title>
 
             <v-card-text>
+              <v-alert
+                :value="validator"
+                color="error"
+                icon="new_releases"
+              >
+                Кількість кредитів повинна бути не більше {{ creditsAll }}
+              </v-alert>
               <v-container grid-list-md>
                 <v-layout wrap>
                 <v-flex xs12>
@@ -28,6 +35,9 @@
                       required
                     ></v-select>
                   </v-flex>
+                <v-flex xs12>
+                  <v-text-field v-model="editedItem.credits" label="Усього кредитів" :rules="requiredField"></v-text-field>
+                </v-flex>
                 </v-layout>
               </v-container>
             </v-card-text>
@@ -35,7 +45,7 @@
             <v-card-actions>
               <v-spacer></v-spacer>
               <v-btn color="blue darken-1" flat @click="close">Відміна</v-btn>
-              <v-btn color="blue darken-1" flat type="submit">Зберегти</v-btn>
+              <v-btn color="blue darken-1" flat type="submit" v-if="!validator">Зберегти</v-btn>
             </v-card-actions>
           </v-card>
         </v-form>
@@ -51,7 +61,8 @@
       <template slot="items" slot-scope="props">
       
         <td>{{ props.item.name }}</td>
-      <td>{{ props.item.category.name }}</td>
+        <td>{{ props.item.credits | zeroValue }}</td>
+        <td>{{ props.item.category.name }}</td>
         <td class="justify-center layout px-1 pr-4">
           <v-icon
             small
@@ -93,20 +104,27 @@
         primaryKey: 'sub_category_id',
 
         categories: [],
+        cycles: [],
+        subCategories: [],
 
         headers: [
           { text: 'Назва підкатегорії', value: 'name' },
+          { text: 'Кількість кредитів', value: 'credits' },
           { text: 'Назва категорії', value: 'subCategoryName' },
           { text: '', value: 'name', sortable: false }
         ],
 
+        creditsAll: 0,
+
         editedItem: {
           name: '',
-          category_id: 1
+          credits: '',
+          category_id: 0
         },
         defaultItem: {
           name: '',
-          category_id: 1
+          credits: '',
+          category_id: 0
         }
       }
     },
@@ -114,6 +132,15 @@
     created(){
       this.fetchData('sub-categories');
       this.fetchCategories();
+      this.fetchCycles();
+      this.fetchSubCategories();
+    },
+
+    filters: {
+      zeroValue: function (value) {
+        if (value == 0) return ' - '
+        return value;
+      }
     },
 
     computed: {
@@ -122,17 +149,62 @@
       },
       getRequestId(){
         return this.editedItem.sub_category_id;
-      }
+      },
+      getRequestCategoryId(){
+        return this.editedItem.category_id;
+      },
+      validator(){
+
+        var aa = 0;
+        var bb = 0;
+
+        for(let i = 0; i < this.categories.length; i++) {
+          if(this.categories[i].category_id == this.editedItem.category_id) {
+            var cycleId = this.categories[i].cycles_id;
+            aa += this.categories[i].credits;
+          }
+        }
+        for(let i = 0; i < this.subCategories.length; i++) {
+          if(this.subCategories[i].category_id == this.editedItem.category_id) {
+            bb += this.subCategories[i].credits;
+          }
+        }
+        for(let i = 0; i < this.cycles.length; i++) {
+          if(this.cycles[i].cycles_id == cycleId) {
+            this.creditsAll = this.cycles[i].credits;
+          }
+        }
+
+        return (this.editedItem.credits) ? aa + bb + +this.editedItem.credits > this.creditsAll : false;
+
+ }
     },
 
     methods: {
-
       fetchCategories(){
         Api().get('categories')
           .then((response)=>{
             this.categories = _.map(response.data, (item)=>{
               return{
                 category_id: item.category_id,
+                cycles_id: item.cycles_id,
+                credits: item.credits,
+                name: item.name
+              }
+            });
+          })
+          .catch((err)=>{
+            console.log(err);
+          })
+      },
+
+      fetchCycles(){
+        Api().get('cycles')
+          .then((response)=>{
+            this.cycles = _.map(response.data, (item)=>{
+              return{
+                cycles_id: item.cycles_id,
+                credits: item.credits,
                 name: item.name
               }
             });
@@ -142,6 +214,23 @@
           })
       },
      
+      fetchSubCategories(){
+        Api().get('sub-categories')
+          .then((response)=>{
+            this.subCategories = _.map(response.data, (item)=>{
+              return{
+                sub_category_id: item.sub_category_id,
+                category_id: item.category_id,
+                credits: item.credits,
+                name: item.name
+              }
+            });
+          })
+          .catch((err)=>{
+            console.log(err);
+          })
+      },
+
     }
   }
   

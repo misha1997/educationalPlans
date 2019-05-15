@@ -61,6 +61,7 @@ class SubCategoriesController{
   update(req, res){
     SubCategories.update({
       name: req.body.data.name,
+      credits: req.body.data.credits,
       category_id: req.body.data.category_id
     }, {
       where: {

@@ -6,8 +6,6 @@
       <v-toolbar-title>Навчальні плани</v-toolbar-title>
       <v-spacer></v-spacer>
       <v-toolbar-items>
-        <v-icon>person</v-icon>
-        <v-spacer></v-spacer>
         <v-btn @click="logout" flat>Вихід</v-btn>
       </v-toolbar-items>
     </v-toolbar>
@@ -21,7 +19,7 @@
 
 	export default{
 		methods: {
-		  ...mapMutations({
+      ...mapMutations({
         'toggleMenu': 'overlay/toggleMenu'
       }),
       logout () {

@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-toolbar dark color="primary">
-      <v-toolbar-title>Кафедри</v-toolbar-title>
+      <v-toolbar-title>Цикли навчального плану</v-toolbar-title>
       <v-spacer></v-spacer>
       <v-dialog v-model="dialog" max-width="500px">
         <v-btn slot="activator" icon color="primary" dark class="mb-2"> <v-icon>add</v-icon></v-btn>
@@ -15,7 +15,10 @@
               <v-container grid-list-md>
                 <v-layout wrap>
                   <v-flex xs12>
-                    <v-text-field v-model="editedItem.name" label="Назва кафедри" :rules="requiredField"></v-text-field>
+                    <v-text-field v-model="editedItem.name" label="Назва циклу" :rules="requiredField"></v-text-field>
+                  </v-flex>
+                  <v-flex xs12>
+                    <v-text-field v-model="editedItem.credits" label="Кількість кредитів" :rules="requiredField"></v-text-field>
                   </v-flex>
                 </v-layout>
               </v-container>
@@ -24,7 +27,7 @@
             <v-card-actions>
               <v-spacer></v-spacer>
               <v-btn color="blue darken-1" flat @click="close">Відміна</v-btn>
-              <v-btn color="blue darken-1" flat type="submit">Зберегти</v-btn>
+              <v-btn color="blue darken-1" type="submit" flat>Зберегти</v-btn>
             </v-card-actions>
           </v-card>
         </v-form>
@@ -38,22 +41,23 @@
       class="elevation-1"
     >
       <template slot="items" slot-scope="props">
-      <td>{{ props.item.name }}</td>
-      <td class="justify-center layout px-1 pr-4">
-        <v-icon
-          small
-          class="mr-2"
-          @click="editItem(props.item)"
-        >
-          edit
-        </v-icon>
-        <v-icon
-          small
-          @click="deleteItem(props.item)"
-        >
-          delete
-        </v-icon>
-      </td>
+        <td>{{ props.item.name }}</td>
+        <td>{{ props.item.credits | zeroValue }}</td>
+        <td class="justify-center layout px-1 pr-4">
+          <v-icon
+            small
+            class="mr-2"
+            @click="editItem(props.item)"
+          >
+            edit
+          </v-icon>
+          <v-icon
+            small
+            @click="deleteItem(props.item)"
+          >
+            delete
+          </v-icon>
+        </td>
       </template>
       <template slot="no-data">
         <v-btn color="primary">Reset</v-btn>
@@ -64,9 +68,8 @@
 
 <script>
 
-  import validation from '../../mixins/validation';
   import crud from '../../mixins/crud';
-
+  import validation from '../../mixins/validation';
 
   export default{
 
@@ -75,35 +78,48 @@
     data(){
       return{
 
-        apiUrl: 'subdivisions',
+        apiUrl: 'cycles',
 
-        primaryKey: 'subdivision_id',
+        primaryKey: 'cycles_id',
 
         headers: [
-          { text: 'Назва кафедри', value: 'name' },
+          { text: 'Назва циклу', value: 'name' },
+          { text: 'Кількість кредитів', value: 'credits' },
           { text: '', value: 'name', sortable: false }
         ],
 
         editedItem: {
-          api_id: 0,
-          name: ''
+          name: '',
+          credits: ''
         },
-
         defaultItem: {
-          api_id: 0,
-          name: ''
+          name: '',
+          credits: ''
         }
+      }
+    },
+
+    created(){
+      this.fetchData();
+    },
+
+    filters: {
+      zeroValue: function (value) {
+        if (value == 0) return ' - '
+        return value;
       }
     },
 
     computed: {
       formTitle () {
-        return this.editedIndex === -1 ? 'Нова кафедра' : 'Редагувати кафедру'
+        return this.editedIndex === -1 ? 'Новий цикл' : 'Редагувати цикл'
       },
+
       getRequestId(){
-        return this.editedItem.subdivision_id;
+        return this.editedItem.cycles_id;
       }
     }
   }
+
 
 </script>

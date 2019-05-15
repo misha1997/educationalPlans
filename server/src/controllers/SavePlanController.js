@@ -4,6 +4,7 @@ const Subjects = require('../models/Subjects');
 const Category = require('../models/Categories');
 const SubCategories = require('../models/SubCategories');
 const DistributionOfHours = require('../models/DistributionOfHours');
+const DistributionOfControls = require('../models/DistributionOfControls');
 const EducationPlan = require('../models/EducationPlan');
 const Departmens = require('../models/Departments');
 const Subdivision = require('../models/Subdivision');
@@ -11,10 +12,13 @@ const Subdivision = require('../models/Subdivision');
 class SavePlanController {
   async save (req, res) {
     const educationItems = await EducationItem.findAll({
-      education_item_id: req.body.id,
+      where: {
+        education_plans_id: req.body.id
+      },
       include: [
         { model: Subjects},
-        { model: DistributionOfHours}
+        { model: DistributionOfHours},
+        { model: DistributionOfControls}
       ]
     })
 
@@ -229,6 +233,9 @@ class SavePlanController {
                 )
               );
             })
+
+            
+
             educationPlans.forEach(function(item, p, educationPlan){
               if (educationPlan[p].dataValues.id == educationItem[e].dataValues.education_plans_id) {
                 educationPlanDepartmentName = educationPlan[p].dataValues.department.dataValues.name;
@@ -238,6 +245,11 @@ class SavePlanController {
             subjectIter++;
             worksheet.cell(11+lineIter, 1).number(subjectIter).style(myStyle);
             worksheet.cell(11+lineIter, 2).string(educationItem[e].dataValues.subject.dataValues.name).style(myStyle); // Назви навчальних дисциплін
+            educationItem[e].dataValues.distribution_of_controls.forEach(function(item, r, distribution_of_control) {
+              worksheet.cell(11+lineIter, 3).string(distribution_of_control[r].dataValues.exams).style(myStyle); // Екзамени
+              worksheet.cell(11+lineIter, 4).string(distribution_of_control[r].dataValues.credit).style(myStyle); // Заліки
+              worksheet.cell(11+lineIter, 5).string(distribution_of_control[r].dataValues.exams).style(myStyle); //Індивідуальні завдання
+              })
             worksheet.cell(11+lineIter, 6).number(educationItem[e].dataValues.credits).style(myStyle); // Кредити
             worksheet.cell(11+lineIter, 7).number(educationItem[e].dataValues.credits*30).style(myStyle); // загальний обсяг
             worksheet.cell(11+lineIter, 8).number(distribution_of_hours*8).style(myStyle); // всього

@@ -24,7 +24,7 @@
                       v-model="editedItem.subdivision_id"
                       item-text="name"
                       item-value="subdivision_id"
-                      label="Факультет"
+                      label="Кафедра"
                       required
                     ></v-select>
                   </v-flex>
@@ -119,7 +119,7 @@
 
     computed: {
       formTitle () {
-        return this.editedIndex === -1 ? 'Нова кафедра' : 'Редагувати кафедру'
+        return this.editedIndex === -1 ? 'Новий факультет' : 'Редагувати факультет'
       },
       getRequestId(){
         return this.editedItem.department_id;

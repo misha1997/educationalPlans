@@ -3,6 +3,7 @@ let _ = require('lodash');
 const EducationItem = require('../models/EducationItem');
 const Subjects = require('../models/Subjects');
 const Categories = require('../models/Categories');
+const Cycle = require('../models/Cycles');
 const SubCategories = require('../models/SubCategories');
 const DistributionOfHours = require('../models/DistributionOfHours');
 const DistributionOfControls = require('../models/DistributionOfControls');
@@ -12,14 +13,18 @@ class EducationItemController{
     let seriesRequests = async (req, res) => {
       try{
 
-        let data = await Categories.findAll({
-          include: [
-            { model: SubCategories },
-          ]
+        let data = await Cycle.findAll({
+          include: [{
+            model: Categories,
+            include: [{
+              model: SubCategories
+            }]
+          }],
         });
-
         let educationItems = await EducationItem.findAll({
-          education_item_id: req.body.id,
+          where: {
+            education_plans_id: req.body.id
+          },
           include: [
             { model: Subjects},
             { model: DistributionOfHours},

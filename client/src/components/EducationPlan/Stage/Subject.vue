@@ -76,7 +76,7 @@
       },
 
       amountOfHours(){
-        return _.sumBy(this.getDistributionOfHours, (item) => {return item.value}) * 8;
+        return _.sumBy(this.getDistributionOfHours, (item) => {return +item.value}) * 8;
       },
 
       getLearningData(){

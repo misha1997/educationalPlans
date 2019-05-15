@@ -1,6 +1,7 @@
 [
     {
         "name": "Test SubCategory",
-        "category_id": 1
+        "category_id": 1,
+        "credits": 10
     }
 ]

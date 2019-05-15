@@ -1,5 +1,6 @@
 <template>
   <div>
+    <PlanControls></PlanControls>
     <v-toolbar dark color="primary">
       <v-toolbar-title>Навчальні плани</v-toolbar-title>
       <v-spacer></v-spacer>
@@ -78,6 +79,13 @@
           <v-icon
             small
             class="mr-2"
+            @click="editControl()"
+          >
+            widgets
+          </v-icon>
+          <v-icon
+            small
+            class="mr-2"
             @click="editItem(props.item)"
           >
             edit
@@ -105,15 +113,24 @@
 </template>
 
 <script>
+  import {mapMutations} from 'vuex';
+
+  import { EventBus } from '../../event-bus.js';
 
   import Api from '../../services/Api';
 
   import validation from '../../mixins/validation';
   import crud from '../../mixins/crud';
 
+  import PlanControls from './Forms/PlanControls';
+
   export default{
 
     mixins: [validation, crud],
+
+    components: {
+      PlanControls
+    },
 
     data(){
       return{
@@ -207,6 +224,10 @@
         this.editedItem = Object.assign({}, item);
         this.getDepartments();
         this.dialog = true;
+      },
+
+      editControl() {
+        EventBus.$emit('toggle-plan-controls-form');
       },
 
       viewItem(link){

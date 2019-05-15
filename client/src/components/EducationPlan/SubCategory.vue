@@ -4,7 +4,6 @@
       :headers="headers"
       :items="stageItems"
       class="mb-2"
-      :hide-actions="true"
     >
       <template slot="items" slot-scope="props">
         <subject :data="props"></subject>
@@ -20,8 +19,8 @@
 
   import {mapGetters, mapActions} from 'vuex';
   import { EventBus } from '../../event-bus.js';
-
   import Subject from './Stage/Subject';
+  import Api from '../../services/Api';
 
   export default{
 
@@ -52,6 +51,7 @@
           { text: 'Лабораторні', value: 'laboratories'},
           { text: '', value: 'name', sortable: false }
         ],
+        category: []
       }
     },
 
@@ -69,12 +69,15 @@
 
     methods: {
       ...mapActions({
-        'createEducationItem': 'plan/createEducationItem'
+        'createEducationItemSubCategory': 'plan/createEducationItemSubCategory'
       }),
 
       addSubject(){
-        EventBus.$emit('toggle-item-form');
-        this.createEducationItem(this.subCategory.sub_category_id);
+        Api().get(`categories/${this.subCategory.category_id}`)
+          .then((response)=>{
+            EventBus.$emit('toggle-item-form', _.sumBy(this.stageItems, (item) => {return item.credits}), response.data[0].credits);
+            this.createEducationItemSubCategory(this.subCategory.sub_category_id);
+        })
       }
     }
   }
