@@ -50,8 +50,7 @@
           { text: 'Практичні, семінарські', value: 'practice' },
           { text: 'Лабораторні', value: 'laboratories'},
           { text: '', value: 'name', sortable: false }
-        ],
-        category: []
+        ]
       }
     },
 
@@ -64,7 +63,7 @@
         return _.filter(this.getEducationItems, (item) => {
           return item.sub_category_id === this.subCategory.sub_category_id;
         })
-      }
+      },
     },
 
     methods: {
@@ -74,10 +73,19 @@
 
       addSubject(){
         Api().get(`categories/${this.subCategory.category_id}`)
-          .then((response)=>{
-            EventBus.$emit('toggle-item-form', _.sumBy(this.stageItems, (item) => {return item.credits}), response.data[0].credits);
-            this.createEducationItemSubCategory(this.subCategory.sub_category_id);
-        })
+          .then(res => {
+            let cycleId = res.data.map((cycles) => {return cycles.cycles_id});
+            let credits = res.data.map((cycles) => {return cycles.credits});
+            return {"cycleId" :cycleId[0], "credits" : credits[0]};
+          })
+          .then(categories => {
+            EventBus.$emit('toggle-item-form', _.sumBy(this.stageItems, (item) => {return item.credits}), categories.credits);
+            this.createEducationItemSubCategory({
+              "sub_category_id" : this.subCategory.sub_category_id, 
+              "category_id" : this.subCategory.category_id,
+              "cycles_id" : categories.cycleId
+            });
+          })
       }
     }
   }

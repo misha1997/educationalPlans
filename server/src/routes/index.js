@@ -8,16 +8,11 @@ const departments = require('./departments');
 const educationItem = require('./educationItem');
 const users = require('./users');
 const login = require('./login');
-const refreshTokens = require('./refreshToken');
 const subjects = require('./subjects');
-
-const saveExel = require('./saveExel');
-
 const distributionOfHours = require('./distributionOfHours');
-
 const distributionOfControls = require('./distributionOfControls');
 
-const authMiddleware = require('../middleware/auth');
+const saveExel = require('./saveExel');
 
 module.exports = function(app){
   app.use('/api/cycles', cycles);
@@ -30,11 +25,9 @@ module.exports = function(app){
   app.use('/api/education-item', educationItem);
   app.use('/api/users', users);
   app.use('/api/login', login);
-  app.use('/api/refresh-tokens', refreshTokens);
-
-  app.use('/api/save-exel', saveExel);
-
   app.use('/api/subjects', subjects);
   app.use('/api/distribution-of-hours', distributionOfHours);
   app.use('/api/distribution-of-controls', distributionOfControls);
+
+  app.use('/api/save-exel', saveExel);
 }

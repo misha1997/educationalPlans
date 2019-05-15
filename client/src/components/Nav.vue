@@ -50,12 +50,12 @@
             icon: "description"
           },
           {
-            title: "Кафедри",
+            title: "Факультети",
             name: "subdivisions",
             icon: "school"
           },
           {
-            title: "Факультети",
+            title: "Кафедри",
             name: "departments",
             icon: "school"
           },

@@ -153,14 +153,14 @@
         ],
 
         editedItem: {
-          user_id: 1,
+          user_id: this.$store.state.user,
           name: '',
           department_id: 0,
           year: null,
           subdivision_id: 0
         },
         defaultItem: {
-          user_id: 1,
+          user_id: this.$store.state.user,
           name: '',
           department_id: 0,
           year: null,

@@ -75,7 +75,7 @@
         Api().get(`cycles/${this.category.cycles_id}`)
           .then((response)=>{
             EventBus.$emit('toggle-item-form', _.sumBy(this.stageItems, (item) => {return item.credits}), response.data[0].credits);
-            this.createEducationItemCategory(this.category.category_id);
+            this.createEducationItemCategory({"category_id" : this.category.category_id, "cycles_id" : this.category.cycles_id});
           })
       }
     }

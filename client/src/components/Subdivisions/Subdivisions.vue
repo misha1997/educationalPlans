@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-toolbar dark color="primary">
-      <v-toolbar-title>Кафедри</v-toolbar-title>
+      <v-toolbar-title>Факультети</v-toolbar-title>
       <v-spacer></v-spacer>
       <v-dialog v-model="dialog" max-width="500px">
         <v-btn slot="activator" icon color="primary" dark class="mb-2"> <v-icon>add</v-icon></v-btn>
@@ -15,7 +15,7 @@
               <v-container grid-list-md>
                 <v-layout wrap>
                   <v-flex xs12>
-                    <v-text-field v-model="editedItem.name" label="Назва кафедри" :rules="requiredField"></v-text-field>
+                    <v-text-field v-model="editedItem.name" label="Назва факультету" :rules="requiredField"></v-text-field>
                   </v-flex>
                 </v-layout>
               </v-container>
@@ -80,7 +80,7 @@
         primaryKey: 'subdivision_id',
 
         headers: [
-          { text: 'Назва кафедри', value: 'name' },
+          { text: 'Назва факультету', value: 'name' },
           { text: '', value: 'name', sortable: false }
         ],
 
@@ -98,7 +98,7 @@
 
     computed: {
       formTitle () {
-        return this.editedIndex === -1 ? 'Нова кафедра' : 'Редагувати кафедру'
+        return this.editedIndex === -1 ? 'Новий факультет' : 'Редагувати факультет'
       },
       getRequestId(){
         return this.editedItem.subdivision_id;

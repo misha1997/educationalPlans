@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-toolbar dark color="primary">
-      <v-toolbar-title>Факультети</v-toolbar-title>
+      <v-toolbar-title>Кафедри</v-toolbar-title>
       <v-spacer></v-spacer>
       <v-dialog v-model="dialog" max-width="500px">
         <v-btn slot="activator" icon color="primary" dark class="mb-2"> <v-icon>add</v-icon></v-btn>
@@ -15,7 +15,7 @@
               <v-container grid-list-md>
                 <v-layout wrap>
                   <v-flex xs12>
-                    <v-text-field v-model="editedItem.name" label="Назва факультету" :rules="requiredField"></v-text-field>
+                    <v-text-field v-model="editedItem.name" label="Назва кафедри" :rules="requiredField"></v-text-field>
                   </v-flex>
                   <v-flex xs12>
                     <v-select
@@ -24,7 +24,7 @@
                       v-model="editedItem.subdivision_id"
                       item-text="name"
                       item-value="subdivision_id"
-                      label="Кафедра"
+                      label="Факультет"
                       required
                     ></v-select>
                   </v-flex>
@@ -93,8 +93,8 @@
         universities: [],
 
         headers: [
-          { text: 'Назва факультету', value: 'name' },
-          { text: 'Назва кафедри', value: 'subdivision' },
+          { text: 'Назва кафедри', value: 'name' },
+          { text: 'Назва факультету', value: 'subdivision' },
           { text: '', value: 'name', sortable: false }
         ],
 
@@ -119,7 +119,7 @@
 
     computed: {
       formTitle () {
-        return this.editedIndex === -1 ? 'Новий факультет' : 'Редагувати факультет'
+        return this.editedIndex === -1 ? 'Нова кафедра' : 'Редагувати кафедру'
       },
       getRequestId(){
         return this.editedItem.department_id;

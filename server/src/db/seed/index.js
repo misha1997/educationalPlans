@@ -25,39 +25,10 @@ db.sync().then(async function () {
             Cycles.create(cycles)
         })
     )
-    await Promise.all(
-        categories.map(category => {
-            Categories.create(category)
-        })
-    )
-
-    await Promise.all(
-        subdivisions.map(subdivision => {
-            Subdivisions.create(subdivision)
-        })
-    )
-
-    await Promise.all(
-        departments.map(department => {
-            Departments.create(department)
-        })
-    )
-
-    await Promise.all(
-        subCategories.map(subCategory => {
-            SubCategories.create(subCategory)
-        })
-    )
 
     await Promise.all(
         users.map(user => {
             Users.create(user)
-        })
-    )
-
-    await Promise.all(
-        educationPlan.map(educationPlan => {
-            EducationPlan.create(educationPlan)
         })
     )
 
