@@ -2,6 +2,7 @@ const _ = require('lodash');
 const EducationPlan = require('../models/EducationPlan');
 const Departmens = require('../models/Departments');
 const Subdivision = require('../models/Subdivision');
+const EducationItem = require('../models/EducationItem');
 
 class EducationPlanController{
 
@@ -91,6 +92,18 @@ class EducationPlanController{
     }
 
     destroy(req, res) {
+      EducationItem.destroy({
+        where: {
+          education_plans_id: req.params.id
+        }
+      })
+        .then(() => {
+          res.send("Educationitem was successfully deleted");
+        })
+        .catch((err) => {
+          res.send(err);
+        })
+        
       EducationPlan.destroy({
         where: {
           id: req.params.id
