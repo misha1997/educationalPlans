@@ -33,6 +33,16 @@
                 </tr>
 
                 <tr>
+                  <td colspan="16">Кількість заліки</td>
+                </tr>
+                <tr>
+                  <td v-for="item in data">
+                    <v-text-field v-model="item.value" :label="item.label">
+                    </v-text-field>
+                  </td>
+                </tr>
+
+                <tr>
                   <td colspan="16">Кількість екзаменів</td>
                 </tr>
                 <tr>
@@ -79,7 +89,8 @@
     data(){
       return {
         dialog: false,
-        data: []
+        data: [],
+        educationPlanId: null
       }
     },
 
@@ -87,8 +98,10 @@
 
       this.initData();
 
-      EventBus.$on('toggle-plan-controls-form', () => {
+      EventBus.$on('toggle-plan-controls-form', (id, data) => {
+        this.educationPlanId = id;
         this.dialog = !this.dialog;
+        
       });
     },
     methods:{
@@ -110,7 +123,30 @@
       },
 
       save(){
-        console.log("save")
+
+        // let data = _.filter(this.data, (item) => {
+        //   return item.value !== '' && _.isNumber(parseInt(item.value));
+        // });
+
+        // let formattedData = _.map(data, (item) => {
+        //   return{
+        //     "education_item_id": this.educationItemId,
+        //     "module_number": item.module_number,
+        //     "value": item.value,
+        //   }
+        // });
+
+        // Api().post('distribution-of-hours/store', {
+        //   educationItemId: this.educationItemId,
+        //   data: formattedData
+        // })
+        //   .then((response) => {
+        //     this.updateDistributionOfHours({educationItemId: this.educationItemId, data: response.data});
+        //     this.dialog = false;
+        //   })
+        //   .catch((err) => {
+        //     console.log(err);
+        //   })
       }
     },
 

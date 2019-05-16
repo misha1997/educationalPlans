@@ -6,14 +6,13 @@
           <v-card-title>
             <span class="headline">{{ formTitle }}</span>
           </v-card-title>
-
           <v-card-text>
             <v-alert
               :value="validator"
               color="error"
               icon="new_releases"
             >
-              Кількість кредитів повинна бути не більше {{ creditCategory }}
+              Кількість кредитів повинна бути не більше {{ creditCategory - credits }}
             </v-alert>
             <v-container grid-list-md>
               <v-layout wrap>
@@ -74,6 +73,8 @@
           subject_id: null,
           credits: null,
         },
+
+        credits: null,
 
         defaultItem: {
           subject_id: null,

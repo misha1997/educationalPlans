@@ -72,7 +72,7 @@
       }),
 
       addSubject(){
-        Api().get(`cycles/${this.category.cycles_id}`)
+        Api().get(`categories/${this.category.category_id}`)
           .then((response)=>{
             EventBus.$emit('toggle-item-form', _.sumBy(this.stageItems, (item) => {return item.credits}), response.data[0].credits);
             this.createEducationItemCategory({"category_id" : this.category.category_id, "cycles_id" : this.category.cycles_id});

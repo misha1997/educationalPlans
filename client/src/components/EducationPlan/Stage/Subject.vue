@@ -136,7 +136,11 @@
       },
 
       modulesForm(educationItemId){
-        EventBus.$emit('toggle-modules-form', educationItemId, this.getDistributionOfHours);
+
+        Api().get(`education-item/${educationItemId}`)
+          .then((res)=>{
+            EventBus.$emit('toggle-modules-form', educationItemId, this.getDistributionOfHours, res.data[0].credits);
+          })
       },
 
       distributionOfControlsForm(educationItemId){

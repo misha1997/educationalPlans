@@ -26,7 +26,7 @@
                       @change="getDepartments"
                       item-text="name"
                       item-value="subdivision_id"
-                      label="Підрозділ"
+                      label="Факультет"
                       required
                     ></v-select>
                   </v-flex>
@@ -79,7 +79,7 @@
           <v-icon
             small
             class="mr-2"
-            @click="editControl()"
+            @click="editControl(props.item)"
           >
             widgets
           </v-icon>
@@ -226,8 +226,16 @@
         this.dialog = true;
       },
 
-      editControl() {
-        EventBus.$emit('toggle-plan-controls-form');
+      editControl(item) {
+
+        Api().get(`plan-controls/${item.id}`)
+          .then((response) => {
+            EventBus.$emit('toggle-plan-controls-form', item.id, response.data[0]);
+          })
+          .catch((err) => {
+            console.log(err);
+          })
+
       },
 
       viewItem(link){

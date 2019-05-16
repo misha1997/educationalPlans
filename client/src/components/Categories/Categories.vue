@@ -36,7 +36,7 @@
                     ></v-select>
                   </v-flex>
                 <v-flex xs12>
-                  <v-text-field v-model="editedItem.credits" label="Усього кредитів" :rules="requiredField"></v-text-field>
+                  <v-text-field v-model.number="editedItem.credits" label="Усього кредитів" type="number"></v-text-field>
                 </v-flex>
                 </v-layout>
               </v-container>
@@ -117,12 +117,12 @@
 
         editedItem: {
           name: '',
-          credits: '',
+          credits: null,
           cycles_id: ''
         },
         defaultItem: {
           name: '',
-          credits: '',
+          credits: null,
           cycles_id: ''
         }
       }
@@ -169,6 +169,7 @@
     },
 
     methods: {
+
       fetchCycles(){
         Api().get('cycles')
           .then((response)=>{

@@ -44,6 +44,16 @@ class EducationItemController{
     seriesRequests(req, res);
   }
 
+  findOne(req, res){
+    EducationItem.findAll()
+    .then((response)=>{
+      res.send(response);
+    })
+    .catch((err) => {
+      res.send(err);
+    })
+  }
+
   store(req, res){
     EducationItem.create(req.body).then((response) => {
         EducationItem.find({

@@ -8,10 +8,17 @@
           </v-card-title>
 
           <v-card-text>
+            <v-alert
+              :value="validator"
+              color="error"
+              icon="new_releases"
+            >
+              Кількість годин повинна бути в діапазоні від {{ Math.ceil((this.credits*30)/32) }} до {{ Math.floor((this.credits*30)/8) }}
+            </v-alert>
             <v-container grid-list-md class="py-0">
               <table class="table table-bordered text-center">
                 <tr>
-                  <td colspan="16">Розподіл годин на тиждень за курсами, семестрами і модульними атестаційними циклами </td>
+                  <td colspan="16">Розподіл годин на тиждень за курсами, семестрами і модульними атестаційними циклами</td>
                 </tr>
                 <tr>
                   <td colspan="4" v-for="index in 4">{{ index }} курс</td>
@@ -38,7 +45,7 @@
           <v-card-actions>
             <v-spacer></v-spacer>
             <v-btn color="blue darken-1" flat @click="close">Відміна</v-btn>
-            <v-btn color="blue darken-1" type="submit" flat>Зберегти</v-btn>
+            <v-btn color="blue darken-1" type="submit" flat v-if="!validator">Зберегти</v-btn>
           </v-card-actions>
         </v-card>
       </v-form>
@@ -61,6 +68,8 @@
         dialog: false,
         data: [],
         educationItemId: null,
+        subVal: null,
+        credits: null
       }
     },
 
@@ -68,10 +77,11 @@
 
       this.initData();
 
-      EventBus.$on('toggle-modules-form', (educationItemId, data) => {
+      EventBus.$on('toggle-modules-form', (educationItemId, data, credits) => {
         this.dialog = !this.dialog;
         this.educationItemId = educationItemId;
-        console.log(data);
+        this.sumVal = _.sumBy(data, (item) => {return item.value})*8;
+        this.credits = credits;
 
         if(!_.isEmpty(data)){
           _.forEach(data, (item) => {
@@ -84,6 +94,10 @@
     computed: {
       formTitle () {
         return this.editedIndex === -1 ? 'Створення' : 'Заповнити данні розподілу по модулям'
+      },
+      validator(){
+        let sumHours = _.sumBy(this.data, (item) => {return +item.value});
+        return (sumHours) ? ((this.credits*30)*0.25)/8 >= sumHours || (this.credits*30) < sumHours*8 : false;
       }
     },
 
@@ -105,23 +119,12 @@
 
       },
 
-      fetchData(){
-        Api().post('distribution-of-hours', {
-          id: this.educationItemId
-        })
-          .then((response) => {
-            console.log(response);
-          })
-          .catch((err) => {
-            console.log(err);
-          })
-      },
-
       close(){
         this.dialog = false;
       },
 
       save(){
+
         let data = _.filter(this.data, (item) => {
           return item.value !== '' && _.isNumber(parseInt(item.value));
         });
