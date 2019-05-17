@@ -5,6 +5,7 @@ const PlanControlsController = require('../controllers/PlanControlsController');
 
 let PlanControls = new PlanControlsController();
 
-router.get('/:id', PlanControls.index);
+router.get('/:id', PlanControls.findOne);
+router.post('/', PlanControls.create);
 
 module.exports = router;

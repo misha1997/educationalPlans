@@ -49,6 +49,44 @@ class EducationPlanController{
         })
     }
 
+    async clone(req, res) {
+      const educationPlan = await EducationPlan.findOne({
+        where: {
+          id: req.body.id
+        }
+      })
+
+      await EducationPlan.create({
+        "user_id" : req.body.user_id,
+        "department_id" : educationPlan.department_id,
+        "name" : educationPlan.name,
+        "status" : "cloned",
+        "year" : educationPlan.year,
+        "created_at" : new Date()
+      }, {
+        include: [Departmens]
+      })
+      .then((response) => {
+        EducationPlan.findOne({
+          where: {
+            id: response.id,
+          },
+          include: [{
+            model: Departmens
+          }]
+        })
+          .then((response)=>{
+            res.send(response)
+          })
+          .catch((err)=>{
+            res.send(err);
+          })
+      })
+      .catch((err) => {
+        res.send(err);
+      });
+    }
+
     store(req, res) {
       req.body.created_at = new Date();
       EducationPlan.create(req.body, {

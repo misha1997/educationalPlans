@@ -230,7 +230,7 @@
 
         Api().get(`plan-controls/${item.id}`)
           .then((response) => {
-            EventBus.$emit('toggle-plan-controls-form', item.id, response.data[0]);
+            EventBus.$emit('toggle-plan-controls-form', item.id, response.data);
           })
           .catch((err) => {
             console.log(err);

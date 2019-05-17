@@ -12,7 +12,12 @@
               color="error"
               icon="new_releases"
             >
-              Кількість кредитів повинна бути не більше {{ creditCategory - credits }}
+              <div v-if="creditCategory - credits == 0">
+                Кількість допустимих кредитів вичерпана
+              </div>
+              <div v-else>
+                Кількість кредитів повинна бути не більше {{ creditCategory - credits }}
+              </div>
             </v-alert>
             <v-container grid-list-md>
               <v-layout wrap>

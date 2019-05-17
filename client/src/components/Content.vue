@@ -18,7 +18,7 @@
             </v-breadcrumbs>
           </div>
           <div>
-            <v-progress-linear :indeterminate="isLoading"></v-progress-linear>
+            <!-- <v-progress-linear :indeterminate="isLoading"></v-progress-linear> -->
           </div>
           <div>
             <router-view></router-view>

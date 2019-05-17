@@ -136,7 +136,7 @@
 
     filters: {
       zeroValue: function (value) {
-        if (value == 0) return ' - '
+        if (value == null || value == 0) return ' - '
         return value;
       }
     },

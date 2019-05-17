@@ -8,6 +8,7 @@ let EducationPlan = new EducationPlanController();
 router.get('/', EducationPlan.findAll);
 router.get('/:id', EducationPlan.findOne);
 router.post('/', EducationPlan.store);
+router.post('/clone-plan', EducationPlan.clone);
 router.put('/:id', EducationPlan.update);
 router.delete('/:id', EducationPlan.destroy);
 

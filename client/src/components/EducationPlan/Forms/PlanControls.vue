@@ -26,18 +26,8 @@
                   <td colspan="16">Кількість годин на тиждень</td>
                 </tr>
                 <tr>
-                  <td v-for="item in data">
-                    <v-text-field v-model="item.value" :label="item.label">
-                    </v-text-field>
-                  </td>
-                </tr>
-
-                <tr>
-                  <td colspan="16">Кількість заліки</td>
-                </tr>
-                <tr>
-                  <td v-for="item in data">
-                    <v-text-field v-model="item.value" :label="item.label">
+                  <td v-for="item in hoursWeek">
+                    <v-text-field v-model="item.hours_week" :label="item.label">
                     </v-text-field>
                   </td>
                 </tr>
@@ -46,8 +36,8 @@
                   <td colspan="16">Кількість екзаменів</td>
                 </tr>
                 <tr>
-                  <td v-for="item in data">
-                    <v-text-field v-model="item.value" :label="item.label">
+                  <td v-for="item in credit">
+                    <v-text-field v-model="item.credit" :label="item.label">
                     </v-text-field>
                   </td>
                 </tr>
@@ -56,8 +46,8 @@
                   <td colspan="16">Кількість курсових робіт</td>
                 </tr>
                 <tr>
-                  <td v-for="item in data">
-                    <v-text-field v-model="item.value" :label="item.label">
+                  <td v-for="item in courseWork">
+                    <v-text-field v-model="item.course_work" :label="item.label">
                     </v-text-field>
                   </td>
                 </tr>
@@ -82,6 +72,7 @@
   import {EventBus} from "../../../event-bus";
   import Api from '../../../services/Api';
   import Swal from '../../../services/Swal';
+  import {successAlert, errorAlert} from '../../../services/Swal';
 
   const ROMAN_NUMBERS = ["I", "II", "III", "IV"]
 
@@ -89,7 +80,9 @@
     data(){
       return {
         dialog: false,
-        data: [],
+        hoursWeek: [],
+        credit: [],
+        courseWork: [],
         educationPlanId: null
       }
     },
@@ -101,17 +94,33 @@
       EventBus.$on('toggle-plan-controls-form', (id, data) => {
         this.educationPlanId = id;
         this.dialog = !this.dialog;
-        
+        if(!_.isEmpty(data)){
+          _.forEach(data, (item) => {
+            this.hoursWeek[item.module_number - 1].hours_week = item.hours_week;
+            this.credit[item.module_number - 1].credit = item.credit;
+            this.courseWork[item.module_number - 1].course_work = item.course_work;
+          })
+        }
       });
     },
     methods:{
       initData(){
         let counter = 0;
         _.forEach(new Array(16), (item, index) => {
-          this.data.push({
+          this.hoursWeek.push({
             module_number: index+1,
             label: ROMAN_NUMBERS[counter],
-            value: ''
+            hours_week: ''
+          });
+          this.credit.push({
+            module_number: index+1,
+            label: ROMAN_NUMBERS[counter],
+            credit: ''
+          });
+          this.courseWork.push({
+            module_number: index+1,
+            label: ROMAN_NUMBERS[counter],
+            course_work: ''
           });
           counter = (counter !== 3) ? counter + 1 : 0;
         });
@@ -124,36 +133,39 @@
 
       save(){
 
-        // let data = _.filter(this.data, (item) => {
-        //   return item.value !== '' && _.isNumber(parseInt(item.value));
-        // });
+        let hoursWeek = _.filter(this.hoursWeek, (item) => {
+          return item.hours_week !== '' && _.isNumber(parseInt(item.hours_week));
+        });
 
-        // let formattedData = _.map(data, (item) => {
-        //   return{
-        //     "education_item_id": this.educationItemId,
-        //     "module_number": item.module_number,
-        //     "value": item.value,
-        //   }
-        // });
+        let credit = _.filter(this.credit, (item) => {
+          return item.credit !== '' && _.isNumber(parseInt(item.credit));
+        });
 
-        // Api().post('distribution-of-hours/store', {
-        //   educationItemId: this.educationItemId,
-        //   data: formattedData
-        // })
-        //   .then((response) => {
-        //     this.updateDistributionOfHours({educationItemId: this.educationItemId, data: response.data});
-        //     this.dialog = false;
-        //   })
-        //   .catch((err) => {
-        //     console.log(err);
-        //   })
+        let courseWork = _.filter(this.courseWork, (item) => {
+          return item.course_work !== '' && _.isNumber(parseInt(item.course_work));
+        });
+
+        Api().post('plan-controls', {
+          planId : this.educationPlanId,
+          controls : _.merge(hoursWeek, credit, courseWork)
+        })
+        .then((response) => {
+          this.dialog = false;
+          successAlert("Запис був збережений");
+        })
+        .catch((err) => {
+          console.log(err);
+        })
+
       }
     },
 
     watch:{
       dialog: function(){
         if(this.dialog === false){
-          this.data = [];
+          this.hoursWeek = [],
+          this.credit = [],
+          this.courseWork = [],
           this.initData();
         }
       }

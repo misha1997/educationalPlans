@@ -155,29 +155,28 @@
       },
       validator(){
 
-        var aa = 0;
-        var bb = 0;
+        var subCategoriesCredits = 0;
 
         for(let i = 0; i < this.categories.length; i++) {
           if(this.categories[i].category_id == this.editedItem.category_id) {
             var cycleId = this.categories[i].cycles_id;
-            aa += this.categories[i].credits;
           }
         }
+
         for(let i = 0; i < this.subCategories.length; i++) {
-          if(this.subCategories[i].category_id == this.editedItem.category_id) {
-            bb += this.subCategories[i].credits;
+          if(this.subCategories[i].sub_category_id != this.editedItem.sub_category_id) {
+            subCategoriesCredits += this.subCategories[i].credits;
           }
         }
+        
         for(let i = 0; i < this.cycles.length; i++) {
           if(this.cycles[i].cycles_id == cycleId) {
             this.creditsAll = this.cycles[i].credits;
           }
         }
 
-        return (this.editedItem.credits) ? aa + bb + +this.editedItem.credits > this.creditsAll : false;
-
- }
+        return (this.editedItem.credits) ? subCategoriesCredits + +this.editedItem.credits > this.creditsAll : false;
+      }
     },
 
     methods: {

@@ -79,7 +79,7 @@
             return {"cycleId" :cycleId[0], "credits" : credits[0]};
           })
           .then(categories => {
-            EventBus.$emit('toggle-item-form', _.sumBy(this.stageItems, (item) => {return item.credits}), categories.credits);
+            EventBus.$emit('toggle-item-form', _.sumBy(this.stageItems, (item) => {return item.credits}), this.subCategory.credits);
             this.createEducationItemSubCategory({
               "sub_category_id" : this.subCategory.sub_category_id, 
               "category_id" : this.subCategory.category_id,
