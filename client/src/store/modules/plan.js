@@ -50,7 +50,7 @@ let mutations = {
     });
 
     if(index !== -1){
-      _.assign(state.educationItems[index], {lectures: data.lectures, practice: data.practice, laboratories: data.laboratories });
+      _.assign(state.educationItems[index], {lectures: data.lectures, laboratories: data.laboratories });
     }
   },
 

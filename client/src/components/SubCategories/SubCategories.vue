@@ -17,7 +17,7 @@
                 color="error"
                 icon="new_releases"
               >
-                Кількість кредитів повинна бути не більше {{ creditsAll }}
+                Кількість кредитів повинна бути не більше {{ creditsAll - credits }}
               </v-alert>
               <v-container grid-list-md>
                 <v-layout wrap>
@@ -121,6 +121,9 @@
           credits: '',
           category_id: 0
         },
+
+        credits: '',
+
         defaultItem: {
           name: '',
           credits: '',
@@ -154,9 +157,7 @@
         return this.editedItem.category_id;
       },
       validator(){
-
         var subCategoriesCredits = 0;
-
         for(let i = 0; i < this.categories.length; i++) {
           if(this.categories[i].category_id == this.editedItem.category_id) {
             var cycleId = this.categories[i].cycles_id;
@@ -174,7 +175,6 @@
             this.creditsAll = this.cycles[i].credits;
           }
         }
-
         return (this.editedItem.credits) ? subCategoriesCredits + +this.editedItem.credits > this.creditsAll : false;
       }
     },
