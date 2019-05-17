@@ -11,5 +11,4 @@ router.get('/:id', Subject.show);
 router.put('/:id', Subject.update);
 router.delete('/:id', Subject.destroy);
 
-
 module.exports = router;
