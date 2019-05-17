@@ -15,7 +15,10 @@ const SubCategories = db.define('sub_categories', {
   name: {
     type: Sequelize.STRING,
     required: true
-  }
+  },
+  credits: {
+    type: Sequelize.INTEGER
+  },
 });
 
 SubCategories.belongsTo(Categories, {

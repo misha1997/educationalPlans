@@ -52,9 +52,8 @@ export default {
           email: this.email,
           password: this.password
         })
-        this.$store.dispatch('setAccessToken', response.data.accessToken)
-        this.$store.dispatch('setRefreshToken', response.data.refreshToken)
-        this.$store.dispatch('setUser', response.config.data)
+        this.$store.dispatch('setToken', response.data.token)
+        this.$store.dispatch('setUser', response.data.user.user_id)
         this.$router.push({
           name: 'home'
         })

@@ -14,6 +14,12 @@ const EducationItem = db.define('education_items',{
   sub_category_id: {
     type: Sequelize.INTEGER
   },
+  category_id: {
+    type: Sequelize.INTEGER
+  },
+  cycles_id: {
+    type: Sequelize.INTEGER
+  },
   education_plans_id: {
     type: Sequelize.INTEGER
   },

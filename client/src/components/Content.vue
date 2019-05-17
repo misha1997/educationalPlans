@@ -13,12 +13,12 @@
 
             <v-breadcrumbs :items="breadcrumbs">
               <template slot="item" slot-scope="props">
-                <a :href="props.item.link" :class="">{{ props.item.title.toUpperCase() }}</a>
+                <a :href="props.item.link">{{ props.item.title.toUpperCase() }}</a>
               </template>
             </v-breadcrumbs>
           </div>
           <div>
-            <v-progress-linear :indeterminate="isLoading"></v-progress-linear>
+            <!-- <v-progress-linear :indeterminate="isLoading"></v-progress-linear> -->
           </div>
           <div>
             <router-view></router-view>

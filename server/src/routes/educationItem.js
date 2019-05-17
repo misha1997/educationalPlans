@@ -9,5 +9,6 @@ router.post('/', EducationItem.index);
 router.post('/store', EducationItem.store);
 router.put('/update-learning-plan/:id', EducationItem.updateLearningPlan);
 router.delete('/:id', EducationItem.destroy);
+router.get('/:id', EducationItem.findOne);
 
 module.exports = router;

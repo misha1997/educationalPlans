@@ -1,6 +1,26 @@
 [
     {
-        "name": "Test SubCategory",
-        "category_id": 1
+        "sub_category_id" : 1,
+        "category_id": 2,
+        "name": "2.1.1 Обов’язкові навчальні дисципліни за спеціальністю",
+        "credits": 55
+    },
+    {
+        "sub_category_id" : 2,
+        "category_id": 3,
+        "name": "2.1.2 Обов'язкові навчальні дисципліни за освітньою програмою",
+        "credits": 60
+    },
+    {
+        "sub_category_id" : 3,
+        "category_id": 3,
+        "name": "2.2.1 Вибіркові навчальні дисципліни за спецальністю",
+        "credits": 10
+    },
+    {
+        "sub_category_id" : 4,
+        "category_id": 4,
+        "name": "2.2.2 Вибіркові навчальні дисципліни за освітньою програмою",
+        "credits": 35
     }
 ]

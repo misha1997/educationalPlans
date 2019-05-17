@@ -83,24 +83,31 @@ let mutations = {
     if(index !== -1){
       state.educationItems[index].distribution_of_hours = data;
     }
-  },
-
-
-updateDistributionOfControls(state,{educationItemId, data}){
-  let index = state.educationItems.findIndex((item) => {
-    return item.education_item_id === educationItemId;
-  });
-
-  if(index !== -1){
-    state.educationItems[index].distribution_of_controls = data;
-  }
   }
 };
 
 let actions = {
-  createEducationItem({state, commit, getters}, subCategoryId){
-    commit('setCurrentItem', {'education_plans_id': getters.getEducationPlanId, 'sub_category_id': subCategoryId});
-  }
+  createEducationItemSubCategory({state, commit, getters}, id){
+    commit('setCurrentItem', {
+      'education_plans_id': getters.getEducationPlanId, 
+      'sub_category_id': id.sub_category_id, 
+      'category_id': id.category_id,
+      'cycles_id': id.cycles_id
+    });
+  },
+  createEducationItemCategory({state, commit, getters}, id){
+    commit('setCurrentItem', {
+      'education_plans_id': getters.getEducationPlanId,
+      'category_id': id.category_id,
+      'cycles_id': id.cycles_id
+    });
+  },
+  createEducationItemCycle({state, commit, getters}, cyclesId){
+    commit('setCurrentItem', {
+      'education_plans_id': getters.getEducationPlanId, 
+      'cycles_id': cyclesId, 
+    });
+  },
 }
 
 module.exports = {

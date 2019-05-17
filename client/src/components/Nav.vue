@@ -31,8 +31,13 @@
         links: [
           {
             title: "Головна",
-            name: "home",
+            name: "education-plan",
             icon: "home"
+          },
+          {
+            title: "Цикли",
+            name: "cycles",
+            icon: "file_copy"
           },
           {
             title: "Категорії",
@@ -45,12 +50,12 @@
             icon: "description"
           },
           {
-            title: "Кафедри",
+            title: "Факультети",
             name: "subdivisions",
             icon: "school"
           },
           {
-            title: "Факультети",
+            title: "Кафедри",
             name: "departments",
             icon: "school"
           },
@@ -58,11 +63,6 @@
             title: "Предмети",
             name: "subjects",
             icon: "school"
-          },
-          {
-            title: "Навчальні плани",
-            name: "education-plan",
-            icon: "assignment"
           },
           {
             title: "Користувачі",

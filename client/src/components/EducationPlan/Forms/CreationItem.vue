@@ -6,8 +6,19 @@
           <v-card-title>
             <span class="headline">{{ formTitle }}</span>
           </v-card-title>
-
           <v-card-text>
+            <v-alert
+              :value="validator"
+              color="error"
+              icon="new_releases"
+            >
+              <div v-if="creditCategory - credits == 0">
+                Кількість допустимих кредитів вичерпана
+              </div>
+              <div v-else>
+                Кількість кредитів повинна бути не більше {{ creditCategory - credits }}
+              </div>
+            </v-alert>
             <v-container grid-list-md>
               <v-layout wrap>
                 <v-flex xs12>
@@ -31,7 +42,7 @@
           <v-card-actions>
             <v-spacer></v-spacer>
             <v-btn color="blue darken-1" flat @click="close">Відміна</v-btn>
-            <v-btn color="blue darken-1" type="submit" flat>Зберегти</v-btn>
+            <v-btn color="blue darken-1" type="submit" flat v-if="!validator">Зберегти</v-btn>
           </v-card-actions>
         </v-card>
       </v-form>
@@ -59,12 +70,16 @@
 
         subjects: [],
 
+        creditCategory: 0,
+
         primaryKey: 'education_item_id',
 
         editedItem: {
           subject_id: null,
           credits: null,
         },
+
+        credits: null,
 
         defaultItem: {
           subject_id: null,
@@ -94,11 +109,17 @@
           practice: 0,
           laboratories: 0
         })));
+      },
+
+      validator(){
+        return (this.editedItem.credits) ? this.credits + +this.editedItem.credits > this.creditCategory : false;
       }
     },
 
     created(){
-      EventBus.$on('toggle-item-form', () => {
+      EventBus.$on('toggle-item-form', (credits, creditCategory) => {
+        this.credits = credits;
+        this.creditCategory = creditCategory;
         this.dialog = !this.dialog;
       });
       this.fetchSubjects();
@@ -123,10 +144,6 @@
           .catch((err)=>{
             console.log(err);
           })
-      },
-
-      fetchData(){
-        console.log("Method is not used")
       },
 
       save () {

@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-toolbar dark color="primary">
-      <v-toolbar-title>Кафедри</v-toolbar-title>
+      <v-toolbar-title>Цикли навчального плану</v-toolbar-title>
       <v-spacer></v-spacer>
       <v-dialog v-model="dialog" max-width="500px">
         <v-btn slot="activator" icon color="primary" dark class="mb-2"> <v-icon>add</v-icon></v-btn>
@@ -15,18 +15,10 @@
               <v-container grid-list-md>
                 <v-layout wrap>
                   <v-flex xs12>
-                    <v-text-field v-model="editedItem.name" label="Назва кафедри" :rules="requiredField"></v-text-field>
+                    <v-text-field v-model="editedItem.name" label="Назва циклу" :rules="requiredField"></v-text-field>
                   </v-flex>
                   <v-flex xs12>
-                    <v-select
-                      :rules="requiredField"
-                      :items="universities"
-                      v-model="editedItem.subdivision_id"
-                      item-text="name"
-                      item-value="subdivision_id"
-                      label="Факультет"
-                      required
-                    ></v-select>
+                    <v-text-field v-model="editedItem.credits" label="Кількість кредитів" :rules="requiredField"></v-text-field>
                   </v-flex>
                 </v-layout>
               </v-container>
@@ -50,7 +42,7 @@
     >
       <template slot="items" slot-scope="props">
         <td>{{ props.item.name }}</td>
-        <td>{{ props.item.subdivision.name }}</td>
+        <td>{{ props.item.credits | zeroValue }}</td>
         <td class="justify-center layout px-1 pr-4">
           <v-icon
             small
@@ -75,7 +67,7 @@
 </template>
 
 <script>
-  import Api from '../../services/Api';
+
   import crud from '../../mixins/crud';
   import validation from '../../mixins/validation';
 
@@ -86,61 +78,48 @@
     data(){
       return{
 
-        apiUrl: 'departments',
+        apiUrl: 'cycles',
 
-        primaryKey: 'department_id',
-
-        universities: [],
+        primaryKey: 'cycles_id',
 
         headers: [
-          { text: 'Назва кафедри', value: 'name' },
-          { text: 'Назва факультету', value: 'subdivision' },
+          { text: 'Назва циклу', value: 'name' },
+          { text: 'Кількість кредитів', value: 'credits' },
           { text: '', value: 'name', sortable: false }
         ],
 
         editedItem: {
           name: '',
-          api_id: 1,
-          subdivision_id: 1
-
+          credits: ''
         },
         defaultItem: {
           name: '',
-          api_id: 1,
-          subdivision_id: 1
+          credits: ''
         }
       }
     },
 
     created(){
-      this.fetchData('departments'); 
-      this.fetchSubDivisions();
+      this.fetchData();
+    },
+
+    filters: {
+      zeroValue: function (value) {
+        if (value == 0) return ' - '
+        return value;
+      }
     },
 
     computed: {
       formTitle () {
-        return this.editedIndex === -1 ? 'Нова кафедра' : 'Редагувати кафедру'
+        return this.editedIndex === -1 ? 'Новий цикл' : 'Редагувати цикл'
       },
+
       getRequestId(){
-        return this.editedItem.department_id;
-      }
-    },
-    methods: {
-      fetchSubDivisions(){
-        Api().get('subdivisions')
-          .then((response)=>{
-            this.universities = _.map(response.data, (item)=>{
-              return{
-                subdivision_id: item.subdivision_id,
-                name: item.name
-              }
-            });
-          })
-          .catch((err)=>{
-            console.log(err);
-          })
+        return this.editedItem.cycles_id;
       }
     }
   }
+
 
 </script>

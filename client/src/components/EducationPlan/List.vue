@@ -1,5 +1,6 @@
 <template>
   <div>
+    <PlanControls></PlanControls>
     <v-toolbar dark color="primary">
       <v-toolbar-title>Навчальні плани</v-toolbar-title>
       <v-spacer></v-spacer>
@@ -25,7 +26,7 @@
                       @change="getDepartments"
                       item-text="name"
                       item-value="subdivision_id"
-                      label="Підрозділ"
+                      label="Факультет"
                       required
                     ></v-select>
                   </v-flex>
@@ -78,6 +79,13 @@
           <v-icon
             small
             class="mr-2"
+            @click="editControl(props.item)"
+          >
+            widgets
+          </v-icon>
+          <v-icon
+            small
+            class="mr-2"
             @click="editItem(props.item)"
           >
             edit
@@ -105,15 +113,24 @@
 </template>
 
 <script>
+  import {mapMutations} from 'vuex';
+
+  import { EventBus } from '../../event-bus.js';
 
   import Api from '../../services/Api';
 
   import validation from '../../mixins/validation';
   import crud from '../../mixins/crud';
 
+  import PlanControls from './Forms/PlanControls';
+
   export default{
 
     mixins: [validation, crud],
+
+    components: {
+      PlanControls
+    },
 
     data(){
       return{
@@ -136,14 +153,14 @@
         ],
 
         editedItem: {
-          user_id: 1,
+          user_id: this.$store.state.user,
           name: '',
           department_id: 0,
           year: null,
           subdivision_id: 0
         },
         defaultItem: {
-          user_id: 1,
+          user_id: this.$store.state.user,
           name: '',
           department_id: 0,
           year: null,
@@ -207,6 +224,18 @@
         this.editedItem = Object.assign({}, item);
         this.getDepartments();
         this.dialog = true;
+      },
+
+      editControl(item) {
+
+        Api().get(`plan-controls/${item.id}`)
+          .then((response) => {
+            EventBus.$emit('toggle-plan-controls-form', item.id, response.data);
+          })
+          .catch((err) => {
+            console.log(err);
+          })
+
       },
 
       viewItem(link){
