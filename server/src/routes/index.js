@@ -15,21 +15,21 @@ const PlanControls = require('./PlanControls');
 
 const saveExel = require('./saveExel');
 
-module.exports = function(app){
-  app.use('/api/cycles', cycles);
-  app.use('/api/categories', categories);
-  app.use('/api/asu', asu);
-  app.use('/api/subdivisions', subdivisions);
-  app.use('/api/sub-categories', subCategories);
-  app.use('/api/education-plan', educationPlan);
-  app.use('/api/departments', departments);
-  app.use('/api/education-item', educationItem);
-  app.use('/api/users', users);
-  app.use('/api/login', login);
-  app.use('/api/subjects', subjects);
-  app.use('/api/distribution-of-hours', distributionOfHours);
-  app.use('/api/distribution-of-controls', distributionOfControls);
-  app.use('/api/plan-controls', PlanControls);
+module.exports = function(app) {
+	app.use('/api/cycles', cycles);
+	app.use('/api/categories', categories);
+	app.use('/api/asu', asu);
+	app.use('/api/subdivisions', subdivisions);
+	app.use('/api/sub-categories', subCategories);
+	app.use('/api/education-plan', educationPlan);
+	app.use('/api/departments', departments);
+	app.use('/api/education-item', educationItem);
+	app.use('/api/users', users);
+	app.use('/api/login', login);
+	app.use('/api/subjects', subjects);
+	app.use('/api/distribution-of-hours', distributionOfHours);
+	app.use('/api/distribution-of-controls', distributionOfControls);
+	app.use('/api/plan-controls', PlanControls);
 
-  app.use('/api/save-exel', saveExel);
-}
+	app.use('/api/save-exel', saveExel);
+};
