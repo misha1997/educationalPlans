@@ -1,0 +1,12 @@
+{
+  "watch": ["src"],
+  "ext": "js",
+  "exec": "node src/index.js",
+	"events": {
+		"restart": "prettier --write --loglevel warn \"src/**/*.js\"",
+		"start": "prettier --write --loglevel warn \"src/**/*.js\""
+	},
+  "env": {
+    "NODE_ENV": "development"
+  }
+}
