@@ -1,4 +1,5 @@
 const _ = require('lodash');
+
 const DistributionOfHours = require('../models/DistributionOfHours');
 
 class DistributionOfHoursController {
