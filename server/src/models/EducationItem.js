@@ -32,11 +32,11 @@ const EducationItem = db.define('education_items',{
   lectures: {
     type: Sequelize.INTEGER
   },
-  practice: {
-    type: Sequelize.INTEGER
-  },
   laboratories: {
     type: Sequelize.INTEGER
+  },
+  choice: {
+    type: Sequelize.BOOLEAN
   }
 });
 

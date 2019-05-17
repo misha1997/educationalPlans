@@ -17,7 +17,7 @@
                 color="error"
                 icon="new_releases"
               >
-                Кількість кредитів повинна бути не більше {{ creditsAll }}
+                Кількість кредитів повинна бути не більше {{ creditsAll - credits }}
               </v-alert>
               <v-container grid-list-md>
                 <v-layout wrap>
@@ -120,6 +120,9 @@
           credits: null,
           cycles_id: ''
         },
+
+        credits: null,
+
         defaultItem: {
           name: '',
           credits: null,
@@ -150,7 +153,10 @@
       },
       getRequestCyclesId(){
         return this.editedItem.cycles_id;
+        
       },
+
+
       validator(){
           for (let i = 0; i < this.cycles.length; i++) {
             if(this.cycles[i].cycles_id == this.editedItem.cycles_id) {
@@ -159,17 +165,14 @@
               this.creditsAll = this.cycles[i].credits;
             }
           }
-
           let findCycles = this.data.filter(function(cycles) {
             return cycles.cycles_id == cycles_id && cycles.category_id != category_id;
           });
-          
           return (this.editedItem.credits) ? _.sumBy(findCycles, (item) => {return +item.credits}) + +this.editedItem.credits > this.creditsAll : false;
       }
     },
 
     methods: {
-
       fetchCycles(){
         Api().get('cycles')
           .then((response)=>{

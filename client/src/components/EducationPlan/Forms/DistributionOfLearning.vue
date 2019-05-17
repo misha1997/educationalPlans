@@ -4,26 +4,29 @@
       <v-form ref="form" @submit.prevent="save()">
         <v-card>
           <v-card-title>
-            <span class="headline">Лекції/Практики/Лабораторні {{ maxAmountOfHours }}</span>
+            <span class="headline">Лекції/Лабораторні</span>
           </v-card-title>
 
           <v-card-text>
 
             <v-alert
-              :value="validator"
-              color="error"
-              icon="new_releases"
+              :value="validator2"
+              type="info"
             >
-              Сума повинна бути менше ніж {{ maxAmountOfHours }}
+              Сума годин повинна бути менше ніж {{ maxAmountOfHours }}
+            </v-alert>
+
+            <v-alert
+              :value="validator"
+              type="error"
+            >
+              Сума годин повинна бути менше ніж {{ maxAmountOfHours }}
             </v-alert>
 
             <v-container grid-list-md>
               <v-layout wrap>
                 <v-flex xs12>
                   <v-text-field v-model.number="editedItem.lectures" label="Кількість лекцій" type="number" min="0"></v-text-field>
-                </v-flex>
-                <v-flex xs12>
-                  <v-text-field v-model.number="editedItem.practice" label="Кількість практічних" type="number" min="0"></v-text-field>
                 </v-flex>
                 <v-flex xs12>
                   <v-text-field v-model.number="editedItem.laboratories" label="Кількість лабораторних" type="number" min="0"></v-text-field>
@@ -62,7 +65,6 @@
 
         editedItem: {
           lectures: '',
-          practice: '',
           laboratories: ''
         },
 
@@ -79,9 +81,11 @@
       }),
 
       currentAmountOHours(){
-        return Math.abs(parseInt(this.editedItem.lectures) || 0) +
-               Math.abs(parseInt(this.editedItem.practice) || 0) +
-               Math.abs(parseInt(this.editedItem.laboratories) || 0);
+        return Math.abs(parseInt(this.editedItem.lectures) || 0) + Math.abs(parseInt(this.editedItem.laboratories) || 0);
+      },
+
+      validator2(){
+        return (!_.isNaN(this.currentAmountOHours)) ? this.currentAmountOHours <= this.maxAmountOfHours : false;
       },
 
       validator(){
@@ -115,7 +119,6 @@
 
             Api().put('education-item/update-learning-plan/'+this.educationItemId,{
               lectures: this.editedItem.lectures == "" ? 0 : this.editedItem.lectures,
-              practice: this.editedItem.practice == "" ? 0 : this.editedItem.practice,
               laboratories: this.editedItem.laboratories == "" ? 0 : this.editedItem.laboratories
             })
             .then((response)=>{

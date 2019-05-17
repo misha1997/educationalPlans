@@ -8,6 +8,15 @@
           </v-card-title>
           <v-card-text>
             <v-alert
+              :value="validator2"
+              color="info"
+            >
+              <div v-if="creditCategory - credits > 0">
+               Кількість кредитів повинна бути не більше {{ creditCategory - credits }}
+              </div>
+            </v-alert>
+
+            <v-alert
               :value="validator"
               color="error"
               icon="new_releases"
@@ -35,6 +44,11 @@
                 <v-flex xs12>
                   <v-text-field v-model="editedItem.credits" label="Кількість кредитів" :rules="creditsValidation"></v-text-field>
                 </v-flex>
+                <v-checkbox
+                  v-model="editedItem.choice"
+                  color="indigo"
+                  label="Дисципліна за вибором"
+                ></v-checkbox>
               </v-layout>
             </v-container>
           </v-card-text>
@@ -75,6 +89,7 @@
         primaryKey: 'education_item_id',
 
         editedItem: {
+          choice: false,
           subject_id: null,
           credits: null,
         },
@@ -82,6 +97,7 @@
         credits: null,
 
         defaultItem: {
+          choice: false,
           subject_id: null,
           credits: null,
         },
@@ -96,7 +112,7 @@
       }),
 
       formTitle () {
-        return this.editedIndex === -1 ? 'Нова категорія' : 'Редагувати категорію'
+        return this.editedIndex === -1 ? 'Нова дисципліна' : 'Редагувати дисципліну'
       },
 
       getRequestId(){
@@ -106,9 +122,12 @@
       additionalData(){
         return _.assignIn(this.getCurrentItem, Object.assign(({}, {
           lectures: 0,
-          practice: 0,
           laboratories: 0
         })));
+      },
+
+      validator2(){
+        return (this.editedItem.credits) ? this.credits + +this.editedItem.credits <= this.creditCategory : false;
       },
 
       validator(){
@@ -136,6 +155,7 @@
           .then((response)=>{
             this.subjects = _.map(response.data, (item)=>{
               return{
+                choice: item.choice,
                 subject_id: item.subject_id,
                 name: item.name
               }

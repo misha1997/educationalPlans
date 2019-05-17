@@ -5,7 +5,7 @@
         <td class="text-center">{{ data.item.credits }}</td>
         <td class="text-center">{{ data.item.credits*30 }}</td>
         <td class="text-center">{{ data.item.lectures | zeroValue }}</td>
-        <td class="text-center">{{ data.item.practice | zeroValue }}</td>
+        <td class="text-center">{{ this.amountOfHours - data.item.lectures | zeroValue }}</td>
         <td class="text-center">{{ data.item.laboratories | zeroValue }}</td>
         <td class="justify-center layout px-1 pr-4">
           <v-icon
@@ -136,11 +136,7 @@
       },
 
       modulesForm(educationItemId){
-
-        Api().get(`education-item/${educationItemId}`)
-          .then((res)=>{
-            EventBus.$emit('toggle-modules-form', educationItemId, this.getDistributionOfHours, res.data[0].credits);
-          })
+        EventBus.$emit('toggle-modules-form', educationItemId, this.getDistributionOfHours, this.data.item.credits);
       },
 
       distributionOfControlsForm(educationItemId){
