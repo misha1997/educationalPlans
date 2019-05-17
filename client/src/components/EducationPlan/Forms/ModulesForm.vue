@@ -13,7 +13,7 @@
               color="error"
               icon="new_releases"
             >
-              Кількість годин повинна бути в діапазоні від {{ Math.ceil((this.credits*30)/32) }} до {{ Math.floor((this.credits*30)/8) }}
+              Кількість годин повинна бути в діапазоні від {{ Math.ceil((credits*30)/32) }} до {{ Math.floor((credits*30)/8) }}
             </v-alert>
             <v-container grid-list-md class="py-0">
               <table class="table table-bordered text-center">
@@ -96,6 +96,8 @@
         return this.editedIndex === -1 ? 'Створення' : 'Заповнити данні розподілу по модулям'
       },
       validator(){
+
+
         let sumHours = _.sumBy(this.data, (item) => {return +item.value});
         return (sumHours) ? ((this.credits*30)*0.25)/8 >= sumHours || (this.credits*30) < sumHours*8 : false;
       }

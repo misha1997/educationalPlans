@@ -1,5 +1,4 @@
 const Subdivision = require('../models/Subdivision');
-const Departments = require('../models/Departments');
 
 class SubDivisionController{
 
@@ -46,26 +45,16 @@ class SubDivisionController{
   }
 
   destroy(req, res){
-    Departments.destroy({
-      where: {
-        subdivision_id: req.params.id
-      }
-    }).then(() => {
-      res.send("Departments was successfully deleted");
-    }).catch((err) => {
-      res.send(err);
-    })
-
     Subdivision.destroy({
       where: {
         subdivision_id: req.params.id
       }
-    }).then((response) => {
+    }).then(() => {
       res.send("Subdivision was deleted");
     })
-      .catch((err) => {
-        res.send(err);
-      })
+    .catch((err) => {
+      res.send(err);
+    })
   }
 }
 

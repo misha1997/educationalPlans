@@ -11,7 +11,7 @@
 
     </v-data-table>
 
-    <v-btn color="info" class="mx-0" @click="addSubject()">Додати предмет</v-btn>
+    <v-btn color="info" class="mx-0" @click="addSubject()">Додати дисципліну</v-btn>
   </div>
 </template>
 

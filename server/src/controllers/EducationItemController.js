@@ -80,7 +80,6 @@ class EducationItemController{
   updateLearningPlan(req, res){
     EducationItem.update({
       lectures: parseInt(req.body.lectures),
-      practice: parseInt(req.body.practice),
       laboratories: parseInt(req.body.laboratories)
     }, {
       where: {

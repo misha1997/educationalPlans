@@ -35,6 +35,11 @@
                 <v-flex xs12>
                   <v-text-field v-model="editedItem.credits" label="Кількість кредитів" :rules="creditsValidation"></v-text-field>
                 </v-flex>
+                <v-checkbox
+                  v-model="editedItem.choice"
+                  color="indigo"
+                  label="Дисципліна за вибором"
+                ></v-checkbox>
               </v-layout>
             </v-container>
           </v-card-text>
@@ -75,6 +80,7 @@
         primaryKey: 'education_item_id',
 
         editedItem: {
+          choice: false,
           subject_id: null,
           credits: null,
         },
@@ -82,6 +88,7 @@
         credits: null,
 
         defaultItem: {
+          choice: false,
           subject_id: null,
           credits: null,
         },
@@ -96,7 +103,7 @@
       }),
 
       formTitle () {
-        return this.editedIndex === -1 ? 'Нова категорія' : 'Редагувати категорію'
+        return this.editedIndex === -1 ? 'Нова дисципліна' : 'Редагувати дисципліну'
       },
 
       getRequestId(){
@@ -106,7 +113,6 @@
       additionalData(){
         return _.assignIn(this.getCurrentItem, Object.assign(({}, {
           lectures: 0,
-          practice: 0,
           laboratories: 0
         })));
       },
@@ -136,6 +142,7 @@
           .then((response)=>{
             this.subjects = _.map(response.data, (item)=>{
               return{
+                choice: item.choice,
                 subject_id: item.subject_id,
                 name: item.name
               }
