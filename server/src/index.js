@@ -1,42 +1,43 @@
-const createError = require('http-errors');
-const express = require('express');
-const cors = require('cors');
-const cookieParser = require('cookie-parser');
-const logger = require('morgan');
-const bodyParser = require('body-parser');
-
 require('dotenv').config();
+
+const cors = require('cors');
+const logger = require('morgan');
+const express = require('express');
+const bodyParser = require('body-parser');
+const createError = require('http-errors');
+const cookieParser = require('cookie-parser');
+const newman = require('newman');
 
 const app = express();
 
-app.use(cors());
-app.use(bodyParser.json());
-app.use(logger('dev'));
+app.disable('x-powered-by');
+
 app.use(express.json());
+app.use(bodyParser.json());
 app.use(express.urlencoded({ extended: false }));
+
+app.use(cors());
+app.use(logger('dev'));
 app.use(cookieParser());
 
 require('./routes')(app);
 
-// catch 404 and forward to error handler
-app.use(function(req, res, next) {
-	next(createError(404));
-});
-
-// error handler
-app.use(function(err, req, res, next) {
-	// set locals, only providing error in development
+app.use((req, res, next) => next(createError(404)));
+app.use((err, req, res, next) => {
 	res.locals.message = err.message;
 	res.locals.error = req.app.get('env') === 'development' ? err : {};
 
-	// render the error page
 	res.status(err.status || 500);
-	console.log('error');
-	//res.render('error');
+	console.log('error', err);
 });
 
-app.listen(process.env.PORT, () =>
-	console.log(`Server start on port ${process.env.PORT}`),
-);
+app.listen(process.env.PORT, () => {
+	newman.run({
+		reporters: 'cli',
+		collection: require('../test/latest.postman_collection.json'),
+	});
+
+	console.log(`Server start on port ${process.env.PORT}`);
+});
 
 module.exports = app;

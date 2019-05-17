@@ -1,13 +1,6 @@
-const Users = require('../models/Users');
 const jwt = require('jsonwebtoken');
 
-require('dotenv').config();
-const bcrypt = require('bcrypt-nodejs');
-
-function hashNewPassword(password) {
-	const SALT_FACTOR = 8;
-	return bcrypt.hashSync(password, bcrypt.genSaltSync(SALT_FACTOR), null);
-}
+const Users = require('../models/Users');
 
 class UsersController {
 	findAll(req, res) {
@@ -67,7 +60,7 @@ class UsersController {
 				name: name,
 				surname: surname,
 				email: email,
-				password: hashNewPassword(password),
+				password: password,
 				role: role,
 			},
 			{
@@ -93,11 +86,11 @@ class UsersController {
 				email: email,
 			},
 		})
-			.then(user => {
+			.then(async user => {
 				if (!user) {
 					res.status(401).json({ message: 'User does not exist!' });
 				}
-				const isValid = bcrypt.compareSync(password, user.password);
+				const isValid = await user.comparePassword(password, user.password);
 				if (isValid) {
 					const token = jwt.sign(
 						user.user_id.toString(),
