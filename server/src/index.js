@@ -6,6 +6,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const createError = require('http-errors');
 const cookieParser = require('cookie-parser');
+const newman = require('newman');
 
 const app = express();
 
@@ -31,6 +32,11 @@ app.use((err, req, res, next) => {
 });
 
 app.listen(process.env.PORT, () => {
+	newman.run({
+		reporters: 'cli',
+		collection: require('../test/latest.postman_collection.json'),
+	});
+
 	console.log(`Server start on port ${process.env.PORT}`);
 });
 
