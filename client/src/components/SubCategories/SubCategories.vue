@@ -17,7 +17,12 @@
                 color="error"
                 icon="new_releases"
               >
-                Кількість кредитів повинна бути не більше {{ creditsAll }}
+              <div v-if="creditsAll - subCategoriesCredits <= 0">
+                Кількість допустимих кредитів вичерпана
+              </div>
+              <div v-else>
+                Кількість кредитів повинна бути не більше {{ creditsAll - subCategoriesCredits }}
+              </div>
               </v-alert>
               <v-container grid-list-md>
                 <v-layout wrap>
@@ -115,6 +120,7 @@
         ],
 
         creditsAll: 0,
+        subCategoriesCredits: 0,
 
         editedItem: {
           name: '',
@@ -155,27 +161,20 @@
       },
       validator(){
 
-        var subCategoriesCredits = 0;
-
         for(let i = 0; i < this.categories.length; i++) {
           if(this.categories[i].category_id == this.editedItem.category_id) {
             var cycleId = this.categories[i].cycles_id;
           }
         }
 
-        for(let i = 0; i < this.subCategories.length; i++) {
-          if(this.subCategories[i].sub_category_id != this.editedItem.sub_category_id) {
-            subCategoriesCredits += this.subCategories[i].credits;
-          }
-        }
-        
         for(let i = 0; i < this.cycles.length; i++) {
           if(this.cycles[i].cycles_id == cycleId) {
             this.creditsAll = this.cycles[i].credits;
           }
         }
 
-        return (this.editedItem.credits) ? subCategoriesCredits + +this.editedItem.credits > this.creditsAll : false;
+        this.subCategoriesCredits = _.sumBy(this.subCategories, (item) => {return (item.sub_category_id != this.editedItem.sub_category_id) ? +item.credits : 0 });
+        return (this.editedItem.credits) ? this.subCategoriesCredits + +this.editedItem.credits > this.creditsAll : false;
       }
     },
 

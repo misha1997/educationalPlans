@@ -18,7 +18,7 @@
                     <v-text-field v-model="editedItem.name" label="Назва циклу" :rules="requiredField"></v-text-field>
                   </v-flex>
                   <v-flex xs12>
-                    <v-text-field v-model="editedItem.credits" label="Кількість кредитів" :rules="requiredField"></v-text-field>
+                    <v-text-field v-model.number="editedItem.credits" label="Кількість кредитів" type="number" :rules="requiredField"></v-text-field>
                   </v-flex>
                 </v-layout>
               </v-container>

@@ -74,7 +74,7 @@
       addSubject(){
         Api().get(`cycles/${this.cycles.cycles_id}`)
           .then((response)=>{
-            EventBus.$emit('toggle-item-form', _.sumBy(this.stageItems, (item) => {return item.credits}), response.data[0].credits);
+            EventBus.$emit('toggle-item-form', _.sumBy(this.stageItems, (item) => { return (item.choice == 0) ? item.credits : 0 }), response.data[0].credits);
             this.createEducationItemCycle(this.cycles.cycles_id);
           })
       }
