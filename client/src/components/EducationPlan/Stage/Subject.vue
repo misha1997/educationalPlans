@@ -9,7 +9,7 @@
         <td class="text-center">{{ data.item.laboratories | zeroValue }}</td>
         <td class="justify-center layout px-1 pr-4">
           <v-icon
-            title="Лекції/Практики/Лабораторні"
+            title="Лекції/Лабораторні"
             small
             class="mr-2"
             @click="distributionOfLearningForm(data.item.education_item_id)"
@@ -82,7 +82,6 @@
       getLearningData(){
         return {
           lectures: this.data.item.lectures,
-          practice: this.data.item.practice,
           laboratories: this.data.item.laboratories
         }
       }

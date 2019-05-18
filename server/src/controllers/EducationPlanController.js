@@ -75,7 +75,8 @@ class EducationPlanController {
 				name: educationPlan.name,
 				status: 'cloned',
 				year: educationPlan.year,
-				created_at: new Date(),
+        		created_at: new Date(),
+       			cloned_plan_id: educationPlan.id
 			},
 			{
 				include: [Departmens],

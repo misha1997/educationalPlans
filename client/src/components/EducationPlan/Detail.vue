@@ -74,7 +74,7 @@
             return 1;
           return 0;
         }
-        return this.data.sort(compare);
+        return this.data.sort(compare); 
       }
     },
 
@@ -119,7 +119,8 @@
       clonePlan(){
         Api().post(`education-plan/clone-plan`, {
           id: this.getEducationPlanId,
-          user_id : this.$store.state.user
+          user_id : this.$store.state.user,
+          cloned_plan_id: this.$route.params.id
         }).then(() => {
           successAlert("Навчальний план склоновано");
         })

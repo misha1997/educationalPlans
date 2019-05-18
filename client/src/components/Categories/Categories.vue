@@ -10,15 +10,27 @@
             <v-card-title>
               <span class="headline">{{ formTitle }}</span>
             </v-card-title>
-
             <v-card-text>
-              <v-alert
-                :value="validator"
-                color="error"
-                icon="new_releases"
-              >
+            <v-alert
+              :value="validator2"
+              color="info"
+            >
+              <div v-if="creditsAll - cycleCredits > 0">
+               Кількість кредитів повинна бути не більше {{ creditsAll - cycleCredits }}
+              </div>
+            </v-alert>
+            <v-alert
+              :value="validator"
+              color="error"
+              icon="new_releases"
+            >
+              <div v-if="creditsAll - cycleCredits == 0">
+                Кількість допустимих кредитів вичерпана
+              </div>
+              <div v-else>
                 Кількість кредитів повинна бути не більше {{ creditsAll - cycleCredits }}
-              </v-alert>
+              </div>
+            </v-alert>
               <v-container grid-list-md>
                 <v-layout wrap>
                 <v-flex xs12>
@@ -152,6 +164,24 @@
       getRequestCyclesId(){
         return this.editedItem.cycles_id;
       },
+
+      validator2(){
+         for (let i = 0; i < this.cycles.length; i++) {
+            if(this.cycles[i].cycles_id == this.editedItem.cycles_id) {
+              var cycles_id = this.editedItem.cycles_id;
+              var category_id = this.editedItem.category_id;
+              this.creditsAll = this.cycles[i].credits;
+            }
+          }
+
+          let findCycles = this.data.filter(function(cycles) {
+            return cycles.cycles_id == cycles_id && cycles.category_id != category_id;
+          });
+
+          this.cycleCredits = _.sumBy(findCycles, (item) => {return +item.credits});
+          return (this.editedItem.credits) ? this.cycleCredits + +this.editedItem.credits <= this.creditsAll : false;
+      },
+
       validator(){
           for (let i = 0; i < this.cycles.length; i++) {
             if(this.cycles[i].cycles_id == this.editedItem.cycles_id) {

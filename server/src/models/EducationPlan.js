@@ -27,6 +27,9 @@ const EducationPlan = db.define('education_plans', {
 	created_at: {
 		type: Sequelize.DATE,
 	},
+	cloned_plan_id: {
+		type: Sequelize.INTEGER,
+	}
 });
 
 EducationPlan.belongsTo(Departments, {

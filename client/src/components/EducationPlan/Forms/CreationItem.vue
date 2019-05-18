@@ -7,6 +7,15 @@
             <span class="headline">{{ formTitle }}</span>
           </v-card-title>
           <v-card-text>
+          <v-alert
+              :value="validator2"
+              color="info"
+            >
+              <div v-if="creditCategory - credits > 0">
+               Кількість кредитів повинна бути не більше {{ creditCategory - credits }}
+              </div>
+            </v-alert>
+
             <v-alert
               :value="validator"
               color="error"
@@ -115,6 +124,10 @@
           lectures: 0,
           laboratories: 0
         })));
+      },
+
+      validator2(){
+        return (this.editedItem.credits) ? this.credits + +this.editedItem.credits <= this.creditCategory : false;
       },
 
       validator(){

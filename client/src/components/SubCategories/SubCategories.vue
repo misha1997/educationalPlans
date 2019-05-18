@@ -12,6 +12,15 @@
             </v-card-title>
 
             <v-card-text>
+            <v-alert
+              :value="validator2"
+              color="info"
+            >
+              <div v-if="creditsAll - subCategoriesCredits > 0">
+               Кількість кредитів повинна бути не більше {{ creditsAll - subCategoriesCredits }}
+              </div>
+            </v-alert>
+
               <v-alert
                 :value="validator"
                 color="error"
@@ -159,6 +168,23 @@
       getRequestCategoryId(){
         return this.editedItem.category_id;
       },
+      validator2(){
+        for(let i = 0; i < this.categories.length; i++) {
+          if(this.categories[i].category_id == this.editedItem.category_id) {
+            var cycleId = this.categories[i].cycles_id;
+          }
+        }
+
+        for(let i = 0; i < this.cycles.length; i++) {
+          if(this.cycles[i].cycles_id == cycleId) {
+            this.creditsAll = this.cycles[i].credits;
+          }
+        }
+
+        this.subCategoriesCredits = _.sumBy(this.subCategories, (item) => {return (item.sub_category_id != this.editedItem.sub_category_id) ? +item.credits : 0 });
+        return (this.editedItem.credits) ? this.subCategoriesCredits + +this.editedItem.credits <= this.creditsAll : false;
+      },
+
       validator(){
 
         for(let i = 0; i < this.categories.length; i++) {
