@@ -75,8 +75,22 @@
         <td>{{ props.item.status }}</td>
         <td>{{ props.item.year }}</td>
         <td>{{ props.item.created_at.substring(0,10) }}</td>
-        <td class="justify-center layout px-1 pr-4">
+        <td class="right layout px-1 pr-4">
+
+
           <v-icon
+            title="Норми котролю"
+            v-if="$store.state.role == 'admin'"
+            small
+            class="mr-2"
+            @click="editControl(props.item)"
+          >
+            widgets
+          </v-icon>
+
+          <v-icon
+            title="Норми котролю"
+            v-if="props.item.status != 'created' && $store.state.role != 'admin'"
             small
             class="mr-2"
             @click="editControl(props.item)"
@@ -84,13 +98,8 @@
             widgets
           </v-icon>
           <v-icon
-            small
-            class="mr-2"
-            @click="editItem(props.item)"
-          >
-            edit
-          </v-icon>
-          <v-icon
+            title="Видалити"
+            v-if="props.item.status != 'created' && $store.state.role != 'admin'"
             small
             class="mr-2"
             @click="deleteItem(props.item)"
@@ -98,12 +107,45 @@
             delete
           </v-icon>
           <v-icon
+            title="Редагувати"
+            v-if="props.item.status != 'created' && $store.state.role != 'admin'"
+            small
+            class="mr-2"
+            @click="editItem(props.item)"
+          >
+            edit
+          </v-icon>
+
+          <v-icon
+            title="Редагувати"
+            v-if="$store.state.role == 'admin'"
+            small
+            class="mr-2"
+            @click="editItem(props.item)"
+          >
+            edit
+          </v-icon>
+
+          <v-icon
+            title="Видалити"
+            v-if="$store.state.role == 'admin'"
+            small
+            class="mr-2"
+            @click="deleteItem(props.item)"
+          >
+            delete
+          </v-icon>
+
+          <v-icon
+            title="Відкрити"
             small
             @click="viewItem('/education-plan/' + props.item.id)"
           >
             remove_red_eye
           </v-icon>
         </td>
+
+
       </template>
       <template slot="no-data">
         <v-btn color="primary">Reset</v-btn>

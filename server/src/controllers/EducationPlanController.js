@@ -146,7 +146,52 @@ class EducationPlanController {
 		res.send();
 	}
 
-	store(req, res) {
+	sendVerify(req, res) {
+		EducationPlan.update(
+			{
+				status: "on verification",
+			},
+			{
+				where: {
+					id: req.body.id,
+				},
+			},
+		).then(() => {
+			res.send();
+		})
+	}
+
+	verify(req, res) {
+		EducationPlan.update(
+			{
+				status: "verified",
+			},
+			{
+				where: {
+					id: req.body.id,
+				},
+			},
+		).then(() => {
+			res.send();
+		})
+	}
+
+	refinement(req, res) {
+		EducationPlan.update(
+			{
+				status: "on refinement",
+			},
+			{
+				where: {
+					id: req.body.id,
+				},
+			},
+		).then(() => {
+			res.send();
+		})
+	}
+
+	create(req, res) {
 		req.body.created_at = new Date();
 		EducationPlan.create(req.body, {
 			include: [Departmens],

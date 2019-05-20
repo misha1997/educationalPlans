@@ -13,7 +13,12 @@
     <v-btn color="info" class="mx-0" @click="saveExel()">Завантажити</v-btn>
     <v-btn color="info" class="mx-0" @click="clonePlan()">Клонувати</v-btn>
 
-    <div v-for="cycles in sortedCycles" :key="cycles.id">
+    <v-btn v-if="status != 'created' && $store.state.role == 'repres_depart'" color="info right" class="mx-0" @click="sendVerify()">Відправити на верифікацію</v-btn>
+
+    <v-btn v-if="status == 'on verification' && $store.state.role == 'repres_omu'" color="info right" class="mx-1" @click="verify()">Підтвердити</v-btn>
+    <v-btn v-if="status == 'on verification' && $store.state.role == 'repres_omu'" color="info right" class="mx-1" @click="refinement()">Відправити на дообпацівання</v-btn>
+
+    <div v-for="cycles in sortedCycles" :key="cycles.id" class="mt-4">
       <h3 class="text-md-center">{{ cycles.name }}</h3>
       <Cycles :cycles="cycles" v-if="cycles.categories.length == 0"></Cycles>
       <div v-for="category in cycles.categories" :key="category.id" class="mt-3 mb-4">
@@ -58,7 +63,8 @@
     data(){
       return {
         data: [],
-        name: ''
+        name: '',
+        status: '',
       }
     },
 
@@ -92,6 +98,7 @@
       fetchData(){
         Api().get(`education-plan/${this.$route.params.id}`).then((response)=>{
           this.name = response.data[0].name;
+          this.status = response.data[0].status;
         });
         this.setEducationPlanId(parseInt(this.$route.params.id));
         if(this.getEducationPlanId){
@@ -122,6 +129,30 @@
           user_id : this.$store.state.user
         }).then(() => {
           successAlert("Навчальний план склоновано");
+        })
+      },
+
+      sendVerify(){
+        Api().post(`education-plan/send-verify`, {
+          id: this.getEducationPlanId
+        }).then(() => {
+          successAlert("Навчальний план відправлено на верифікацію");
+        })
+      },
+
+      verify(){
+        Api().post(`education-plan/verify`, {
+          id: this.getEducationPlanId
+        }).then(() => {
+          successAlert("Навчальний план верифіковано");
+        })
+      },
+
+      refinement(){
+        Api().post(`education-plan/refinement`, {
+          id: this.getEducationPlanId
+        }).then(() => {
+          successAlert("Навчальний план відправлено на дообрацювання");
         })
       }
 
