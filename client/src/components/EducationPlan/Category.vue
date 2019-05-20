@@ -11,7 +11,7 @@
 
     </v-data-table>
 
-    <v-btn color="info" class="mx-0" @click="addSubject()">Додати дисципліну</v-btn>
+    <v-btn color="info" class="mx-0" v-if="status == 'created' || $store.state.role == 'admin'" @click="addSubject()">Додати дисципліну</v-btn>
   </div>
 </template>
 
@@ -50,8 +50,13 @@
           { text: 'Практичні, семінарські', value: 'practice' },
           { text: 'Лабораторні', value: 'laboratories'},
           { text: '', value: 'name', sortable: false }
-        ]
+        ],
+        status: '',
       }
+    },
+
+    created(){
+      this.fetchData();
     },
 
     computed: {
@@ -70,6 +75,12 @@
       ...mapActions({
         'createEducationItemCategory': 'plan/createEducationItemCategory'
       }),
+      fetchData(){
+        Api().get(`education-plan/${this.$route.params.id}`).then((response)=>{
+         
+          this.status = response.data[0].status;
+        });
+      },
 
       addSubject(){
         Api().get(`categories/${this.category.category_id}`)

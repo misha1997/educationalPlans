@@ -22,13 +22,16 @@ SET time_zone = "+00:00";
 -- База данных: `ep`
 --
 
+CREATE SCHEMA IF NOT EXISTS `ep` DEFAULT CHARACTER SET utf8 ;
+USE `ep` ;
+
 -- --------------------------------------------------------
 
 --
 -- Структура таблицы `audit`
 --
 
-CREATE TABLE `audit` (
+CREATE TABLE IF NOT EXISTS `ep`.`audit` (
   `audit_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
   `operation_type` varchar(100) NOT NULL,
@@ -42,7 +45,7 @@ CREATE TABLE `audit` (
 -- Структура таблицы `categories`
 --
 
-CREATE TABLE `categories` (
+CREATE TABLE IF NOT EXISTS `ep`.`categories` (
   `category_id` int(11) NOT NULL,
   `cycles_id` int(11) NOT NULL,
   `name` varchar(100) NOT NULL,
@@ -55,7 +58,7 @@ CREATE TABLE `categories` (
 -- Структура таблицы `cycles`
 --
 
-CREATE TABLE `cycles` (
+CREATE TABLE IF NOT EXISTS `ep`.`cycles` (
   `cycles_id` int(11) NOT NULL,
   `name` varchar(255) NOT NULL,
   `credits` int(11) NOT NULL
@@ -67,7 +70,7 @@ CREATE TABLE `cycles` (
 -- Структура таблицы `departments`
 --
 
-CREATE TABLE `departments` (
+CREATE TABLE IF NOT EXISTS `ep`.`departments` (
   `department_id` int(11) NOT NULL,
   `subdivision_id` int(11) NOT NULL,
   `api_id` int(11) NOT NULL,
@@ -80,7 +83,7 @@ CREATE TABLE `departments` (
 -- Структура таблицы `distribution_of_controls`
 --
 
-CREATE TABLE `distribution_of_controls` (
+CREATE TABLE IF NOT EXISTS `ep`.`distribution_of_controls` (
   `distribution_of_controls_id` int(11) NOT NULL,
   `education_item_id` int(11) NOT NULL,
   `exams` varchar(50) DEFAULT NULL,
@@ -94,7 +97,7 @@ CREATE TABLE `distribution_of_controls` (
 -- Структура таблицы `distribution_of_hours`
 --
 
-CREATE TABLE `distribution_of_hours` (
+CREATE TABLE IF NOT EXISTS `ep`.`distribution_of_hours` (
   `distribution_of_hours_id` int(11) NOT NULL,
   `education_item_id` int(11) NOT NULL,
   `module_number` int(11) NOT NULL,
@@ -107,7 +110,7 @@ CREATE TABLE `distribution_of_hours` (
 -- Структура таблицы `education_items`
 --
 
-CREATE TABLE `education_items` (
+CREATE TABLE IF NOT EXISTS `ep`.`education_items` (
   `education_item_id` int(11) NOT NULL,
   `sub_category_id` int(11) DEFAULT NULL,
   `category_id` int(11) DEFAULT NULL,
@@ -126,7 +129,7 @@ CREATE TABLE `education_items` (
 -- Структура таблицы `education_plans`
 --
 
-CREATE TABLE `education_plans` (
+CREATE TABLE IF NOT EXISTS `ep`.`education_plans` (
   `id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
   `department_id` int(11) NOT NULL,
@@ -142,7 +145,7 @@ CREATE TABLE `education_plans` (
 -- Структура таблицы `plan_controls`
 --
 
-CREATE TABLE `plan_controls` (
+CREATE TABLE IF NOT EXISTS `ep`.`plan_controls` (
   `control_id` int(11) NOT NULL,
   `id` int(11) NOT NULL,
   `module_number` int(11) DEFAULT NULL,
@@ -158,7 +161,7 @@ CREATE TABLE `plan_controls` (
 -- Структура таблицы `subdivisions`
 --
 
-CREATE TABLE `subdivisions` (
+CREATE TABLE IF NOT EXISTS `ep`.`subdivisions` (
   `subdivision_id` int(11) NOT NULL,
   `api_id` int(11) NOT NULL,
   `name` varchar(100) NOT NULL
@@ -170,7 +173,7 @@ CREATE TABLE `subdivisions` (
 -- Структура таблицы `subjects`
 --
 
-CREATE TABLE `subjects` (
+CREATE TABLE IF NOT EXISTS `ep`.`subjects` (
   `subject_id` int(11) NOT NULL,
   `name` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -181,7 +184,7 @@ CREATE TABLE `subjects` (
 -- Структура таблицы `sub_categories`
 --
 
-CREATE TABLE `sub_categories` (
+CREATE TABLE IF NOT EXISTS `ep`.`sub_categories` (
   `sub_category_id` int(11) NOT NULL,
   `category_id` int(11) NOT NULL,
   `name` varchar(100) NOT NULL,
@@ -194,7 +197,7 @@ CREATE TABLE `sub_categories` (
 -- Структура таблицы `token`
 --
 
-CREATE TABLE `token` (
+CREATE TABLE IF NOT EXISTS `ep`.`token` (
   `id` int(10) NOT NULL,
   `tokenId` varchar(255) NOT NULL,
   `userId` int(100) NOT NULL
@@ -206,7 +209,7 @@ CREATE TABLE `token` (
 -- Структура таблицы `users`
 --
 
-CREATE TABLE `users` (
+CREATE TABLE IF NOT EXISTS `ep`.`users` (
   `user_id` int(11) NOT NULL,
   `email` varchar(128) NOT NULL,
   `password` varchar(256) NOT NULL,

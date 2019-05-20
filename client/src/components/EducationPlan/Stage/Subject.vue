@@ -21,6 +21,7 @@
             title="Заповнити данні розподілу по модулям" 
             small
             class="mr-2"
+            v-if="status == 'created' || $store.state.role == 'admin'"
             @click="modulesForm(data.item.education_item_id)"
           >
           today
@@ -29,6 +30,7 @@
             title="Розподіл контрольних заходів за семестрами"  
             small
             class="mr-2"
+            v-if="status == 'created' || $store.state.role == 'admin'"
             @click="distributionOfControlsForm(data.item.education_item_id)"
           >
           widgets
@@ -36,6 +38,7 @@
           <v-icon
             title="Видалити"
             small
+            v-if="status == 'created' || $store.state.role == 'admin'"
             @click="deleteItem(data.item)"
           >
           delete
@@ -57,6 +60,16 @@
         type: Object,
         require: true
       }
+    },
+
+    data(){
+      return {
+        status: '',
+      }
+    },
+
+    created(){
+      this.fetchData();
     },
 
     filters: {
@@ -94,6 +107,13 @@
         'enableLoading': 'overlay/enableLoading',
         'disableLoading': 'overlay/disableLoading'
       }),
+
+      fetchData(){
+        Api().get(`education-plan/${this.$route.params.id}`).then((response)=>{
+         
+          this.status = response.data[0].status;
+        });
+      },
 
       editItem(){
         EventBus.$emit('toggle-item-form', educationItemId);
