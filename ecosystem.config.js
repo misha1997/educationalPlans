@@ -1,7 +1,7 @@
 module.exports = {
     apps : [{
         name        : "worker",
-        script      : "./server/src/index.js",
+        script      : "cd server && npm run start",
         watch      : true,
     },{
         name       : "api-app",
