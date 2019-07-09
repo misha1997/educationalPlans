@@ -16,6 +16,8 @@ export default new Vuex.Store({
   state: {
     token: null,
     user: null,
+    role: null,
+    department: null,
     isUserLoggedIn: false
   },
   mutations: {
@@ -25,6 +27,12 @@ export default new Vuex.Store({
     },
     setUser (state, user) {
       state.user = user
+    },
+    setRole (state, role) {
+      state.role = role
+    },
+    setDepartment (state, department) {
+      state.department = department
     }
   },
   actions: {
@@ -33,6 +41,12 @@ export default new Vuex.Store({
     },
     setUser ({commit}, user) {
       commit('setUser', user)
+    },
+    setRole ({commit}, role) {
+      commit('setRole', role)
+    },
+    setDepartment ({commit}, department) {
+      commit('setDepartment', department)
     }
   },
   modules: {

@@ -1,21 +1,19 @@
-const async = require('async');
 const _ = require('lodash');
 const curl = new (require('curl-request'))();
-let Subdivision = require('../models/Subdivision');
-let Departments = require('../models/Departments');
 
-const key = 'wP3GUp8Lv3lB8rmbJ2cO4f4tcSJY3sCw';
-const apiUrl = 'http://asu.sumdu.edu.ua/api/getDivisions?key=' + key;
+const Subdivision = require('../models/Subdivision');
+const Departments = require('../models/Departments');
 
-function parseData(response) {
-	let sudivisionsData = _.filter(JSON.parse(response).result, function(item) {
+const parseData = response => {
+	let sudivisionsData = _.filter(JSON.parse(response).result, item => {
 		return item.KOD_TYPE == 7 || item.KOD_TYPE == 8 || item.KOD_TYPE == 9;
 	});
-	let departmentsData = _.filter(JSON.parse(response).result, function(item) {
+
+	let departmentsData = _.filter(JSON.parse(response).result, item => {
 		return item.KOD_TYPE == 2;
 	});
 
-	let subdivision = _.map(sudivisionsData, item => {
+	let subdivisions = _.map(sudivisionsData, item => {
 		return {
 			api_id: item.ID_DIV,
 			name: item.NAME_DIV,
@@ -31,16 +29,16 @@ function parseData(response) {
 	});
 
 	return {
-		subdivision: subdivision,
+		subdivisions: subdivisions,
 		departments: departments,
 	};
-}
+};
 
-function departmentsFormatter(subdivisionDb, departmentsData) {
+const departmentsFormatter = (SubdivisionsDb, departmentsData) => {
 	let departments = [];
 
 	for (let i = 0; i < departmentsData.length; i++) {
-		_.forEach(subdivisionDb, item => {
+		_.forEach(SubdivisionsDb, item => {
 			if (departmentsData[i].parent_id == item.api_id) {
 				departments.push({
 					subdivision_id: item.subdivision_id,
@@ -51,26 +49,22 @@ function departmentsFormatter(subdivisionDb, departmentsData) {
 		});
 	}
 	return departments;
-}
+};
 
-async function store(response) {
-	let { subdivision, departments } = parseData(response);
+const store = async response => {
+	let { subdivisions, departments } = parseData(response);
 
-	try {
-		await Subdivision.bulkCreate(subdivision);
-		let subdivisionDb = await Subdivision.findAll();
+	await Subdivision.bulkCreate(subdivisions);
+	let SubdivisionsDb = await Subdivision.findAll();
 
-		departments = departmentsFormatter(subdivisionDb, departments);
-		await Departments.bulkCreate(departments);
-	} catch (e) {
-		throw 'Problem with saving data to DB';
-	}
-}
+	departments = departmentsFormatter(SubdivisionsDb, departments);
+	await Departments.bulkCreate(departments);
+};
 
 module.exports = {
 	getAsuData(req, res) {
 		curl
-			.get(apiUrl)
+			.get(process.env.ASU_SUMDU_API + process.env.ASU_KEY)
 			.then(({ body }) => {
 				store(body);
 				res.send('Data was successfully saved to data base');

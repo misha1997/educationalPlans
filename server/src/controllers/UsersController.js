@@ -1,13 +1,13 @@
-const Users = require('../models/Users');
 const jwt = require('jsonwebtoken');
 
-require('dotenv').config();
-const bcrypt = require('bcrypt-nodejs');
+const Users = require('../models/Users');
 
-function hashNewPassword(password) {
-	const SALT_FACTOR = 8;
-	return bcrypt.hashSync(password, bcrypt.genSaltSync(SALT_FACTOR), null);
-}
+const bcrypt = require('bcrypt');
+
+function hashNewPassword (password) {
+	const SALT_FACTOR = 8
+	return bcrypt.hashSync(password, bcrypt.genSaltSync(SALT_FACTOR), null)
+  }
 
 class UsersController {
 	findAll(req, res) {
@@ -61,7 +61,7 @@ class UsersController {
 	}
 
 	update(req, res) {
-		const { name, surname, email, password, role } = req.body.data;
+		const { name, surname, email, password, role, department_id } = req.body.data;
 		Users.update(
 			{
 				name: name,
@@ -69,6 +69,7 @@ class UsersController {
 				email: email,
 				password: hashNewPassword(password),
 				role: role,
+				department_id: department_id
 			},
 			{
 				where: {
@@ -93,11 +94,11 @@ class UsersController {
 				email: email,
 			},
 		})
-			.then(user => {
+			.then(async user => {
 				if (!user) {
 					res.status(401).json({ message: 'User does not exist!' });
 				}
-				const isValid = bcrypt.compareSync(password, user.password);
+				const isValid = await user.comparePassword(password, user.password);
 				if (isValid) {
 					const token = jwt.sign(
 						user.user_id.toString(),

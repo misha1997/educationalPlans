@@ -26,7 +26,7 @@ export default {
       ],
         passwordRules: [
             v => !!v || 'Обов\'язкове поле',
-            v => String(v).length >= 8 || 'Не менше 8 символив'
+            v => String(v).length >= 8 || 'Не менше 8 символів'
         ],
         repeatPasswordRules: [
             v => !!v || 'Обов\'язкове поле',
@@ -37,7 +37,7 @@ export default {
         ],
         newPasswordRules: [
             v => !!v || 'Обов\'язкове поле',
-            v => String(v).length >= 8 || 'Не менше 8 символив',
+            v => String(v).length >= 8 || 'Не менше 8 символів',
             v => v != this.editedItem.oldPassword || `Такий пароль вже існує`
         ],
         repeatNewPasswordRules: [

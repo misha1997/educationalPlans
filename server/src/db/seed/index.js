@@ -6,7 +6,6 @@ const Categories = require('../../models/Categories');
 const SubCategories = require('../../models/SubCategories');
 const Subdivisions = require('../../models/Subdivision');
 const Departments = require('../../models/Departments');
-const EducationPlan = require('../../models/EducationPlan');
 const Subjects = require('../../models/Subjects');
 const Users = require('../../models/Users');
 
@@ -15,7 +14,6 @@ const categories = require('./Categories.json');
 const subCategories = require('./SubCategories.json');
 const subdivisions = require('./Subdivision.json');
 const departments = require('./Departments.json');
-const educationPlan = require('./EducationPlan.json');
 const subjects = require('./Subjects.json');
 const users = require('./Users.json');
 
@@ -51,20 +49,15 @@ db.sync().then(async function() {
 	);
 
 	await Promise.all(
-		users.map(user => {
-			Users.create(user);
-		}),
-	);
-
-	await Promise.all(
-		educationPlan.map(educationPlan => {
-			EducationPlan.create(educationPlan);
-		}),
-	);
-
-	await Promise.all(
 		subjects.map(subject => {
 			Subjects.create(subject);
 		}),
 	);
+
+	await Promise.all(
+		users.map(user => {
+			Users.create(user);
+		}),
+	);
+	
 });

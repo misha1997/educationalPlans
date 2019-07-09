@@ -4,7 +4,7 @@
       <v-toolbar-title>Підкатегорії навчального плану</v-toolbar-title>
       <v-spacer></v-spacer>
       <v-dialog v-model="dialog" max-width="500px">
-        <v-btn slot="activator" icon color="primary" dark class="mb-2"> <v-icon>add</v-icon></v-btn>
+        <v-btn slot="activator" icon color="primary" v-if="$store.state.role == 'admin'" dark class="mb-2"> <v-icon>add</v-icon></v-btn>
         <v-form ref="form" @submit.prevent="save()">
           <v-card>
             <v-card-title>
@@ -17,7 +17,12 @@
                 color="error"
                 icon="new_releases"
               >
-                Кількість кредитів повинна бути не більше {{ creditsAll - credits }}
+              <div v-if="creditsAll - subCategoriesCredits <= 0">
+                Кількість допустимих кредитів вичерпана
+              </div>
+              <div v-else>
+                Кількість кредитів повинна бути не більше {{ creditsAll - subCategoriesCredits }}
+              </div>
               </v-alert>
               <v-container grid-list-md>
                 <v-layout wrap>
@@ -56,6 +61,7 @@
       :headers="headers"
       :items="data"
       :rows-per-page-items="rowsPerPageItems"
+      rows-per-page-text="Кількість рядків на сторінці"
       class="elevation-1"
     >
       <template slot="items" slot-scope="props">
@@ -66,6 +72,7 @@
         <td class="justify-center layout px-1 pr-4">
           <v-icon
             small
+            v-if="$store.state.role == 'admin'"
             class="mr-2"
             @click="editItem(props.item)"
           >
@@ -73,6 +80,7 @@
           </v-icon>
           <v-icon
             small
+            v-if="$store.state.role == 'admin'"
             @click="deleteItem(props.item)"
           >
             delete
@@ -115,6 +123,7 @@
         ],
 
         creditsAll: 0,
+        subCategoriesCredits: 0,
 
         editedItem: {
           name: '',
@@ -157,25 +166,26 @@
         return this.editedItem.category_id;
       },
       validator(){
-        var subCategoriesCredits = 0;
         for(let i = 0; i < this.categories.length; i++) {
           if(this.categories[i].category_id == this.editedItem.category_id) {
             var cycleId = this.categories[i].cycles_id;
           }
         }
 
-        for(let i = 0; i < this.subCategories.length; i++) {
-          if(this.subCategories[i].sub_category_id != this.editedItem.sub_category_id) {
-            subCategoriesCredits += this.subCategories[i].credits;
-          }
-        }
-        
         for(let i = 0; i < this.cycles.length; i++) {
           if(this.cycles[i].cycles_id == cycleId) {
             this.creditsAll = this.cycles[i].credits;
           }
         }
-        return (this.editedItem.credits) ? subCategoriesCredits + +this.editedItem.credits > this.creditsAll : false;
+
+      
+        this.subCategoriesCredits = _.sumBy(this.subCategories, (item) => 
+        {
+          return (item.sub_category_id != this.editedItem.sub_category_id) ? +item.credits : 0 
+        });
+        
+        return (this.editedItem.credits) ? this.subCategoriesCredits + +this.editedItem.credits > this.creditsAll : false;
+      
       }
     },
 

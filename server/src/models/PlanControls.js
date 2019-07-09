@@ -27,6 +27,12 @@ const PlanControls = db.define('plan_controls', {
 	course_work: {
 		type: Sequelize.INTEGER,
 	},
+	сontrol_work: {
+		type: Sequelize.INTEGER,
+	},
+	semester: {
+		type: Sequelize.INTEGER,
+	},
 });
 
 PlanControls.belongsTo(EducationPlan, {

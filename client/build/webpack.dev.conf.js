@@ -29,11 +29,18 @@ const devWebpackConfig = merge(baseWebpackConfig, {
       ],
     },
     hot: true,
+    disableHostCheck: true,
     contentBase: false, // since we use CopyWebpackPlugin.
     compress: true,
     host: HOST || config.dev.host,
     port: PORT || config.dev.port,
     open: config.dev.autoOpenBrowser,
+    proxy: {
+      '/api': {
+        target: 'http://eptest.sumdu.edu.ua:8081',
+        secure: false         
+       }
+    },
     overlay: config.dev.errorOverlay
       ? { warnings: false, errors: true }
       : false,

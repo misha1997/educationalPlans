@@ -5,9 +5,22 @@
     fixed
     app
   >
-    <v-list>
+    <v-list v-if="$store.state.role == 'admin'">
 
       <v-list-tile v-for="item in links" :key="item.name">
+        <v-list-tile-action>
+          <v-icon>{{ item.icon }}</v-icon>
+        </v-list-tile-action>
+        <v-list-tile-title>
+          <a :href="'#/'+item.name" @click.prevent="linkTo(item)">{{ item.title }}</a>
+        </v-list-tile-title>
+      </v-list-tile>
+
+    </v-list>
+
+    <v-list v-if="$store.state.role != 'admin'">
+
+      <v-list-tile v-for="item in links" :key="item.name" v-if="item.name != 'users' && item.name != 'settings'">
         <v-list-tile-action>
           <v-icon>{{ item.icon }}</v-icon>
         </v-list-tile-action>
@@ -30,8 +43,8 @@
       return {
         links: [
           {
-            title: "Головна",
-            name: "education-plan",
+            title: "Робота з планами",
+            name: "home",
             icon: "home"
           },
           {

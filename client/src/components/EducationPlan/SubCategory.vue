@@ -11,7 +11,8 @@
 
     </v-data-table>
 
-    <v-btn color="info" class="mx-0" @click="addSubject()">Додати дисципліну</v-btn>
+    <v-btn v-if="$store.state.role == 'admin'" color="info" class="mx-0" @click="addSubject()">Додати дисципліну</v-btn>
+    <v-btn v-if="status != 'created' && $store.state.role != 'admin'" color="info" class="mx-0" @click="addSubject()">Додати дисципліну</v-btn>
   </div>
 </template>
 
@@ -32,7 +33,8 @@
       subCategory: {
         type: Object,
         required: true
-      }
+      },
+      status: String
     },
 
     data(){
@@ -79,11 +81,12 @@
             return {"cycleId" :cycleId[0], "credits" : credits[0]};
           })
           .then(categories => {
-            EventBus.$emit('toggle-item-form', _.sumBy(this.stageItems, (item) => {return item.credits}), this.subCategory.credits);
+            EventBus.$emit('toggle-item-form', _.sumBy(this.stageItems, (item) => { return (item.choice == 0) ? item.credits : 0 }), this.subCategory.credits);
             this.createEducationItemSubCategory({
               "sub_category_id" : this.subCategory.sub_category_id, 
               "category_id" : this.subCategory.category_id,
-              "cycles_id" : categories.cycleId
+              "cycles_id" : categories.cycleId,
+              "fixed" : (this.status == 'created') ? 1 : 0
             });
           })
       }

@@ -54,6 +54,8 @@ export default {
         })
         this.$store.dispatch('setToken', response.data.token)
         this.$store.dispatch('setUser', response.data.user.user_id)
+        this.$store.dispatch('setRole', response.data.user.role)
+        this.$store.dispatch('setDepartment', response.data.user.department_id)
         this.$router.push({
           name: 'home'
         })

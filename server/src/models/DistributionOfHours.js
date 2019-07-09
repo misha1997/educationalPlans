@@ -18,6 +18,15 @@ const DistributionOfHours = db.define('distribution_of_hours', {
 	value: {
 		type: Sequelize.INTEGER,
 	},
+	form_control: {
+		type: Sequelize.STRING,
+	},
+	individual_tasks: {
+		type: Sequelize.STRING,
+	},
+	semester: {
+		type: Sequelize.INTEGER,
+	},
 });
 
 module.exports = DistributionOfHours;

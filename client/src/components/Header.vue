@@ -6,6 +6,7 @@
       <v-toolbar-title>Навчальні плани</v-toolbar-title>
       <v-spacer></v-spacer>
       <v-toolbar-items>
+      <v-btn @click="viewProfile('/profile/'+$store.state.user)" flat><v-icon>person</v-icon></v-btn>
         <v-btn @click="logout" flat>Вихід</v-btn>
       </v-toolbar-items>
     </v-toolbar>
@@ -28,6 +29,9 @@
         this.$router.push({
           name: 'home'
         })
+      },
+      viewProfile(link){
+        this.$router.push(link);
       }
     }
 	}

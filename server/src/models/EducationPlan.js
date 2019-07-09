@@ -27,6 +27,30 @@ const EducationPlan = db.define('education_plans', {
 	created_at: {
 		type: Sequelize.DATE,
 	},
+	qualification: {
+		type: Sequelize.STRING,
+	},
+	discipline: {
+		type: Sequelize.STRING,
+	},
+	specialty: {
+		type: Sequelize.STRING,
+	},
+	specialization: {
+		type: Sequelize.STRING,
+	},
+	educational_program: {
+		type: Sequelize.STRING,
+	},
+	educational_level: {
+		type: Sequelize.STRING,
+	},
+	form_study: {
+		type: Sequelize.STRING,
+	},
+	training_period: {
+		type: Sequelize.STRING,
+	},
 });
 
 EducationPlan.belongsTo(Departments, {

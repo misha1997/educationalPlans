@@ -33,12 +33,12 @@
       integrateData(){
         this.enableLoading();
         Api().post('asu')
-          .then((response) => {
-            //successAlert(response);
-          })
-          .catch((err)=>{
-            //errorAlert(err);
-          })
+          .then(()=>{
+              successAlert("Записи було збережено");
+            })
+            .catch((err)=>{
+              errorAlert(err);
+            })
           .then(()=>{
             this.disableLoading();
           })

@@ -4,18 +4,17 @@
       <v-form ref="form" @submit.prevent="save()">
         <v-card>
           <v-card-title>
-            <span class="headline">{{ formTitle }}</span>
+            <span class="headline">Нова дисципліна</span>
           </v-card-title>
           <v-card-text>
             <v-alert
-              :value="validator2"
+              :value="true"
               color="info"
+              icon="info"
+              outline
             >
-              <div v-if="creditCategory - credits > 0">
-               Кількість кредитів повинна бути не більше {{ creditCategory - credits }}
-              </div>
+              Якщо дисципліна відсутня в переліку, зверніться до адміністратора
             </v-alert>
-
             <v-alert
               :value="validator"
               color="error"
@@ -111,10 +110,6 @@
         'getCurrentItem': 'plan/getCurrentItem'
       }),
 
-      formTitle () {
-        return this.editedIndex === -1 ? 'Нова дисципліна' : 'Редагувати дисципліну'
-      },
-
       getRequestId(){
         return this.editedItem.education_item_id;
       },
@@ -131,7 +126,12 @@
       },
 
       validator(){
-        return (this.editedItem.credits) ? this.credits + +this.editedItem.credits > this.creditCategory : false;
+        if (this.editedItem.choice == true){
+            return 0;
+        }
+        else {
+            return (this.editedItem.credits) ? this.credits + +this.editedItem.credits > this.creditCategory : false;
+        }
       }
     },
 

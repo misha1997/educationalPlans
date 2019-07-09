@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Май 17 2019 г., 02:02
+-- Время создания: Июн 19 2019 г., 15:33
 -- Версия сервера: 5.7.16
 -- Версия PHP: 7.1.0
 
@@ -33,7 +33,7 @@ CREATE TABLE `audit` (
   `user_id` int(11) NOT NULL,
   `operation_type` varchar(100) NOT NULL,
   `data` text NOT NULL,
-  `timestamp` timestamp NOT NULL
+  `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -49,6 +49,16 @@ CREATE TABLE `categories` (
   `credits` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Дамп данных таблицы `categories`
+--
+
+INSERT INTO `categories` (`category_id`, `cycles_id`, `name`, `credits`) VALUES
+(1, 1, '1.1 Обов\'язкові навчальні дисципліни', 50),
+(2, 1, '1.2 Вибіркові навчальні дисципліни', 15),
+(3, 2, '2.1 Обов\'язкові навчальні дисципліни', NULL),
+(4, 2, '2.2. Вибіркові навчальні дисципліни', NULL);
+
 -- --------------------------------------------------------
 
 --
@@ -60,6 +70,16 @@ CREATE TABLE `cycles` (
   `name` varchar(255) NOT NULL,
   `credits` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Дамп данных таблицы `cycles`
+--
+
+INSERT INTO `cycles` (`cycles_id`, `name`, `credits`) VALUES
+(1, '1 ЦИКЛ ДИСЦИПЛІН ЗАГАЛЬНОЇ ПІДГОТОВКИ', 65),
+(2, '2 ЦИКЛ ДИСЦИПЛІН ПРОФЕСІЙНОЇ ПІДГОТОВКИ', 160),
+(3, '3 Цикл практичної підготовки', 10),
+(4, '4 Атестація', 5);
 
 -- --------------------------------------------------------
 
@@ -73,6 +93,13 @@ CREATE TABLE `departments` (
   `api_id` int(11) NOT NULL,
   `name` varchar(200) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Дамп данных таблицы `departments`
+--
+
+INSERT INTO `departments` (`department_id`, `subdivision_id`, `api_id`, `name`) VALUES
+(1, 1, 0, 'КН');
 
 -- --------------------------------------------------------
 
@@ -98,8 +125,24 @@ CREATE TABLE `distribution_of_hours` (
   `distribution_of_hours_id` int(11) NOT NULL,
   `education_item_id` int(11) NOT NULL,
   `module_number` int(11) NOT NULL,
-  `value` int(11) NOT NULL
+  `value` int(11) NOT NULL,
+  `form_control` varchar(100) NOT NULL,
+  `individual_tasks` varchar(100) NOT NULL,
+  `semester` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Дамп данных таблицы `distribution_of_hours`
+--
+
+INSERT INTO `distribution_of_hours` (`distribution_of_hours_id`, `education_item_id`, `module_number`, `value`, `form_control`, `individual_tasks`, `semester`) VALUES
+(78, 9, 1, 5, 'differscore', 'сontrolwork', 1),
+(79, 9, 2, 2, '', 'сontrolwork', 1),
+(80, 9, 3, 1, '', '', 2),
+(81, 9, 4, 1, '', 'сontrolwork', 2),
+(82, 10, 1, 5, 'credit', 'сontrolwork', 1),
+(83, 10, 2, 1, 'differscore', 'сontrolwork', 1),
+(84, 10, 4, 1, '', 'сontrolwork', 2);
 
 -- --------------------------------------------------------
 
@@ -116,9 +159,18 @@ CREATE TABLE `education_items` (
   `subject_id` int(11) NOT NULL,
   `credits` int(11) NOT NULL,
   `lectures` int(11) DEFAULT '0',
-  `practice` int(11) DEFAULT '0',
-  `laboratories` int(11) DEFAULT '0'
+  `laboratories` int(11) DEFAULT '0',
+  `choice` tinyint(1) NOT NULL DEFAULT '0',
+  `fixed` tinyint(1) DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Дамп данных таблицы `education_items`
+--
+
+INSERT INTO `education_items` (`education_item_id`, `sub_category_id`, `category_id`, `cycles_id`, `education_plans_id`, `subject_id`, `credits`, `lectures`, `laboratories`, `choice`, `fixed`) VALUES
+(9, NULL, 1, 1, 1, 1, 5, 0, 0, 0, 1),
+(10, NULL, 1, 1, 1, 4, 5, 0, 0, 0, 1);
 
 -- --------------------------------------------------------
 
@@ -136,6 +188,13 @@ CREATE TABLE `education_plans` (
   `created_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Дамп данных таблицы `education_plans`
+--
+
+INSERT INTO `education_plans` (`id`, `user_id`, `department_id`, `name`, `status`, `year`, `created_at`) VALUES
+(1, 1, 1, 'Новий план', 'created', 2019, '2019-06-12 11:26:50');
+
 -- --------------------------------------------------------
 
 --
@@ -146,11 +205,35 @@ CREATE TABLE `plan_controls` (
   `control_id` int(11) NOT NULL,
   `id` int(11) NOT NULL,
   `module_number` int(11) DEFAULT NULL,
-  `hours_week` int(11) DEFAULT NULL,
-  `exams` int(11) DEFAULT NULL,
-  `credit` int(11) DEFAULT NULL,
-  `course_work` int(11) DEFAULT NULL
+  `hours_week` int(11) NOT NULL DEFAULT '0',
+  `exams` int(11) NOT NULL DEFAULT '0',
+  `credit` int(11) NOT NULL DEFAULT '0',
+  `course_work` int(11) NOT NULL DEFAULT '0',
+  `сontrol_work` int(11) NOT NULL DEFAULT '0',
+  `semester` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Дамп данных таблицы `plan_controls`
+--
+
+INSERT INTO `plan_controls` (`control_id`, `id`, `module_number`, `hours_week`, `exams`, `credit`, `course_work`, `сontrol_work`, `semester`) VALUES
+(113, 1, 1, 1, 0, 0, 0, 2, 1),
+(114, 1, 2, 0, 0, 2, 0, 0, 1),
+(115, 1, 3, 0, 0, 0, 3, 0, 2),
+(116, 1, 4, 0, 0, 0, 0, 4, 2),
+(117, 1, 5, 0, 0, 0, 0, 0, 3),
+(118, 1, 6, 0, 0, 0, 0, 0, 3),
+(119, 1, 7, 0, 0, 0, 0, 0, 4),
+(120, 1, 8, 0, 0, 0, 0, 0, 4),
+(121, 1, 9, 0, 0, 0, 0, 0, 5),
+(122, 1, 10, 0, 0, 0, 0, 0, 5),
+(123, 1, 11, 0, 0, 0, 0, 0, 6),
+(124, 1, 12, 0, 0, 0, 0, 0, 6),
+(125, 1, 13, 0, 0, 0, 0, 0, 7),
+(126, 1, 14, 0, 0, 0, 0, 0, 7),
+(127, 1, 15, 0, 0, 0, 0, 0, 8),
+(128, 1, 16, 0, 0, 0, 0, 0, 8);
 
 -- --------------------------------------------------------
 
@@ -164,6 +247,13 @@ CREATE TABLE `subdivisions` (
   `name` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Дамп данных таблицы `subdivisions`
+--
+
+INSERT INTO `subdivisions` (`subdivision_id`, `api_id`, `name`) VALUES
+(1, 0, 'ЕлІТ');
+
 -- --------------------------------------------------------
 
 --
@@ -174,6 +264,22 @@ CREATE TABLE `subjects` (
   `subject_id` int(11) NOT NULL,
   `name` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Дамп данных таблицы `subjects`
+--
+
+INSERT INTO `subjects` (`subject_id`, `name`) VALUES
+(1, 'Іноземна мова'),
+(2, 'Українознавство з комунікативним курсом української мови'),
+(3, 'Філософія'),
+(4, 'Фізичне виховання'),
+(5, 'Вибіркові дисципліни гуманітарного спрямування (додаток 1)'),
+(6, 'Вибіркові дисципліни інших спеціальностей  (додаток 2)'),
+(7, 'Практика'),
+(8, 'Кваліфікаційна робота бакалавра'),
+(9, 'Атестаційний кваліфікаційний іспит'),
+(10, 'Вибіркові дисципліни за спеціальністю');
 
 -- --------------------------------------------------------
 
@@ -187,6 +293,16 @@ CREATE TABLE `sub_categories` (
   `name` varchar(100) NOT NULL,
   `credits` int(11) DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Дамп данных таблицы `sub_categories`
+--
+
+INSERT INTO `sub_categories` (`sub_category_id`, `category_id`, `name`, `credits`) VALUES
+(1, 3, '2.1.1 Обов’язкові навчальні дисципліни за спеціальністю', 55),
+(2, 3, '2.1.2 Обов\'язкові навчальні дисципліни за освітньою програмою', 60),
+(3, 4, '2.2.1 Вибіркові навчальні дисципліни за спецальністю', 10),
+(4, 4, '2.2.2 Вибіркові навчальні дисципліни за освітньою програмою', 35);
 
 -- --------------------------------------------------------
 
@@ -212,8 +328,18 @@ CREATE TABLE `users` (
   `password` varchar(256) NOT NULL,
   `name` varchar(100) NOT NULL,
   `surname` varchar(100) NOT NULL,
-  `role` varchar(50) NOT NULL
+  `role` varchar(50) NOT NULL,
+  `department_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Дамп данных таблицы `users`
+--
+
+INSERT INTO `users` (`user_id`, `email`, `password`, `name`, `surname`, `role`, `department_id`) VALUES
+(1, 'test@gmail.com', '$2b$08$xEqTaGcNgZDyBhDS9YK95OAfmT5.KQokVUTODFzTOG6Hu82uA.Lnm', 'Name', 'Surname', 'admin', 1),
+(2, 'test2@gmail.com', '$2b$08$r4SQOOOiZvfnhMKuddFGDOfjaLQI.zBq/a/96uPjzs94JF.009NC.', 'Name2', 'Surname2', 'repres_omu', 1),
+(3, 'test3@gmail.com', '$2b$08$Heg.JEIrC5b1sGFbDa9OW.yew5/3udQuPZrCX3G5e6m0Jlp3EEIiy', 'Name3', 'Surname3', 'repres_depart', 1);
 
 --
 -- Индексы сохранённых таблиц
@@ -316,7 +442,8 @@ ALTER TABLE `token`
 -- Индексы таблицы `users`
 --
 ALTER TABLE `users`
-  ADD PRIMARY KEY (`user_id`);
+  ADD PRIMARY KEY (`user_id`),
+  ADD KEY `fk_users_departments1_idx` (`department_id`) USING BTREE;
 
 --
 -- AUTO_INCREMENT для сохранённых таблиц
@@ -332,79 +459,79 @@ ALTER TABLE `audit`
 -- AUTO_INCREMENT для таблицы `categories`
 --
 ALTER TABLE `categories`
-  MODIFY `category_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `category_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT для таблицы `cycles`
 --
 ALTER TABLE `cycles`
-  MODIFY `cycles_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `cycles_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT для таблицы `departments`
 --
 ALTER TABLE `departments`
-  MODIFY `department_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `department_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT для таблицы `distribution_of_controls`
 --
 ALTER TABLE `distribution_of_controls`
-  MODIFY `distribution_of_controls_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `distribution_of_controls_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT для таблицы `distribution_of_hours`
 --
 ALTER TABLE `distribution_of_hours`
-  MODIFY `distribution_of_hours_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+  MODIFY `distribution_of_hours_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=85;
 
 --
 -- AUTO_INCREMENT для таблицы `education_items`
 --
 ALTER TABLE `education_items`
-  MODIFY `education_item_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=118;
+  MODIFY `education_item_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT для таблицы `education_plans`
 --
 ALTER TABLE `education_plans`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT для таблицы `plan_controls`
 --
 ALTER TABLE `plan_controls`
-  MODIFY `control_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=54;
+  MODIFY `control_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=129;
 
 --
 -- AUTO_INCREMENT для таблицы `subdivisions`
 --
 ALTER TABLE `subdivisions`
-  MODIFY `subdivision_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `subdivision_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT для таблицы `subjects`
 --
 ALTER TABLE `subjects`
-  MODIFY `subject_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `subject_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT для таблицы `sub_categories`
 --
 ALTER TABLE `sub_categories`
-  MODIFY `sub_category_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `sub_category_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT для таблицы `token`
 --
 ALTER TABLE `token`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=64;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT для таблицы `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- Ограничения внешнего ключа сохраненных таблиц
@@ -468,6 +595,12 @@ ALTER TABLE `plan_controls`
 --
 ALTER TABLE `sub_categories`
   ADD CONSTRAINT `fk_sub_category_category1` FOREIGN KEY (`category_id`) REFERENCES `categories` (`category_id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Ограничения внешнего ключа таблицы `users`
+--
+ALTER TABLE `users`
+  ADD CONSTRAINT `fk_users_departments1` FOREIGN KEY (`department_id`) REFERENCES `departments` (`department_id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

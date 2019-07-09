@@ -87,25 +87,28 @@ let mutations = {
 };
 
 let actions = {
-  createEducationItemSubCategory({state, commit, getters}, id){
+  createEducationItemSubCategory({state, commit, getters}, data){
     commit('setCurrentItem', {
       'education_plans_id': getters.getEducationPlanId, 
-      'sub_category_id': id.sub_category_id, 
-      'category_id': id.category_id,
-      'cycles_id': id.cycles_id
+      'sub_category_id': data.sub_category_id, 
+      'category_id': data.category_id,
+      'cycles_id': data.cycles_id,
+      'fixed': data.fixed
     });
   },
-  createEducationItemCategory({state, commit, getters}, id){
+  createEducationItemCategory({state, commit, getters}, data){
     commit('setCurrentItem', {
       'education_plans_id': getters.getEducationPlanId,
-      'category_id': id.category_id,
-      'cycles_id': id.cycles_id
+      'category_id': data.category_id,
+      'cycles_id': data.cycles_id,
+      'fixed': data.fixed
     });
   },
-  createEducationItemCycle({state, commit, getters}, cyclesId){
+  createEducationItemCycle({state, commit, getters}, data){
     commit('setCurrentItem', {
       'education_plans_id': getters.getEducationPlanId, 
-      'cycles_id': cyclesId, 
+      'cycles_id': data.cycles_id, 
+      'fixed': data.fixed
     });
   },
 }

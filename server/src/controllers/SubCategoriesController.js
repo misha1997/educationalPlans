@@ -1,6 +1,9 @@
 const _ = require('lodash');
+
+const EducationItem = require('../models/EducationItem');
 const SubCategories = require('../models/SubCategories');
 const Categories = require('../models/Categories');
+const DistributionOfHours = require('../models/DistributionOfHours');
 
 class SubCategoriesController {
 	index(req, res) {
@@ -83,7 +86,44 @@ class SubCategoriesController {
 			});
 	}
 
-	destroy(req, res) {
+	
+		async destroy(req, res) {
+
+			let educationItem = await EducationItem.findAll({
+				where: {
+					sub_category_id : req.params.id
+				}
+			})
+	
+	
+			let distributionOfHours = await DistributionOfHours.findAll()
+	
+			for(let i = 0; i < distributionOfHours.length; i++) {
+				for (let j = 0; j < educationItem.length; j++) {
+					if(distributionOfHours[i].education_item_id == educationItem[j].education_item_id) {
+						DistributionOfHours.destroy({
+							where: {
+							education_item_id : educationItem[j].education_item_id
+							}
+						})
+					}
+				}
+			}
+
+			res.send();
+
+			EducationItem.destroy({
+				where: {
+					sub_category_id: req.params.id,
+				},
+			})
+			.then(() => {
+				res.send('Educationitem was successfully deleted');
+			})
+			.catch(err => {
+				res.send(err);
+			});
+
 		SubCategories.destroy({
 			where: {
 				sub_category_id: req.params.id,

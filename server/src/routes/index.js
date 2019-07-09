@@ -10,10 +10,7 @@ const users = require('./users');
 const login = require('./login');
 const subjects = require('./subjects');
 const distributionOfHours = require('./distributionOfHours');
-const distributionOfControls = require('./distributionOfControls');
 const PlanControls = require('./PlanControls');
-
-const saveExel = require('./saveExel');
 
 module.exports = function(app) {
 	app.use('/api/cycles', cycles);
@@ -28,8 +25,5 @@ module.exports = function(app) {
 	app.use('/api/login', login);
 	app.use('/api/subjects', subjects);
 	app.use('/api/distribution-of-hours', distributionOfHours);
-	app.use('/api/distribution-of-controls', distributionOfControls);
 	app.use('/api/plan-controls', PlanControls);
-
-	app.use('/api/save-exel', saveExel);
 };

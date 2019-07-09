@@ -4,7 +4,7 @@
       <v-toolbar-title>Категорії навчального плану</v-toolbar-title>
       <v-spacer></v-spacer>
       <v-dialog v-model="dialog" max-width="500px">
-        <v-btn slot="activator" icon color="primary" dark class="mb-2"> <v-icon>add</v-icon></v-btn>
+        <v-btn slot="activator" icon color="primary" v-if="$store.state.role == 'admin'" dark class="mb-2"> <v-icon>add</v-icon></v-btn>
         <v-form ref="form" @submit.prevent="save()">
           <v-card>
             <v-card-title>
@@ -17,7 +17,7 @@
                 color="error"
                 icon="new_releases"
               >
-                Кількість кредитів повинна бути не більше {{ creditsAll - credits }}
+                Кількість кредитів повинна бути не більше {{ creditsAll - cycleCredits }}
               </v-alert>
               <v-container grid-list-md>
                 <v-layout wrap>
@@ -56,6 +56,7 @@
       :headers="headers"
       :items="data"
       :rows-per-page-items="rowsPerPageItems"
+      rows-per-page-text="Кількість рядків на сторінці"
       class="elevation-1"
     >
       <template slot="items" slot-scope="props">
@@ -66,6 +67,7 @@
         <td class="justify-center layout px-1 pr-4">
           <v-icon
             small
+            v-if="$store.state.role == 'admin'"
             class="mr-2"
             @click="editItem(props.item)"
           >
@@ -73,6 +75,7 @@
           </v-icon>
           <v-icon
             small
+            v-if="$store.state.role == 'admin'"
             @click="deleteItem(props.item)"
           >
             delete
@@ -114,6 +117,7 @@
         ],
 
         creditsAll: 0,
+        cycleCredits: 0,
 
         editedItem: {
           name: '',
@@ -168,7 +172,9 @@
           let findCycles = this.data.filter(function(cycles) {
             return cycles.cycles_id == cycles_id && cycles.category_id != category_id;
           });
-          return (this.editedItem.credits) ? _.sumBy(findCycles, (item) => {return +item.credits}) + +this.editedItem.credits > this.creditsAll : false;
+
+          this.cycleCredits = _.sumBy(findCycles, (item) => {return +item.credits});
+          return (this.editedItem.credits) ? this.cycleCredits + +this.editedItem.credits > this.creditsAll : false;
       }
     },
 

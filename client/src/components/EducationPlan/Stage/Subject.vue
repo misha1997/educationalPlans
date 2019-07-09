@@ -9,15 +9,27 @@
         <td class="text-center">{{ data.item.laboratories | zeroValue }}</td>
         <td class="justify-center layout px-1 pr-4">
           <v-icon
-            title="Лекції/Практики/Лабораторні"
+            title="Лекції/Лабораторні"
             small
             class="mr-2"
             @click="distributionOfLearningForm(data.item.education_item_id)"
-            v-if="isDistributionOfHours"
+            v-if="isDistributionOfHours && $store.state.role == 'admin'"
           >
           school
           </v-icon>
           <v-icon
+            title="Лекції/Лабораторні"
+            small
+            class="mr-2"
+            @click="distributionOfLearningForm(data.item.education_item_id)"
+            v-if="isDistributionOfHours && $store.state.role != 'admin' && data.item.fixed == 0"
+          >
+          school
+          </v-icon>
+
+
+          <v-icon
+            v-if="$store.state.role == 'admin'"
             title="Заповнити данні розподілу по модулям" 
             small
             class="mr-2"
@@ -26,14 +38,25 @@
           today
           </v-icon>
           <v-icon
-            title="Розподіл контрольних заходів за семестрами"  
+            v-if="$store.state.role != 'admin' && data.item.fixed == 0"
+            title="Заповнити данні розподілу по модулям" 
             small
             class="mr-2"
-            @click="distributionOfControlsForm(data.item.education_item_id)"
+            @click="modulesForm(data.item.education_item_id)"
           >
-          widgets
+          today
+          </v-icon>
+
+          <v-icon
+            v-if="$store.state.role == 'admin'"
+            title="Видалити"
+            small
+            @click="deleteItem(data.item)"
+          >
+          delete
           </v-icon>
           <v-icon
+            v-if="$store.state.role != 'admin' && data.item.fixed == 0"
             title="Видалити"
             small
             @click="deleteItem(data.item)"
@@ -82,7 +105,6 @@
       getLearningData(){
         return {
           lectures: this.data.item.lectures,
-          practice: this.data.item.practice,
           laboratories: this.data.item.laboratories
         }
       }
@@ -135,12 +157,21 @@
         }
       },
 
-      modulesForm(educationItemId){
-        EventBus.$emit('toggle-modules-form', educationItemId, this.getDistributionOfHours, this.data.item.credits);
-      },
+      modulesForm(educationItemId){ 
 
-      distributionOfControlsForm(educationItemId){
-        EventBus.$emit('toggle-distribution-of-controls-form', educationItemId);
+        Api().post('education-item', {
+          id: this.data.item.education_plans_id
+        }).then((res) => {
+          var controls = []
+          res.data.educationItems.forEach(elem => {
+            elem.distribution_of_hours.forEach(hour => {
+              controls.push(hour)
+            })
+          });
+          Api().get(`plan-controls/${this.data.item.education_plans_id}`).then((controlsPlan)=>{
+            EventBus.$emit('toggle-modules-form', educationItemId, this.getDistributionOfHours, this.data.item.credits, controlsPlan.data, controls);
+          });
+        })
       },
 
       distributionOfLearningForm(educationItemId){

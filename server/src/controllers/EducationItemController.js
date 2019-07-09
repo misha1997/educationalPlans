@@ -6,7 +6,6 @@ const Categories = require('../models/Categories');
 const Cycle = require('../models/Cycles');
 const SubCategories = require('../models/SubCategories');
 const DistributionOfHours = require('../models/DistributionOfHours');
-const DistributionOfControls = require('../models/DistributionOfControls');
 
 class EducationItemController {
 	index(req, res) {
@@ -22,7 +21,7 @@ class EducationItemController {
 								},
 							],
 						},
-					],
+					]
 				});
 				let educationItems = await EducationItem.findAll({
 					where: {
@@ -30,8 +29,7 @@ class EducationItemController {
 					},
 					include: [
 						{ model: Subjects },
-						{ model: DistributionOfHours },
-						{ model: DistributionOfControls },
+						{ model: DistributionOfHours }
 					],
 				});
 

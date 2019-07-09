@@ -11,7 +11,8 @@
 
     </v-data-table>
 
-    <v-btn color="info" class="mx-0" @click="addSubject()">Додати дисципліну</v-btn>
+    <v-btn v-if="$store.state.role == 'admin'" color="info" class="mx-0" @click="addSubject()">Додати дисципліну</v-btn>
+    <v-btn v-if="status != 'created' && $store.state.role != 'admin'" color="info" class="mx-0" @click="addSubject()">Додати дисципліну</v-btn>
   </div>
 </template>
 
@@ -32,7 +33,8 @@
       category: {
         type: Object,
         required: true
-      }
+      },
+      status: String
     },
 
     data(){
@@ -74,8 +76,12 @@
       addSubject(){
         Api().get(`categories/${this.category.category_id}`)
           .then((response)=>{
-            EventBus.$emit('toggle-item-form', _.sumBy(this.stageItems, (item) => { return (item.choice == 0) ? item.credits : 0 }), response.data[0].credits);
-            this.createEducationItemCategory({"category_id" : this.category.category_id, "cycles_id" : this.category.cycles_id});
+            EventBus.$emit('toggle-item-form', _.sumBy(this.stageItems, (item) => { return (item.choice == 0) ? item.credits : 0 } ), response.data[0].credits);
+            this.createEducationItemCategory({
+              "category_id" : this.category.category_id, 
+              "cycles_id" : this.category.cycles_id, 
+              "fixed" : (this.status == 'created') ? 1 : 0
+              });
           })
       }
     }

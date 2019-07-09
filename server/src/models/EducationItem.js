@@ -38,6 +38,9 @@ const EducationItem = db.define('education_items', {
 	choice: {
 		type: Sequelize.BOOLEAN,
 	},
+	fixed: {
+		type: Sequelize.BOOLEAN,
+	},
 });
 
 EducationItem.belongsTo(Subjects, {
