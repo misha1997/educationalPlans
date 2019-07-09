@@ -86,37 +86,37 @@ class SubCategoriesController {
 			});
 	}
 
-	
-		async destroy(req, res) {
+	async destroy(req, res) {
+		let educationItem = await EducationItem.findAll({
+			where: {
+				sub_category_id: req.params.id,
+			},
+		});
 
-			let educationItem = await EducationItem.findAll({
-				where: {
-					sub_category_id : req.params.id
-				}
-			})
-	
-	
-			let distributionOfHours = await DistributionOfHours.findAll()
-	
-			for(let i = 0; i < distributionOfHours.length; i++) {
-				for (let j = 0; j < educationItem.length; j++) {
-					if(distributionOfHours[i].education_item_id == educationItem[j].education_item_id) {
-						DistributionOfHours.destroy({
-							where: {
-							education_item_id : educationItem[j].education_item_id
-							}
-						})
-					}
+		let distributionOfHours = await DistributionOfHours.findAll();
+
+		for (let i = 0; i < distributionOfHours.length; i++) {
+			for (let j = 0; j < educationItem.length; j++) {
+				if (
+					distributionOfHours[i].education_item_id ==
+					educationItem[j].education_item_id
+				) {
+					DistributionOfHours.destroy({
+						where: {
+							education_item_id: educationItem[j].education_item_id,
+						},
+					});
 				}
 			}
+		}
 
-			res.send();
+		res.send();
 
-			EducationItem.destroy({
-				where: {
-					sub_category_id: req.params.id,
-				},
-			})
+		EducationItem.destroy({
+			where: {
+				sub_category_id: req.params.id,
+			},
+		})
 			.then(() => {
 				res.send('Educationitem was successfully deleted');
 			})

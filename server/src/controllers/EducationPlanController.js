@@ -48,9 +48,7 @@ class EducationPlanController {
 				},
 			],
 			where: { id: req.params.id },
-			order: [
-            	['id', 'ASC']
-        	],
+			order: [['id', 'ASC']],
 		})
 			.map(el => el.get({ plain: true }))
 			.then(response => {
@@ -75,7 +73,7 @@ class EducationPlanController {
 		const creareEducationPlan = await EducationPlan.create({
 			user_id: req.body.user_id,
 			department_id: educationPlan.department_id,
-			name: educationPlan.name + " - клон",
+			name: educationPlan.name + ' - клон',
 			status: 'cloned',
 			year: educationPlan.year,
 			created_at: new Date(),
@@ -86,62 +84,65 @@ class EducationPlanController {
 			educational_program: educationPlan.educational_program,
 			educational_level: educationPlan.educational_level,
 			form_study: educationPlan.form_study,
-			training_period: educationPlan.training_period
+			training_period: educationPlan.training_period,
 		});
 
-		let planControls = await PlanControls.findAll()
+		let planControls = await PlanControls.findAll();
 
-		if(planControls.length > 0) {
+		if (planControls.length > 0) {
 			for (let i = 0; i < planControls.length; i++) {
 				await PlanControls.create({
-					id : creareEducationPlan.id,
+					id: creareEducationPlan.id,
 					module_number: planControls[i].module_number,
-					hours_week : planControls[i].hours_week,
-					exams : planControls[i].exams,
-					credit : planControls[i].credit,
-					course_work : planControls[i].course_work,
-					semester : planControls[i].semester
+					hours_week: planControls[i].hours_week,
+					exams: planControls[i].exams,
+					credit: planControls[i].credit,
+					course_work: planControls[i].course_work,
+					semester: planControls[i].semester,
 				});
 			}
 		}
 
 		let educationItem = await EducationItem.findAll({
 			where: {
-				education_plans_id : educationPlan.id
-			}
-		})
+				education_plans_id: educationPlan.id,
+			},
+		});
 
 		var newEducationItemId = [];
 
 		for (let i = 0; i < educationItem.length; i++) {
 			var createEducationItem = await EducationItem.create({
-				sub_category_id : educationItem[i].sub_category_id,
-				category_id : educationItem[i].category_id,
-				cycles_id : educationItem[i].cycles_id,
-				education_plans_id : creareEducationPlan.id,
-				subject_id : educationItem[i].subject_id,
-				credits : educationItem[i].credits,
-				lectures : educationItem[i].lectures,
-				laboratories : educationItem[i].laboratories,
-				choice : educationItem[i].choice,
-				fixed : educationItem[i].fixed
-			})
-			newEducationItemId.push(createEducationItem.education_item_id)
+				sub_category_id: educationItem[i].sub_category_id,
+				category_id: educationItem[i].category_id,
+				cycles_id: educationItem[i].cycles_id,
+				education_plans_id: creareEducationPlan.id,
+				subject_id: educationItem[i].subject_id,
+				credits: educationItem[i].credits,
+				lectures: educationItem[i].lectures,
+				laboratories: educationItem[i].laboratories,
+				choice: educationItem[i].choice,
+				fixed: educationItem[i].fixed,
+			});
+			newEducationItemId.push(createEducationItem.education_item_id);
 		}
 
-		let distributionOfHours = await DistributionOfHours.findAll()
+		let distributionOfHours = await DistributionOfHours.findAll();
 
-		for(let i = 0; i < distributionOfHours.length; i++) {
+		for (let i = 0; i < distributionOfHours.length; i++) {
 			for (let j = 0; j < educationItem.length; j++) {
-				if(distributionOfHours[i].education_item_id == educationItem[j].education_item_id) {
+				if (
+					distributionOfHours[i].education_item_id ==
+					educationItem[j].education_item_id
+				) {
 					DistributionOfHours.create({
-						education_item_id : newEducationItemId[j],
-						module_number : distributionOfHours[i].module_number,
-						value : distributionOfHours[i].value,
-						form_control : distributionOfHours[i].form_control,
-						individual_tasks : distributionOfHours[i].individual_tasks,
-						semester : distributionOfHours[i].semester
-					})
+						education_item_id: newEducationItemId[j],
+						module_number: distributionOfHours[i].module_number,
+						value: distributionOfHours[i].value,
+						form_control: distributionOfHours[i].form_control,
+						individual_tasks: distributionOfHours[i].individual_tasks,
+						semester: distributionOfHours[i].semester,
+					});
 				}
 			}
 		}
@@ -152,7 +153,7 @@ class EducationPlanController {
 	sendVerify(req, res) {
 		EducationPlan.update(
 			{
-				status: "on verification",
+				status: 'on verification',
 			},
 			{
 				where: {
@@ -161,13 +162,13 @@ class EducationPlanController {
 			},
 		).then(() => {
 			res.send();
-		})
+		});
 	}
 
 	verify(req, res) {
 		EducationPlan.update(
 			{
-				status: "verified",
+				status: 'verified',
 			},
 			{
 				where: {
@@ -176,13 +177,13 @@ class EducationPlanController {
 			},
 		).then(() => {
 			res.send();
-		})
+		});
 	}
 
 	refinement(req, res) {
 		EducationPlan.update(
 			{
-				status: "on refinement",
+				status: 'on refinement',
 			},
 			{
 				where: {
@@ -191,7 +192,7 @@ class EducationPlanController {
 			},
 		).then(() => {
 			res.send();
-		})
+		});
 	}
 
 	create(req, res) {
@@ -235,7 +236,7 @@ class EducationPlanController {
 				educational_program: req.body.data.educational_program,
 				educational_level: req.body.data.educational_level,
 				form_study: req.body.data.form_study,
-				training_period: req.body.data.training_period
+				training_period: req.body.data.training_period,
 			},
 			{
 				where: {
@@ -252,45 +253,46 @@ class EducationPlanController {
 	}
 
 	async destroy(req, res) {
-
 		let educationItem = await EducationItem.findAll({
 			where: {
-				education_plans_id : req.params.id
-			}
-		})
+				education_plans_id: req.params.id,
+			},
+		});
 
+		let distributionOfHours = await DistributionOfHours.findAll();
 
-		let distributionOfHours = await DistributionOfHours.findAll()
-
-		for(let i = 0; i < distributionOfHours.length; i++) {
+		for (let i = 0; i < distributionOfHours.length; i++) {
 			for (let j = 0; j < educationItem.length; j++) {
-				if(distributionOfHours[i].education_item_id == educationItem[j].education_item_id) {
+				if (
+					distributionOfHours[i].education_item_id ==
+					educationItem[j].education_item_id
+				) {
 					DistributionOfHours.destroy({
 						where: {
-						education_item_id : educationItem[j].education_item_id
-						}
-					})
+							education_item_id: educationItem[j].education_item_id,
+						},
+					});
 				}
 			}
 		}
 
-		res.send()
-	
+		res.send();
+
 		EducationItem.destroy({
 			where: {
 				education_plans_id: req.params.id,
 			},
-		})
+		});
 		PlanControls.destroy({
 			where: {
 				id: req.params.id,
 			},
-		})
+		});
 		EducationPlan.destroy({
 			where: {
 				id: req.params.id,
 			},
-		})
+		});
 	}
 }
 

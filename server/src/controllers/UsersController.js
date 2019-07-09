@@ -4,10 +4,10 @@ const Users = require('../models/Users');
 
 const bcrypt = require('bcrypt');
 
-function hashNewPassword (password) {
-	const SALT_FACTOR = 8
-	return bcrypt.hashSync(password, bcrypt.genSaltSync(SALT_FACTOR), null)
-  }
+function hashNewPassword(password) {
+	const SALT_FACTOR = 8;
+	return bcrypt.hashSync(password, bcrypt.genSaltSync(SALT_FACTOR), null);
+}
 
 class UsersController {
 	findAll(req, res) {
@@ -61,7 +61,14 @@ class UsersController {
 	}
 
 	update(req, res) {
-		const { name, surname, email, password, role, department_id } = req.body.data;
+		const {
+			name,
+			surname,
+			email,
+			password,
+			role,
+			department_id,
+		} = req.body.data;
 		Users.update(
 			{
 				name: name,
@@ -69,7 +76,7 @@ class UsersController {
 				email: email,
 				password: hashNewPassword(password),
 				role: role,
-				department_id: department_id
+				department_id: department_id,
 			},
 			{
 				where: {

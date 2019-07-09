@@ -21,16 +21,13 @@ class EducationItemController {
 								},
 							],
 						},
-					]
+					],
 				});
 				let educationItems = await EducationItem.findAll({
 					where: {
 						education_plans_id: req.body.id,
 					},
-					include: [
-						{ model: Subjects },
-						{ model: DistributionOfHours }
-					],
+					include: [{ model: Subjects }, { model: DistributionOfHours }],
 				});
 
 				res.send({
