@@ -17,7 +17,7 @@
     <v-btn v-if="status != 'created' && $store.state.role == 'repres_depart'" color="info right" class="mx-0" @click="sendVerify()">Відправити на верифікацію</v-btn>
 
     <v-btn v-if="status == 'on verification' && $store.state.role == 'repres_omu'" color="info right" class="mx-1" @click="verify()">Підтвердити</v-btn>
-    <v-btn v-if="status == 'on verification' && $store.state.role == 'repres_omu'" color="info right" class="mx-1" @click="refinement()">Відправити на дообпацівання</v-btn>
+    <v-btn v-if="status == 'on verification' && $store.state.role == 'repres_omu'" color="info right" class="mx-1" @click="refinement()">Відправити на доопрацювання</v-btn>
 
     <div v-for="cycles in sortedCycles" :key="cycles.id" class="mt-4">
       <h3 class="text-md-center">{{ cycles.name.toUpperCase() }}</h3>

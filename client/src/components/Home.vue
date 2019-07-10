@@ -125,7 +125,8 @@
         <td v-if="props.item.status == 'created'">Шаблон</td>
         <td v-if="props.item.status == 'cloned'">Копія плану</td>
         <td v-if="props.item.status == 'verified'">Верифікований</td>
-        <td v-if="props.item.status == 'on refinement'">На верифікації</td>
+        <td v-if="props.item.status == 'on refinement'">Треба доопрацювати</td>
+        <td v-if="props.item.status == 'on verification'">На верифікації</td>
         <td>{{ props.item.year }}</td>
         <td>{{ props.item.created_at.substring(0,10) }}</td>
         <td class="right layout px-1 pr-4">

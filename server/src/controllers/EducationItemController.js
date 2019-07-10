@@ -54,7 +54,7 @@ class EducationItemController {
 	store(req, res) {
 		EducationItem.create(req.body)
 			.then(response => {
-				EducationItem.find({
+				EducationItem.findAll({
 					where: {
 						education_item_id: response.education_item_id,
 					},
