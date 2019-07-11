@@ -5,7 +5,7 @@
       <v-toolbar-title>Навчальні плани</v-toolbar-title>
       <v-spacer></v-spacer>
       <v-dialog v-model="dialog" max-width="600px">
-        <v-btn slot="activator" icon color="primary" v-if="$store.state.role == 'admin'" dark class="mb-2"> <v-icon>add</v-icon></v-btn>
+        <v-btn slot="activator" icon color="primary" v-if="$store.state.role == 'admin'" dark class="mb-2"> <v-icon title="Додати">add</v-icon></v-btn>
         <v-form ref="form" @submit.prevent="save()">
           <v-card>
             <v-card-title>
