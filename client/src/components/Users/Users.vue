@@ -4,7 +4,7 @@
       <v-toolbar-title>Користувачі</v-toolbar-title>
       <v-spacer></v-spacer>
       <v-dialog v-model="dialog" max-width="500px">
-        <v-btn slot="activator" icon color="primary" dark class="mb-2"> <v-icon>add</v-icon></v-btn>
+        <v-btn slot="activator" icon color="primary" dark class="mb-2"> <v-icon title="Додати">add</v-icon></v-btn>
         <v-form ref="form" @submit.prevent="save()">
           <v-card>
             <v-card-title>
@@ -110,6 +110,7 @@
         <td v-if="props.item.role == 'repres_depart'">Представник кафедри</td>
         <td class="justify-center layout px-1 pr-4">
           <v-icon
+          title="Редагувати"
             small
             class="mr-2"
             @click="editItem(props.item)"
@@ -117,6 +118,7 @@
             edit
           </v-icon>
           <v-icon
+          title="Видалити"
             small
             @click="deleteItem(props.item), deleteEmail()"
           >

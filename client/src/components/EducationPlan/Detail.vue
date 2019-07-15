@@ -147,7 +147,7 @@
         Api().post(`education-plan/refinement`, {
           id: this.getEducationPlanId
         }).then(() => {
-          successAlert("Навчальний план відправлено на дообрацювання");
+          successAlert("Навчальний план відправлено на доопрацювання");
         })
       },
 
