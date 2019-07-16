@@ -22,6 +22,9 @@ class EducationItemController {
 							],
 						},
 					],
+					order: [
+						['name', 'ASC'],
+					],
 				});
 				let educationItems = await EducationItem.findAll({
 					where: {
