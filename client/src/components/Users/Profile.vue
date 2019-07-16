@@ -70,6 +70,7 @@
         <td v-if="props.item.role == 'repres_depart'">Представник кафедри</td>
         <td class="justify-center layout px-1 pr-4">
           <v-icon
+          title="Редагувати"
             small
             class="mr-2"
             @click="editItem(props.item)"
