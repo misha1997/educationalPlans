@@ -277,7 +277,6 @@
           }).then(() => {
             Api().get(`education-plan/${this.getEducationPlanId}`).then((response)=>{
               const dataPlan = {
-                name: response.data[0].name,
                 subdivision: response.data[0].department.subdivision.name,
                 year: response.data[0].year,
                 qualification: response.data[0].qualification,
@@ -333,9 +332,6 @@
             </table>
             <br>
             <table cellspacing='0' id='printTable' style='width: 100%;margin: 0 auto;font-size:14px' border=1>
-              <tr>
-                <td colspan=30 align='center'>${dataPlan.name}</td>
-              </tr>
               <tr>
                 <td rowspan=8>№
                 <td rowspan=8 align='center'>назви навчальних дисциплін
@@ -436,13 +432,9 @@
         }
       },
       printData() {
-        const WinPrint = window.open('', '');
-        WinPrint.document.write(this.table);
-        WinPrint.document.body.setAttribute('style', 'font-family: "Open Sans"');
-        WinPrint.document.close();
-        WinPrint.focus();
-        WinPrint.print();
-        WinPrint.close();
+        document.write(this.table);
+        window.print();
+        location.reload();
       },
       viewItem(link){
         this.$router.push(link);
