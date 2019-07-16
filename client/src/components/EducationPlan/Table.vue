@@ -277,7 +277,6 @@
           }).then(() => {
             Api().get(`education-plan/${this.getEducationPlanId}`).then((response)=>{
               const dataPlan = {
-                name: response.data[0].name,
                 subdivision: response.data[0].department.subdivision.name,
                 year: response.data[0].year,
                 qualification: response.data[0].qualification,
@@ -332,64 +331,110 @@
               </tr>
             </table>
             <br>
-            <table cellspacing='0' id='printTable' style='width: 100%;margin: 0 auto;font-size:14px' border=1>
-              <tr>
-                <td colspan=30 align='center'>${dataPlan.name}</td>
-              </tr>
+            <table cellspacing='0' id='printTable' style='width: 100%; border-collapse: collapse; margin: 0 auto;font-size:14px' border=1>
               <tr>
                 <td rowspan=8>№
                 <td rowspan=8 align='center'>назви навчальних дисциплін
                 <td colspan=3 align='center'>розподіл контрольних заходів за семестрами
-                <td rowspan=8 align='center'>кількість кредитів ЄКТС
+                <td rowspan=8 align='center' style='transform: rotate(-90deg);'>кількість кредитів ЄКТС</td>
                 <td colspan=6 align='center'>кількість годин
                 <td colspan=16 align='center'>розподіл годин на тиждень за курсами, семестрами і модульними атестаційними циклами
+              </tr>
               <tr>
-                <td rowspan=7>іспити
-                <td rowspan=7>заліки
-                <td rowspan=7 align='center'>індивідуальні завдання
-                <td rowspan=7 align='center'>загальний обсяг
+                <td rowspan=7 style='transform: rotate(-90deg);'>іспити
+                <td rowspan=7 style='transform: rotate(-90deg);'>заліки
+                <td rowspan=7 align='center' style='transform: rotate(-90deg);'>індивідуальні завдання
+                <td rowspan=7 style='transform: rotate(-90deg);' align='center'>загальний обсяг
                 <td colspan=4 align='center'>аудиторних
-                <td rowspan=7 align='center'>самостійна робота
+                <td rowspan=7 align='center' style='transform: rotate(-90deg);'>самостійна робота
                 <td colspan=4 align='center'>1 курс
                 <td colspan=4 align='center'>2 курс
                 <td colspan=4 align='center'>3 курс
                 <td colspan=4 align='center'>4 курс
+                </tr>
               <tr>
-                <td rowspan=6>всього
+                <td rowspan=6 style='transform: rotate(-90deg);'>всього
                 <td colspan=3 align='center'>у тому числі:
                 <td colspan=16 align='center'>семестри
+                </tr>
               <tr>
                 <td colspan=3>
-                <td colspan=2 align="center">1
-                <td colspan=2 align="center">2
-                <td colspan=2 align="center">3
-                <td colspan=2 align="center">4
-                <td colspan=2 align="center">5
-                <td colspan=2 align="center">6
-                <td colspan=2 align="center">7
-                <td colspan=2 align="center">8
+                <td colspan=2 style='padding: 3.5pt; font-size: 8pt' align="center">1
+                <td colspan=2 style='padding: 3.5pt; font-size: 8pt' align="center">2
+                <td colspan=2 style='padding: 3.5pt; font-size: 8pt' align="center">3
+                <td colspan=2 style='padding: 3.5pt; font-size: 8pt' align="center">4
+                <td colspan=2 style='padding: 3.5pt; font-size: 8pt' align="center">5
+                <td colspan=2 style='padding: 3.5pt; font-size: 8pt' align="center">6
+                <td colspan=2 style='padding: 3.5pt; font-size: 8pt' align="center">7
+                <td colspan=2 style='padding: 3.5pt; font-size: 8pt' align="center">8
+                </tr>
               <tr>
-                <td rowspan=4>лекції
-                <td rowspan=4 align='center'>практичні, семінарські
-                <td rowspan=4>лабораторні
+                <td rowspan=4 style='transform: rotate(-90deg);'>лекції
+                <td rowspan=4 align='center' style='transform: rotate(-90deg);'>практичні, семінарські
+                <td rowspan=4 style='transform: rotate(-90deg);'>лабораторні
                 <td colspan=16 align='center'>модульні атестаційні цикли
+                </tr>
               <tr>
-                <td align="center">I<td align="center">II<td align="center">III<td align="center">IV
-                <td align="center">I<td align="center">II<td align="center">III<td align="center">IV
-                <td align="center">I<td align="center">II<td align="center">III<td align="center">IV
-                <td align="center">I<td align="center">II<td align="center">III<td align="center">IV
+                <td style='padding: 3.5pt; font-size: 8pt' align="center">I<td style='padding: 3.5pt; font-size: 8pt' align="center">II
+                <td style='padding: 3.5pt; font-size: 8pt' align="center">III<td style='padding: 3.5pt; font-size: 8pt' align="center">IV
+                <td style='padding: 3.5pt; font-size: 8pt' align="center">I<td style='padding: 3.5pt; font-size: 8pt' align="center">II
+                <td style='padding: 3.5pt; font-size: 8pt' align="center">III<td style='padding: 3.5pt; font-size: 8pt'align="center">IV
+                <td style='padding: 3.5pt; font-size: 8pt' align="center">I<td style='padding: 3.5pt; font-size: 8pt' align="center">II
+                <td style='padding: 3.5pt; font-size: 8pt' align="center">III<td style='padding: 3.5pt; font-size: 8pt' align="center">IV
+                <td style='padding: 3.5pt; font-size: 8pt' align="center">I<td style='padding: 3.5pt; font-size: 8pt' align="center">II
+                <td style='padding: 3.5pt; font-size: 8pt' align="center">III<td style='padding: 3.5pt; font-size: 8pt' align="center">IV
+                </tr>
               <tr>
                 <td colspan=16 align='center'>кількість тижнів у модульному атестаційному циклі
+                </tr>
               <tr>
-                <td align="center">8<td align="center">8<td align="center">8<td align="center">8<td align="center">8<td align="center">8
-                <td align="center">8<td align="center">8<td align="center">8<td align="center">8<td align="center">8<td align="center">8
-                <td align="center">8<td align="center">8<td align="center">8<td align="center">8
+                <td style='padding: 3.5pt; font-size: 8pt' align="center">8
+                <td style='padding: 3.5pt; font-size: 8pt' align="center">8
+                <td style='padding: 3.5pt; font-size: 8pt' align="center">8
+                <td style='padding: 3.5pt; font-size: 8pt' align="center">8
+                <td style='padding: 3.5pt; font-size: 8pt' align="center">8
+                <td style='padding: 3.5pt; font-size: 8pt' align="center">8
+                <td style='padding: 3.5pt; font-size: 8pt' align="center">8
+                <td style='padding: 3.5pt; font-size: 8pt' align="center">8
+                <td style='padding: 3.5pt; font-size: 8pt' align="center">8
+                <td style='padding: 3.5pt; font-size: 8pt' align="center">8
+                <td style='padding: 3.5pt; font-size: 8pt' align="center">8
+                <td style='padding: 3.5pt; font-size: 8pt' align="center">8
+                <td style='padding: 3.5pt; font-size: 8pt' align="center">8
+                <td style='padding: 3.5pt; font-size: 8pt' align="center">8
+                <td style='padding: 3.5pt; font-size: 8pt' align="center">8
+                <td style='padding: 3.5pt; font-size: 8pt' align="center">8
+                </tr>
               <tr>
-                <td align="center">1<td align="center">2<td align="center">3<td align="center">4<td align="center">5<td align="center">6<td align="center">7<td align="center">8
-                <td align="center">9<td align="center">10
-                <td align="center">11<td align="center">12<td align="center">13<td align="center">14<td align="center">15<td align="center">16<td align="center">17
-                <td align="center">18<td align="center">19<td align="center">20
-                <td align="center">21<td align="center">22<td align="center">23<td align="center">24<td align="center">25<td align="center">26<td align="center">27<td align="center">28`;
+                <td style='padding: 3.5pt; font-size: 8pt' align="center">1
+                <td style='padding: 3.5pt; font-size: 8pt' align="center">2
+                <td style='padding: 3.5pt; font-size: 8pt' align="center">3
+                <td style='padding: 3.5pt; font-size: 8pt' align="center">4
+                <td style='padding: 3.5pt; font-size: 8pt' align="center">5
+                <td style='padding: 3.5pt; font-size: 8pt' align="center">6
+                <td style='padding: 3.5pt; font-size: 8pt' align="center">7
+                <td style='padding: 3.5pt; font-size: 8pt' align="center">8
+                <td style='padding: 3.5pt; font-size: 8pt' align="center">9
+                <td style='padding: 3.5pt; font-size: 8pt' align="center">10
+                <td style='padding: 3.5pt; font-size: 8pt' align="center">11
+                <td style='padding: 3.5pt; font-size: 8pt' align="center">12
+                <td style='padding: 3.5pt; font-size: 8pt' align="center">13
+                <td style='padding: 3.5pt; font-size: 8pt' align="center">14
+                <td style='padding: 3.5pt; font-size: 8pt' align="center">15
+                <td style='padding: 3.5pt; font-size: 8pt' align="center">16
+                <td style='padding: 3.5pt; font-size: 8pt' align="center">17
+                <td style='padding: 3.5pt; font-size: 8pt' align="center">18
+                <td style='padding: 3.5pt; font-size: 8pt' align="center">19
+                <td style='padding: 3.5pt; font-size: 8pt' align="center">20
+                <td style='padding: 3.5pt; font-size: 8pt' align="center">21
+                <td style='padding: 3.5pt; font-size: 8pt' align="center">22
+                <td style='padding: 3.5pt; font-size: 8pt' align="center">23
+                <td style='padding: 3.5pt; font-size: 8pt' align="center">24
+                <td style='padding: 3.5pt; font-size: 8pt' align="center">25
+                <td style='padding: 3.5pt; font-size: 8pt' align="center">26
+                <td style='padding: 3.5pt; font-size: 8pt' align="center">27
+                <td style='padding: 3.5pt; font-size: 8pt' align="center">28
+                </tr>`;
 
               for(var i=0; i<myArray.length; i++) {
                   result += `<tr>`;
@@ -436,13 +481,9 @@
         }
       },
       printData() {
-        const WinPrint = window.open('', '');
-        WinPrint.document.write(this.table);
-        WinPrint.document.body.setAttribute('style', 'font-family: "Open Sans"');
-        WinPrint.document.close();
-        WinPrint.focus();
-        WinPrint.print();
-        WinPrint.close();
+        document.write(this.table);
+        window.print();
+        location.reload();
       },
       viewItem(link){
         this.$router.push(link);
