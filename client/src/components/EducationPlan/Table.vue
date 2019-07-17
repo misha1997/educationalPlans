@@ -304,9 +304,9 @@
               <tr>
                 <td colspan="2">
                   Затверджено рішенням вченої ради.<br>
-                  Протокол від ____.___________._____р. № ____<br>
+                  <p style="margin-top: 9pt; margin-bottom: 9pt">Протокол від ____.___________._____ р. № ____</p>
                   Голова ради ________________ А. В. Васильєв<br>
-                  <span style="margin-left: 120px;">(підпис)</span><br>
+                  <span style="margin-top:-1pt; font-size: 8pt; margin-left: 130px;">(підпис)</span><br>
                   ______ ________________________ ________ р.<br>
                   <span style="margin-left: 130px;">М.П.</span>
                 </td>
@@ -331,7 +331,7 @@
               </tr>
             </table>
             <br>
-            <table cellspacing='0' id='printTable' style='width: 100%; border-collapse: collapse; margin: 0 auto;font-size:14px' border=1>
+            <table cellspacing='0' id='printTable' style='width: 100%; border: 1px solid black; border-collapse: collapse; margin: 0 auto;font-size:14px' border=1>
               <tr>
                 <td rowspan=8>№
                 <td rowspan=8 align='center'>назви навчальних дисциплін
