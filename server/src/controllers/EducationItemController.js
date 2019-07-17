@@ -18,7 +18,13 @@ class EducationItemController {
 							include: [
 								{
 									model: SubCategories,
+									order: [
+										['name', 'ASC'],
+									],
 								},
+							],
+							order: [
+								['name', 'ASC'],
 							],
 						},
 					],
