@@ -675,18 +675,49 @@
               }
               result += `</table>`;
 
-            result += "<div style='width: 100%; margin-top: 24pt'><div style='float: left; width: 46%'>Декан факультету/Директор інституту</div>"
-            result += "<div style='float: left; width: 5%; text-align: center'>_________<div style='margin-top:-1pt; padding-left: 12pt; font-size: 8pt; text-align: center'>(підпис)</div></div></div><div style='clear: both'></div>";
-            result += "<div style='width: 100%; margin-top: 12pt'><div style='float: left; width: 46%'>Завідувач кафедри із спеціальної (фахової) підготовки</div>"
-            result += "<div style='float: left; width: 5%; margin-top: 12pt'>_________<div style='margin-top:-1pt; padding-left: 12pt; font-size: 8pt; text-align: center'>(підпис)</div></div>";
-            result += "<div style='float: left; margin-left: 5%; width: 15%; margin-top: 12pt'; text-align: center'>___________________<div style='margin-top:-1pt; font-size: 8pt; text-align: center'>(прізвище та ініціали)</div></div>";
-            result += "<div style='width: 100%; margin-top: 12pt'><div style='float: left; width: 46%'>Керівник робочої проектної групи</div>"
-            result += "<div style='float: left; width: 5%; margin-top: 12pt'>_________<div style='margin-top:-1pt; padding-left: 12pt; font-size: 8pt; text-align: center'>(підпис)</div></div>";
-            result += "<div style='float: left; margin-left: 5%; width: 15%; margin-top: 12pt'; text-align: center'>___________________<div style='margin-top:-1pt; font-size: 8pt; text-align: center'>(прізвище та ініціали)</div></div><div style='clear: both'></div>";
-            result += "<div style='width: 100%; margin-top: 10pt'>ПОГОДЖЕНО:</div>"
-            result += "<div style='width: 100%;'><div style='float: left; width: 46%'>Начальник організаційно-методичного управління </div>"
-            result += "<div style='float: left; width: 5%'>_________<div style='margin-top:-1pt; font-size: 8pt; padding-left: 12pt; text-align: center'>(підпис)</div></div>";
-            result += "<div style='float: left; margin-left: 5%; width: 15%; text-align: center'>___________________<div style='margin-top:-1pt; font-size: 8pt; text-align: center'>(прізвище та ініціали)</div></div></div>";
+            result += `<div style='width: 100%; margin-top: 24pt'></div>
+            <div style='float: left; width: 46%'>Декан факультету/Директор інституту</div>
+            <div style='float: left; width: 5%; text-align: center'>_________
+            <div style='margin-top:-1pt; padding-left: 8pt; font-size: 8pt; text-align: center'>(підпис)</div>
+            </div>
+            <div style='float: left; margin-left: 2%; width: 15%;' text-align: center'>___________________
+            <div style='margin-top:-1pt; font-size: 8pt; padding-left: 22pt'>(прізвище та ініціали)</div>
+            </div>
+            <div style='clear: both'></div>
+
+            <div style='width: 100%; margin-top: 10pt'></div>
+            <div style='float: left; width: 46%'>Завідувач кафедри із спеціальної (фахової) підготовки</div>
+            <div style='float: left; width: 5%; text-align: center'>_________
+            <div style='margin-top:-1pt; padding-left: 8pt; font-size: 8pt; text-align: center'>(підпис)</div>
+            </div>
+            <div style='float: left; margin-left: 2%; width: 15%;' text-align: center'>___________________
+            <div style='margin-top:-1pt; font-size: 8pt; padding-left: 22pt'>(прізвище та ініціали)</div>
+            </div>
+            <div style='clear: both'></div>
+
+            <div style='width: 100%; margin-top: 10pt'></div>
+            <div style='float: left; width: 46%'>Керівник робочої проектної групи</div>
+            <div style='float: left; width: 5%; text-align: center'>_________
+            <div style='margin-top:-1pt; padding-left: 8pt; font-size: 8pt; text-align: center'>(підпис)</div>
+            </div>
+            <div style='float: left; margin-left: 2%; width: 15%;' text-align: center'>___________________
+            <div style='margin-top:-1pt; font-size: 8pt; padding-left: 22pt'>(прізвище та ініціали)</div>
+            </div>
+            <div style='clear: both'></div>
+
+            <div style='width: 100%; margin-top: 10pt'></div>
+            <div style='width: 100%; margin-top: 10pt'>ПОГОДЖЕНО:</div>
+            <div style='float: left; width: 46%'>Начальник організаційно-методичного управління</div>
+            <div style='float: left; width: 5%; text-align: center'>_________
+            <div style='margin-top:-1pt; padding-left: 8pt; font-size: 8pt; text-align: center'>(підпис)</div>
+            </div>
+            <div style='float: left; margin-left: 2%; width: 15%;' text-align: center'>___________________
+            <div style='margin-top:-1pt; font-size: 8pt; padding-left: 22pt'>(прізвище та ініціали)</div>
+            </div>
+            <div style='clear: both'></div>
+
+            
+            `;
             return result;
         }
       },
