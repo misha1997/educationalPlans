@@ -16,10 +16,19 @@ app.use(bodyParser.json());
 app.use(express.urlencoded({ extended: false }));
 
 app.use(cors());
-app.use(logger('dev'));
+
+if(process.env.NODE_ENV !== 'production') app.use(logger('dev'));
+
 app.use(cookieParser());
 
 require('./routes')(app);
+
+app.use(function(req, res, next) {
+ 	req.headers['if-none-match'] = 'no-match-for-this';
+ 	next();
+});
+
+app.use(express.static(__dirname + '/public'));
 
 app.use((req, res, next) => next(createError(404)));
 app.use((err, req, res, next) => {

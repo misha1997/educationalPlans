@@ -45,7 +45,7 @@ const Users = db.define(
 		department_id: {
 			type: Sequelize.INTEGER,
 			allowNull: true,
-		}
+		},
 	},
 	{
 		hooks: {

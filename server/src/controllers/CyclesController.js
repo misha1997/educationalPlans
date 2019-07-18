@@ -60,64 +60,62 @@ class CyclesController {
 	}
 
 	async destroy(req, res) {
-		
-		
 		let educationItem = await EducationItem.findAll({
 			where: {
-				cycles_id : req.params.id
-			}
-		})
+				cycles_id: req.params.id,
+			},
+		});
 
+		let distributionOfHours = await DistributionOfHours.findAll();
 
-		let distributionOfHours = await DistributionOfHours.findAll()
-
-		for(let i = 0; i < distributionOfHours.length; i++) {
+		for (let i = 0; i < distributionOfHours.length; i++) {
 			for (let j = 0; j < educationItem.length; j++) {
-				if(distributionOfHours[i].education_item_id == educationItem[j].education_item_id) {
+				if (
+					distributionOfHours[i].education_item_id ==
+					educationItem[j].education_item_id
+				) {
 					DistributionOfHours.destroy({
 						where: {
-						education_item_id : educationItem[j].education_item_id
-						}
-					})
+							education_item_id: educationItem[j].education_item_id,
+						},
+					});
 				}
 			}
 		}
 
 		let category = await Categories.findAll({
 			where: {
-				cycles_id : req.params.id
-			}
-		})
+				cycles_id: req.params.id,
+			},
+		});
 
+		let subCategories = await SubCategories.findAll();
 
-		let subCategories = await SubCategories.findAll()
-
-		for(let i = 0; i < subCategories.length; i++) {
+		for (let i = 0; i < subCategories.length; i++) {
 			for (let j = 0; j < category.length; j++) {
-				if(subCategories[i].category_id == category[j].category_id) {
+				if (subCategories[i].category_id == category[j].category_id) {
 					SubCategories.destroy({
 						where: {
-							category_id : category[j].category_id
-						}
-					})
+							category_id: category[j].category_id,
+						},
+					});
 				}
 			}
 		}
 
 		res.send();
 
-
 		EducationItem.destroy({
 			where: {
 				cycles_id: req.params.id,
 			},
 		})
-		.then(() => {
-			res.send('Educationitem was successfully deleted');
-		})
-		.catch(err => {
-			res.send(err);
-		});
+			.then(() => {
+				res.send('Educationitem was successfully deleted');
+			})
+			.catch(err => {
+				res.send(err);
+			});
 
 		Categories.destroy({
 			where: {
@@ -142,8 +140,6 @@ class CyclesController {
 			.catch(err => {
 				res.send(err);
 			});
-
-			
 	}
 }
 

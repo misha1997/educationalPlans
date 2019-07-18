@@ -32,6 +32,10 @@
         var exams = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
         var credit = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
         var course_work = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+
+
+        
+
         Api().post('education-item', {
           id: this.getEducationPlanId
         }).then((response)=>{
@@ -163,7 +167,32 @@
                   sumHoursCycles[i] += sumHours[i]
                 }
                 if(categories[cat].sub_categories.length == 0) {
-                  result.push(_.concat([""],["Усього"], sumCategory, sumHours))
+                  result.push(_.concat([""],["<b>Усього"], 
+                  "","","",
+          `<b>`+sumCategory[3]+`</b>`, 
+          `<b>`+sumCategory[4]+`</b>`, 
+          `<b>`+sumCategory[5]+`</b>`, 
+          `<b>`+sumCategory[6]+`</b>`, 
+          `<b>`+sumCategory[7]+`</b>`, 
+          `<b>`+sumCategory[8]+`</b>`, 
+          `<b>`+sumCategory[9]+`</b>`,
+
+          `<b>`+sumHours[0]+`</b>`, 
+          `<b>`+sumHours[1]+`</b>`, 
+          `<b>`+sumHours[2]+`</b>`, 
+          `<b>`+sumHours[3]+`</b>`, 
+          `<b>`+sumHours[4]+`</b>`, 
+          `<b>`+sumHours[5]+`</b>`, 
+          `<b>`+sumHours[6]+`</b>`,
+          `<b>`+sumHours[7]+`</b>`, 
+          `<b>`+sumHours[8]+`</b>`, 
+          `<b>`+sumHours[9]+`</b>`,
+          `<b>`+sumHours[10]+`</b>`, 
+          `<b>`+sumHours[11]+`</b>`, 
+          `<b>`+sumHours[12]+`</b>`, 
+          `<b>`+sumHours[13]+`</b>`, 
+          `<b>`+sumHours[14]+`</b>`, 
+          `<b>`+sumHours[15]+`</b>`))
                   _.fill(sumCategory, 0);
                   _.fill(sumHours, 0);
                 }
@@ -232,26 +261,175 @@
                   for (let i = 0; i < 16; i++) {
                     sumHoursCycles[i] += sumHours[i]
                   }
-                  result.push(_.concat([""],["Усього"], sumSubCategory, sumHours));
+                  result.push(_.concat([""],["<b>Усього"], 
+                    "","","",
+          `<b>`+sumSubCategory[3]+`</b>`, 
+          `<b>`+sumSubCategory[4]+`</b>`, 
+          `<b>`+sumSubCategory[5]+`</b>`, 
+          `<b>`+sumSubCategory[6]+`</b>`, 
+          `<b>`+sumSubCategory[7]+`</b>`, 
+          `<b>`+sumSubCategory[8]+`</b>`, 
+          `<b>`+sumSubCategory[9]+`</b>`,
+
+          `<b>`+sumHours[0]+`</b>`, 
+          `<b>`+sumHours[1]+`</b>`, 
+          `<b>`+sumHours[2]+`</b>`, 
+          `<b>`+sumHours[3]+`</b>`, 
+          `<b>`+sumHours[4]+`</b>`, 
+          `<b>`+sumHours[5]+`</b>`, 
+          `<b>`+sumHours[6]+`</b>`,
+          `<b>`+sumHours[7]+`</b>`, 
+          `<b>`+sumHours[8]+`</b>`, 
+          `<b>`+sumHours[9]+`</b>`,
+          `<b>`+sumHours[10]+`</b>`, 
+          `<b>`+sumHours[11]+`</b>`, 
+          `<b>`+sumHours[12]+`</b>`, 
+          `<b>`+sumHours[13]+`</b>`, 
+          `<b>`+sumHours[14]+`</b>`, 
+          `<b>`+sumHours[15]+`</b>`,
+
+                  ));
                   _.fill(sumSubCategory, 0);
                   _.fill(sumHours, 0);
                 })
               })
               iter = 0
               if (cycles[c].cycles_id == 1){
-              result.push(_.concat([""],["Усього за навчальними дисциплінами загальної підготовки"], sumCycles, sumHoursCycles))
+              result.push(_.concat([""],["<b>Усього за навчальними дисциплінами загальної підготовки"],   "","","",
+          `<b>`+sumCycles[3]+`</b>`, 
+          `<b>`+sumCycles[4]+`</b>`, 
+          `<b>`+sumCycles[5]+`</b>`, 
+          `<b>`+sumCycles[6]+`</b>`, 
+          `<b>`+sumCycles[7]+`</b>`, 
+          `<b>`+sumCycles[8]+`</b>`, 
+          `<b>`+sumCycles[9]+`</b>`,
+
+          `<b>`+sumHoursCycles[0]+`</b>`, 
+          `<b>`+sumHoursCycles[1]+`</b>`, 
+          `<b>`+sumHoursCycles[2]+`</b>`, 
+          `<b>`+sumHoursCycles[3]+`</b>`, 
+          `<b>`+sumHoursCycles[4]+`</b>`, 
+          `<b>`+sumHoursCycles[5]+`</b>`, 
+          `<b>`+sumHoursCycles[6]+`</b>`,
+          `<b>`+sumHoursCycles[7]+`</b>`, 
+          `<b>`+sumHoursCycles[8]+`</b>`, 
+          `<b>`+sumHoursCycles[9]+`</b>`,
+          `<b>`+sumHoursCycles[10]+`</b>`, 
+          `<b>`+sumHoursCycles[11]+`</b>`, 
+          `<b>`+sumHoursCycles[12]+`</b>`, 
+          `<b>`+sumHoursCycles[13]+`</b>`, 
+          `<b>`+sumHoursCycles[14]+`</b>`, 
+          `<b>`+sumHoursCycles[15]+`</b>`,))
               }
               else if (cycles[c].cycles_id == 2){
-              result.push(_.concat([""],["Усього за дисциплінами професійної підготовки"], sumCycles, sumHoursCycles))
+              result.push(_.concat([""],["<b>Усього за дисциплінами професійної підготовки"],   "","","",
+          `<b>`+sumCycles[3]+`</b>`, 
+          `<b>`+sumCycles[4]+`</b>`, 
+          `<b>`+sumCycles[5]+`</b>`, 
+          `<b>`+sumCycles[6]+`</b>`, 
+          `<b>`+sumCycles[7]+`</b>`, 
+          `<b>`+sumCycles[8]+`</b>`, 
+          `<b>`+sumCycles[9]+`</b>`,
+
+          `<b>`+sumHoursCycles[0]+`</b>`, 
+          `<b>`+sumHoursCycles[1]+`</b>`, 
+          `<b>`+sumHoursCycles[2]+`</b>`, 
+          `<b>`+sumHoursCycles[3]+`</b>`, 
+          `<b>`+sumHoursCycles[4]+`</b>`, 
+          `<b>`+sumHoursCycles[5]+`</b>`, 
+          `<b>`+sumHoursCycles[6]+`</b>`,
+          `<b>`+sumHoursCycles[7]+`</b>`, 
+          `<b>`+sumHoursCycles[8]+`</b>`, 
+          `<b>`+sumHoursCycles[9]+`</b>`,
+          `<b>`+sumHoursCycles[10]+`</b>`, 
+          `<b>`+sumHoursCycles[11]+`</b>`, 
+          `<b>`+sumHoursCycles[12]+`</b>`, 
+          `<b>`+sumHoursCycles[13]+`</b>`, 
+          `<b>`+sumHoursCycles[14]+`</b>`, 
+          `<b>`+sumHoursCycles[15]+`</b>`,))
               }
               else if (cycles[c].cycles_id == 3){
-              result.push(_.concat([""],["Усього практичної підготовки"], sumCycles, sumHoursCycles))
+              result.push(_.concat([""],["<b>Усього практичної підготовки"],   "","","",
+          `<b>`+sumCycles[3]+`</b>`, 
+          `<b>`+sumCycles[4]+`</b>`, 
+          `<b>`+sumCycles[5]+`</b>`, 
+          `<b>`+sumCycles[6]+`</b>`, 
+          `<b>`+sumCycles[7]+`</b>`, 
+          `<b>`+sumCycles[8]+`</b>`, 
+          `<b>`+sumCycles[9]+`</b>`,
+
+          `<b>`+sumHoursCycles[0]+`</b>`, 
+          `<b>`+sumHoursCycles[1]+`</b>`, 
+          `<b>`+sumHoursCycles[2]+`</b>`, 
+          `<b>`+sumHoursCycles[3]+`</b>`, 
+          `<b>`+sumHoursCycles[4]+`</b>`, 
+          `<b>`+sumHoursCycles[5]+`</b>`, 
+          `<b>`+sumHoursCycles[6]+`</b>`,
+          `<b>`+sumHoursCycles[7]+`</b>`, 
+          `<b>`+sumHoursCycles[8]+`</b>`, 
+          `<b>`+sumHoursCycles[9]+`</b>`,
+          `<b>`+sumHoursCycles[10]+`</b>`, 
+          `<b>`+sumHoursCycles[11]+`</b>`, 
+          `<b>`+sumHoursCycles[12]+`</b>`, 
+          `<b>`+sumHoursCycles[13]+`</b>`, 
+          `<b>`+sumHoursCycles[14]+`</b>`, 
+          `<b>`+sumHoursCycles[15]+`</b>`,))
               }
               else if (cycles[c].cycles_id == 4){
-              result.push(_.concat([""],["Усього атестації"], sumCycles, sumHoursCycles))
+              result.push(_.concat([""],["<b>Усього атестації"],   "","","",
+          `<b>`+sumCycles[3]+`</b>`, 
+          `<b>`+sumCycles[4]+`</b>`, 
+          `<b>`+sumCycles[5]+`</b>`, 
+          `<b>`+sumCycles[6]+`</b>`, 
+          `<b>`+sumCycles[7]+`</b>`, 
+          `<b>`+sumCycles[8]+`</b>`, 
+          `<b>`+sumCycles[9]+`</b>`,
+
+          `<b>`+sumHoursCycles[0]+`</b>`, 
+          `<b>`+sumHoursCycles[1]+`</b>`, 
+          `<b>`+sumHoursCycles[2]+`</b>`, 
+          `<b>`+sumHoursCycles[3]+`</b>`, 
+          `<b>`+sumHoursCycles[4]+`</b>`, 
+          `<b>`+sumHoursCycles[5]+`</b>`, 
+          `<b>`+sumHoursCycles[6]+`</b>`,
+          `<b>`+sumHoursCycles[7]+`</b>`, 
+          `<b>`+sumHoursCycles[8]+`</b>`, 
+          `<b>`+sumHoursCycles[9]+`</b>`,
+          `<b>`+sumHoursCycles[10]+`</b>`, 
+          `<b>`+sumHoursCycles[11]+`</b>`, 
+          `<b>`+sumHoursCycles[12]+`</b>`, 
+          `<b>`+sumHoursCycles[13]+`</b>`, 
+          `<b>`+sumHoursCycles[14]+`</b>`, 
+          `<b>`+sumHoursCycles[15]+`</b>`,))
               }
               else{
-                result.push(_.concat([""],["Усього за "+cycles[c].name.toLowerCase()], sumCycles, sumHoursCycles))
+                result.push(_.concat([""],["<b>Усього за "+cycles[c].name.toLowerCase()], 
+                "","","",
+          `<b>`+sumCycles[3]+`</b>`, 
+          `<b>`+sumCycles[4]+`</b>`, 
+          `<b>`+sumCycles[5]+`</b>`, 
+          `<b>`+sumCycles[6]+`</b>`, 
+          `<b>`+sumCycles[7]+`</b>`, 
+          `<b>`+sumCycles[8]+`</b>`, 
+          `<b>`+sumCycles[9]+`</b>`,
+
+          `<b>`+sumHoursCycles[0]+`</b>`, 
+          `<b>`+sumHoursCycles[1]+`</b>`, 
+          `<b>`+sumHoursCycles[2]+`</b>`, 
+          `<b>`+sumHoursCycles[3]+`</b>`, 
+          `<b>`+sumHoursCycles[4]+`</b>`, 
+          `<b>`+sumHoursCycles[5]+`</b>`, 
+          `<b>`+sumHoursCycles[6]+`</b>`,
+          `<b>`+sumHoursCycles[7]+`</b>`, 
+          `<b>`+sumHoursCycles[8]+`</b>`, 
+          `<b>`+sumHoursCycles[9]+`</b>`,
+          `<b>`+sumHoursCycles[10]+`</b>`, 
+          `<b>`+sumHoursCycles[11]+`</b>`, 
+          `<b>`+sumHoursCycles[12]+`</b>`, 
+          `<b>`+sumHoursCycles[13]+`</b>`, 
+          `<b>`+sumHoursCycles[14]+`</b>`, 
+          `<b>`+sumHoursCycles[15]+`</b>`, 
+                ))
               }
               for(let i = 0; i <= 9; i++) {
                 sumAll[i] += sumCycles[i]
@@ -262,7 +440,35 @@
               _.fill(sumCycles, 0);
               _.fill(sumHoursCycles, 0);
           })
-          result.push(_.concat([""],["Загальна кількість"], sumAll, sumHoursAll))
+          result.push(_.concat([""],["<b>Загальна кількість"], 
+          "","","",
+          `<b>`+sumAll[3]+`</b>`, 
+          `<b>`+sumAll[4]+`</b>`, 
+          `<b>`+sumAll[5]+`</b>`, 
+          `<b>`+sumAll[6]+`</b>`, 
+          `<b>`+sumAll[7]+`</b>`, 
+          `<b>`+sumAll[8]+`</b>`, 
+          `<b>`+sumAll[9]+`</b>`,
+
+          `<b>`+sumHoursAll[0]+`</b>`, 
+          `<b>`+sumHoursAll[1]+`</b>`, 
+          `<b>`+sumHoursAll[2]+`</b>`, 
+          `<b>`+sumHoursAll[3]+`</b>`, 
+          `<b>`+sumHoursAll[4]+`</b>`, 
+          `<b>`+sumHoursAll[5]+`</b>`, 
+          `<b>`+sumHoursAll[6]+`</b>`,
+          `<b>`+sumHoursAll[7]+`</b>`, 
+          `<b>`+sumHoursAll[8]+`</b>`, 
+          `<b>`+sumHoursAll[9]+`</b>`,
+          `<b>`+sumHoursAll[10]+`</b>`, 
+          `<b>`+sumHoursAll[11]+`</b>`, 
+          `<b>`+sumHoursAll[12]+`</b>`, 
+          `<b>`+sumHoursAll[13]+`</b>`, 
+          `<b>`+sumHoursAll[14]+`</b>`, 
+          `<b>`+sumHoursAll[15]+`</b>`, 
+          
+          
+          ))
           Api().get(`plan-controls/${this.getEducationPlanId}`).then((response)=>{
             response.data.forEach(function(item, cont, controls) {
               hours_week[controls[cont].module_number - 1] = controls[cont].hours_week
@@ -273,11 +479,10 @@
               _.concat([""], ["Кількість годин на тиждень"], hours_week), 
               _.concat([""], ["Кількість іспитів"], credit), 
               _.concat([""], ["Кількість заліків"], exams), 
-              _.concat([""], ["Кількість курсових робіт"], course_work))
+              _.concat([""], ["Кількість курсових робіт</b>"], course_work))
           }).then(() => {
             Api().get(`education-plan/${this.getEducationPlanId}`).then((response)=>{
               const dataPlan = {
-                name: response.data[0].name,
                 subdivision: response.data[0].department.subdivision.name,
                 year: response.data[0].year,
                 qualification: response.data[0].qualification,
@@ -306,10 +511,16 @@
                 <td colspan="2">
                   Затверджено рішенням вченої ради.<br>
                   <p style="margin-top: 9pt; margin-bottom: 9pt">Протокол від ____.___________._____ р. № ____</p>
-                  Голова ради ________________ А. В. Васильєв<br>
-                  <span style="margin-top:-1pt; font-size: 8pt; margin-left: 130px;">(підпис)</span><br>
-                  ______ ________________________ ________ р.<br>
-                  <span style="margin-left: 130px;">М.П.</span>
+                  <div style="float: left; width: auto">Голова ради  ________________ <br>
+                  <span style="margin-top:-1pt; font-size: 8pt; margin-left: 130px;">(підпис)</span></div>
+
+                  <div style='float: left; width: 15%; text-align: center'>___________________
+                  <div style='margin-top:-1pt; font-size: 8pt; text-align: center'>(прізвище та ініціали)</div>
+                  </div>
+                  </div>
+                  <div style="clear: both"></div>
+                  <div style="margin-top: 10pt">______ ________________________ ________ р.<br>
+                  <span style="margin-left: 130px;">М.П.</span></div>
                 </td>
               </tr>
               <tr>
@@ -332,125 +543,120 @@
               </tr>
             </table>
             <br>
-            <table cellspacing='0' id='printTable' style='width: 100%; border: 1px solid black; border-collapse: collapse; margin: 0 auto;font-size:14px' border=1>
+            <table cellspacing='1' cellpadding=3 border="1" id='printTable' style='width: 100%; border-collapse: collapse; border: 0.1px solid black; margin: 0 auto;font-size:14px'>
               <tr>
-                <td colspan=30 align='center'>${dataPlan.name}</td>
+                <td rowspan=8 align='center' style="white-space: nowrap  "><b>№ п/п</b></td>
+                <td rowspan=8 align='center' style="white-space: nowrap  "><b>Назви навчальних дисциплін</b></td>
+                <td colspan=3 align='center' style="white-space: nowrap  "><b>Розподіл контрольних заходів <br>за семестрами</b></td>
+                <td rowspan=8 align='center' style='transform: rotate(-90deg);'><b>Кількість кредитів ЄКТС</b></td></td>
+                <td colspan=6 align='center'><b>Кількість годин</b></td>
+                <td colspan=16 align='center'><b>Розподіл годин на тиждень за курсами, семестрами і модульними атестаційними циклами</b></td>
               </tr>
               <tr>
-                <td rowspan=8>№
-                <td rowspan=8 align='center'>назви навчальних дисциплін
-                <td colspan=3 align='center'>розподіл контрольних заходів за семестрами
-                <td rowspan=8 align='center' style='transform: rotate(-90deg);'>кількість кредитів ЄКТС</td>
-                <td colspan=6 align='center'>кількість годин
-                <td colspan=16 align='center'>розподіл годин на тиждень за курсами, семестрами і модульними атестаційними циклами
-              </tr>
-              <tr>
-                <td rowspan=7 style='transform: rotate(-90deg);'>іспити
-                <td rowspan=7 style='transform: rotate(-90deg);'>заліки
-                <td rowspan=7 align='center' style='transform: rotate(-90deg);'>індивідуальні завдання
-                <td rowspan=7 style='transform: rotate(-90deg);' align='center'>загальний обсяг
-                <td colspan=4 align='center'>аудиторних
-                <td rowspan=7 align='center' style='transform: rotate(-90deg);'>самостійна робота
-                <td colspan=4 align='center'>1 курс
-                <td colspan=4 align='center'>2 курс
-                <td colspan=4 align='center'>3 курс
-                <td colspan=4 align='center'>4 курс
+                <td rowspan=7 style='transform: rotate(-90deg);'><b>Екзамен</b></td>
+                <td rowspan=7 style='transform: rotate(-90deg);'><b>Залік</b></td>
+                <td rowspan=7 align='center' style='transform: rotate(-90deg);'><b>Індивідуальні завдання</b></td>
+                <td rowspan=7 style='transform: rotate(-90deg);' align='center'><b>Загальний обсяг</b></td>
+                <td colspan=4 align='center'><b>Аудиторних</b></td>
+                <td rowspan=7 align='center' style='transform: rotate(-90deg); white-space: nowrap'><b>Самостійна робота</b></td>
+                <td colspan=4 align='center'>1 курс</td>
+                <td colspan=4 align='center'>2 курс</td>
+                <td colspan=4 align='center'>3 курс</td>
+                <td colspan=4 align='center'>4 курс</td>
                 </tr>
               <tr>
-                <td rowspan=6 style='transform: rotate(-90deg);'>всього
-                <td colspan=3 align='center'>у тому числі:
-                <td colspan=16 align='center'>семестри
+                <td rowspan=6 style='transform: rotate(-90deg);'><b>Всього</b></td>
+                <td colspan=3 align='center'><b>у тому числі:</b></td>
+                <td colspan=16 align='center'><b>Семестри</b></td>
                 </tr>
               <tr>
-                <td colspan=3>
-                <td colspan=2 style='padding: 3.5pt; font-size: 8pt' align="center">1
-                <td colspan=2 style='padding: 3.5pt; font-size: 8pt' align="center">2
-                <td colspan=2 style='padding: 3.5pt; font-size: 8pt' align="center">3
-                <td colspan=2 style='padding: 3.5pt; font-size: 8pt' align="center">4
-                <td colspan=2 style='padding: 3.5pt; font-size: 8pt' align="center">5
-                <td colspan=2 style='padding: 3.5pt; font-size: 8pt' align="center">6
-                <td colspan=2 style='padding: 3.5pt; font-size: 8pt' align="center">7
-                <td colspan=2 style='padding: 3.5pt; font-size: 8pt' align="center">8
+                <td rowspan=5 style='transform: rotate(-90deg);'><b>Лекції</b></td>
+                <td rowspan=5 align='center' style='transform: rotate(-90deg);'><b>Практичні (сем.)</b></td>
+                <td rowspan=5 style='transform: rotate(-90deg);'><b>Лабораторні</b></td>
+                
+                <td colspan=2 style='padding: 3.5pt; font-size: 8pt' align="center">1</td>
+                <td colspan=2 style='padding: 3.5pt; font-size: 8pt' align="center">2</td>
+                <td colspan=2 style='padding: 3.5pt; font-size: 8pt' align="center">3</td>
+                <td colspan=2 style='padding: 3.5pt; font-size: 8pt' align="center">4</td>
+                <td colspan=2 style='padding: 3.5pt; font-size: 8pt' align="center">5</td>
+                <td colspan=2 style='padding: 3.5pt; font-size: 8pt' align="center">6</td>
+                <td colspan=2 style='padding: 3.5pt; font-size: 8pt' align="center">7</td>
+                <td colspan=2 style='padding: 3.5pt; font-size: 8pt' align="center">8</td>
+                </tr>
+             <tr><td colspan=16 align='center'><b>Модульні атестаційні цикли</b></td></tr>
+              <tr>
+                <td style='padding: 3.5pt; font-size: 8pt' align="center">I</td><td style='padding: 3.5pt; font-size: 8pt' align="center">II</td>
+                <td style='padding: 3.5pt; font-size: 8pt' align="center">III</td><td style='padding: 3.5pt; font-size: 8pt' align="center">IV</td>
+                <td style='padding: 3.5pt; font-size: 8pt' align="center">I</td><td style='padding: 3.5pt; font-size: 8pt' align="center">II</td>
+                <td style='padding: 3.5pt; font-size: 8pt' align="center">III</td><td style='padding: 3.5pt; font-size: 8pt'align="center">IV</td>
+                <td style='padding: 3.5pt; font-size: 8pt' align="center">I</td><td style='padding: 3.5pt; font-size: 8pt' align="center">II</td>
+                <td style='padding: 3.5pt; font-size: 8pt' align="center">III</td><td style='padding: 3.5pt; font-size: 8pt' align="center">IV</td>
+                <td style='padding: 3.5pt; font-size: 8pt' align="center">I</td><td style='padding: 3.5pt; font-size: 8pt' align="center">II</td>
+                <td style='padding: 3.5pt; font-size: 8pt' align="center">III</td><td style='padding: 3.5pt; font-size: 8pt' align="center">IV</td>
                 </tr>
               <tr>
-                <td rowspan=4 style='transform: rotate(-90deg);'>лекції
-                <td rowspan=4 align='center' style='transform: rotate(-90deg);'>практичні, семінарські
-                <td rowspan=4 style='transform: rotate(-90deg);'>лабораторні
-                <td colspan=16 align='center'>модульні атестаційні цикли
+                <td colspan=16 align='center'><b>Кількість тижнів у модульному атестаційному циклі</b></td>
                 </tr>
               <tr>
-                <td style='padding: 3.5pt; font-size: 8pt' align="center">I<td style='padding: 3.5pt; font-size: 8pt' align="center">II
-                <td style='padding: 3.5pt; font-size: 8pt' align="center">III<td style='padding: 3.5pt; font-size: 8pt' align="center">IV
-                <td style='padding: 3.5pt; font-size: 8pt' align="center">I<td style='padding: 3.5pt; font-size: 8pt' align="center">II
-                <td style='padding: 3.5pt; font-size: 8pt' align="center">III<td style='padding: 3.5pt; font-size: 8pt'align="center">IV
-                <td style='padding: 3.5pt; font-size: 8pt' align="center">I<td style='padding: 3.5pt; font-size: 8pt' align="center">II
-                <td style='padding: 3.5pt; font-size: 8pt' align="center">III<td style='padding: 3.5pt; font-size: 8pt' align="center">IV
-                <td style='padding: 3.5pt; font-size: 8pt' align="center">I<td style='padding: 3.5pt; font-size: 8pt' align="center">II
-                <td style='padding: 3.5pt; font-size: 8pt' align="center">III<td style='padding: 3.5pt; font-size: 8pt' align="center">IV
+                <td style='padding: 3.5pt; font-size: 8pt' align="center">8</td>
+                <td style='padding: 3.5pt; font-size: 8pt' align="center">8</td>
+                <td style='padding: 3.5pt; font-size: 8pt' align="center">8</td>
+                <td style='padding: 3.5pt; font-size: 8pt' align="center">8</td>
+                <td style='padding: 3.5pt; font-size: 8pt' align="center">8</td>
+                <td style='padding: 3.5pt; font-size: 8pt' align="center">8</td>
+                <td style='padding: 3.5pt; font-size: 8pt' align="center">8</td>
+                <td style='padding: 3.5pt; font-size: 8pt' align="center">8</td>
+                <td style='padding: 3.5pt; font-size: 8pt' align="center">8</td>
+                <td style='padding: 3.5pt; font-size: 8pt' align="center">8</td>
+                <td style='padding: 3.5pt; font-size: 8pt' align="center">8</td>
+                <td style='padding: 3.5pt; font-size: 8pt' align="center">8</td>
+                <td style='padding: 3.5pt; font-size: 8pt' align="center">8</td>
+                <td style='padding: 3.5pt; font-size: 8pt' align="center">8</td>
+                <td style='padding: 3.5pt; font-size: 8pt' align="center">8</td>
+                <td style='padding: 3.5pt; font-size: 8pt' align="center">8</td>
                 </tr>
               <tr>
-                <td colspan=16 align='center'>кількість тижнів у модульному атестаційному циклі
-                </tr>
-              <tr>
-                <td style='padding: 3.5pt; font-size: 8pt' align="center">8
-                <td style='padding: 3.5pt; font-size: 8pt' align="center">8
-                <td style='padding: 3.5pt; font-size: 8pt' align="center">8
-                <td style='padding: 3.5pt; font-size: 8pt' align="center">8
-                <td style='padding: 3.5pt; font-size: 8pt' align="center">8
-                <td style='padding: 3.5pt; font-size: 8pt' align="center">8
-                <td style='padding: 3.5pt; font-size: 8pt' align="center">8
-                <td style='padding: 3.5pt; font-size: 8pt' align="center">8
-                <td style='padding: 3.5pt; font-size: 8pt' align="center">8
-                <td style='padding: 3.5pt; font-size: 8pt' align="center">8
-                <td style='padding: 3.5pt; font-size: 8pt' align="center">8
-                <td style='padding: 3.5pt; font-size: 8pt' align="center">8
-                <td style='padding: 3.5pt; font-size: 8pt' align="center">8
-                <td style='padding: 3.5pt; font-size: 8pt' align="center">8
-                <td style='padding: 3.5pt; font-size: 8pt' align="center">8
-                <td style='padding: 3.5pt; font-size: 8pt' align="center">8
-                </tr>
-              <tr>
-                <td style='padding: 3.5pt; font-size: 8pt' align="center">1
-                <td style='padding: 3.5pt; font-size: 8pt' align="center">2
-                <td style='padding: 3.5pt; font-size: 8pt' align="center">3
-                <td style='padding: 3.5pt; font-size: 8pt' align="center">4
-                <td style='padding: 3.5pt; font-size: 8pt' align="center">5
-                <td style='padding: 3.5pt; font-size: 8pt' align="center">6
-                <td style='padding: 3.5pt; font-size: 8pt' align="center">7
-                <td style='padding: 3.5pt; font-size: 8pt' align="center">8
-                <td style='padding: 3.5pt; font-size: 8pt' align="center">9
-                <td style='padding: 3.5pt; font-size: 8pt' align="center">10
-                <td style='padding: 3.5pt; font-size: 8pt' align="center">11
-                <td style='padding: 3.5pt; font-size: 8pt' align="center">12
-                <td style='padding: 3.5pt; font-size: 8pt' align="center">13
-                <td style='padding: 3.5pt; font-size: 8pt' align="center">14
-                <td style='padding: 3.5pt; font-size: 8pt' align="center">15
-                <td style='padding: 3.5pt; font-size: 8pt' align="center">16
-                <td style='padding: 3.5pt; font-size: 8pt' align="center">17
-                <td style='padding: 3.5pt; font-size: 8pt' align="center">18
-                <td style='padding: 3.5pt; font-size: 8pt' align="center">19
-                <td style='padding: 3.5pt; font-size: 8pt' align="center">20
-                <td style='padding: 3.5pt; font-size: 8pt' align="center">21
-                <td style='padding: 3.5pt; font-size: 8pt' align="center">22
-                <td style='padding: 3.5pt; font-size: 8pt' align="center">23
-                <td style='padding: 3.5pt; font-size: 8pt' align="center">24
-                <td style='padding: 3.5pt; font-size: 8pt' align="center">25
-                <td style='padding: 3.5pt; font-size: 8pt' align="center">26
-                <td style='padding: 3.5pt; font-size: 8pt' align="center">27
-                <td style='padding: 3.5pt; font-size: 8pt' align="center">28
+                <td style='padding: 3.5pt; font-size: 8pt' align="center">1</td>
+                <td style='padding: 3.5pt; font-size: 8pt' align="center">2</td>
+                <td style='padding: 3.5pt; font-size: 8pt' align="center">3</td>
+                <td style='padding: 3.5pt; font-size: 8pt' align="center">4</td>
+                <td style='padding: 3.5pt; font-size: 8pt' align="center">5</td>
+                <td style='padding: 3.5pt; font-size: 8pt' align="center">6</td>
+                <td style='padding: 3.5pt; font-size: 8pt' align="center">7</td>
+                <td style='padding: 3.5pt; font-size: 8pt' align="center">8</td>
+                <td style='padding: 3.5pt; font-size: 8pt' align="center">9</td>
+                <td style='padding: 3.5pt; font-size: 8pt' align="center">10</td>
+                <td style='padding: 3.5pt; font-size: 8pt' align="center">11</td>
+                <td style='padding: 3.5pt; font-size: 8pt' align="center">12</td>
+                <td style='padding: 3.5pt; font-size: 8pt' align="center">13</td>
+                <td style='padding: 3.5pt; font-size: 8pt' align="center">14</td>
+                <td style='padding: 3.5pt; font-size: 8pt' align="center">15</td>
+                <td style='padding: 3.5pt; font-size: 8pt' align="center">16</td>
+                <td style='padding: 3.5pt; font-size: 8pt' align="center">17</td>
+                <td style='padding: 3.5pt; font-size: 8pt' align="center">18</td>
+                <td style='padding: 3.5pt; font-size: 8pt' align="center">19</td>
+                <td style='padding: 3.5pt; font-size: 8pt' align="center">20</td>
+                <td style='padding: 3.5pt; font-size: 8pt' align="center">21</td>
+                <td style='padding: 3.5pt; font-size: 8pt' align="center">22</td>
+                <td style='padding: 3.5pt; font-size: 8pt' align="center">23</td>
+                <td style='padding: 3.5pt; font-size: 8pt' align="center">24</td>
+                <td style='padding: 3.5pt; font-size: 8pt' align="center">25</td>
+                <td style='padding: 3.5pt; font-size: 8pt' align="center">26</td>
+                <td style='padding: 3.5pt; font-size: 8pt' align="center">27</td>
+                <td style='padding: 3.5pt; font-size: 8pt' align="center">28</td>
                 </tr>`;
 
               for(var i=0; i<myArray.length; i++) {
                   result += `<tr>`;
                   for(var j=0; j<myArray[i].length; j++){
                       if(myArray[i].length == 1) {
-                        result += `<td colspan='30' align='center'>${myArray[i][j]}</td>`;
+                        result += `<td colspan='28' align='center'><b>${myArray[i][j]}</b></td>`;
                       } else {
                         if (j!=1){
-                        result += `<td align='center'>${myArray[i][j]}</td>`;
+                        result += `<td align='center' style="font-size: 9pt;">${myArray[i][j]}</td>`;
                         }
                         else{
-                          result += `<td style="padding-left: 2pt">${myArray[i][j]}</td>`;
+                          result += `<td style="padding: 2pt 3pt;">${myArray[i][j]}</td>`;
                         }
                       }
                   }
@@ -460,9 +666,9 @@
                   result += `<tr>`;
                   for(var j=0; j<controlRes[i].length; j++){
                     if(isNaN(controlRes[1][j])) {
-                      result += `<td colspan=11 style="padding-left: 2pt">${controlRes[i][j]}</td>`;
+                      result += `<td colspan=11 style="padding-left: 2pt"><b>${controlRes[i][j]}</b></td>`;
                     } else {
-                      result += `<td align="center">${controlRes[i][j]}</td>`;
+                      result += `<td align="center" style="font-size: 9pt"><b>${controlRes[i][j]}</b></td>`;
                     }
                   }
                   result += `</tr>`;
@@ -485,13 +691,9 @@
         }
       },
       printData() {
-        const WinPrint = window.open('', '');
-        WinPrint.document.write(this.table);
-        WinPrint.document.body.setAttribute('style', 'font-family: "Open Sans"');
-        WinPrint.document.close();
-        WinPrint.focus();
-        WinPrint.print();
-        WinPrint.close();
+        document.write(this.table);
+        window.print();
+        location.reload();
       },
       viewItem(link){
         this.$router.push(link);
@@ -499,3 +701,6 @@
     }
   }
 </script>
+<style>
+
+</style>

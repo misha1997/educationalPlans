@@ -59,5 +59,4 @@ db.sync().then(async function() {
 			Users.create(user);
 		}),
 	);
-	
 });
